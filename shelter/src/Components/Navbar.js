@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Box,
@@ -14,14 +14,16 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import dog from "../dog.png";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { makeStyles } from "@mui/styles";
 import { NavigateBeforeSharp } from "@mui/icons-material";
+import authContext from "Helpers/AuthContext";
 
 const useStyles = makeStyles({
   btnGroup: {
@@ -30,14 +32,15 @@ const useStyles = makeStyles({
   btn: {
     minWidth: "120px",
   },
+  img: {
+    width: "8%",
+  },
 });
-
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const classes = useStyles();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -54,28 +57,31 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setAuthenticated(false);
+    setRoles([]);
+    setAccessToken("");
+    setUsername("");
+    localStorage.clear();
+    navigate("/");
+  };
+
+  const {
+    setAuthenticated,
+    authenticated,
+    setRoles,
+    roles,
+    accessToken,
+    setAccessToken,
+    setUsername,
+    username,
+  } = useContext(authContext);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+          <img className={classes.img} src={dog}></img>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -106,11 +112,15 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => navigate("/first")}>
+                <Typography textAlign="center">first Page</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => navigate("/second")}>
+                <Typography textAlign="center">SecondPage</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => navigate("/first")}>
+                <Typography textAlign="center">ThirdPage</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -129,49 +139,64 @@ const Navbar = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            LOGO
-          </Typography>
+          ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button onClick={() => navigate("/first")}>
+              <Typography textAlign="center">first Page</Typography>
+            </Button>
+            <Button onClick={() => navigate("/second")}>
+              <Typography textAlign="center">SecondPage</Typography>
+            </Button>
+            <Button onClick={() => navigate("/third")}>
+              <Typography textAlign="center">ThirdPage</Typography>
+            </Button>
+            <Button
+              onClick={() => {
+                console.log(authenticated);
+                console.log(roles);
+                console.log(accessToken);
+                console.log(username);
+              }}
+            >
+              Log auth info
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {authenticated ? (
+              <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Button onClick={() => navigate("login")}>Login</Button>
+            )}
           </Box>
         </Toolbar>
       </Container>
