@@ -1,0 +1,6 @@
+# Node and JavaScript
+node-modules/
+
+# Dan specific stuff
+shell.nix
+.envrc
