@@ -63,7 +63,7 @@ const Navbar = () => {
     setRoles([]);
     setAccessToken("");
     setUsername("");
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
   };
 
@@ -83,46 +83,6 @@ const Navbar = () => {
         <Toolbar disableGutters>
           <img className={classes.img} src={dog}></img>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <MenuItem onClick={() => navigate("/first")}>
-                <Typography textAlign="center">first Page</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/second")}>
-                <Typography textAlign="center">SecondPage</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/first")}>
-                <Typography textAlign="center">ThirdPage</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -141,15 +101,21 @@ const Navbar = () => {
             }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button onClick={() => navigate("/first")}>
-              <Typography textAlign="center">first Page</Typography>
-            </Button>
-            <Button onClick={() => navigate("/second")}>
-              <Typography textAlign="center">SecondPage</Typography>
-            </Button>
-            <Button onClick={() => navigate("/third")}>
-              <Typography textAlign="center">ThirdPage</Typography>
-            </Button>
+            {roles?.includes(1) ? (
+              <Button onClick={() => navigate("/first")}>
+                <Typography textAlign="center">first Page</Typography>
+              </Button>
+            ) : null}
+            {roles?.includes(2) ? (
+              <Button onClick={() => navigate("/second")}>
+                <Typography textAlign="center">SecondPage</Typography>
+              </Button>
+            ) : null}
+            {roles?.includes(3) ? (
+              <Button onClick={() => navigate("/third")}>
+                <Typography textAlign="center">ThirdPage</Typography>
+              </Button>
+            ) : null}
             <Button
               onClick={() => {
                 console.log(authenticated);

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useRef, useEffect, useContext } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios/axios";
 import authContext from "Helpers/AuthContext";
 
@@ -22,6 +22,8 @@ const LOGIN_URL = "future login url";
 
 function LoginPage({ setLogged, logged }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const classes = useStyles();
   const userRef = useRef();
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
@@ -64,12 +66,12 @@ function LoginPage({ setLogged, logged }) {
     setAccessToken(token);
     setUsername(formUsername);
 
-    localStorage.setItem("username", formUsername);
-    localStorage.setItem("authenticated", auth);
-    localStorage.setItem("roles", JSON.stringify(roles));
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("username", formUsername);
+    sessionStorage.setItem("authenticated", auth);
+    sessionStorage.setItem("roles", JSON.stringify(roles));
+    sessionStorage.setItem("token", token);
 
-    navigate("/");
+    navigate(from, { replace: true });
   };
 
   return (

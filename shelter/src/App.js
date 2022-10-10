@@ -10,6 +10,8 @@ import authContext from "Helpers/AuthContext";
 import FirstPage from "Pages/FirstPage";
 import SecondPage from "Pages/SecondPage";
 import ThirdPage from "Pages/ThirdPage";
+import RequireAuth from "Components/RequireAuth";
+import Unauthorized from "Pages/Unauthorized";
 
 const theme = createTheme({
   palette: {
@@ -56,11 +58,20 @@ function App() {
 
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/first" element={<FirstPage />} />
-          <Route path="/second" element={<SecondPage />} />
-          <Route path="/third" element={<ThirdPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[1]} />}>
+            <Route path="/first" element={<FirstPage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[2]} />}>
+            <Route path="/second" element={<SecondPage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[3]} />}>
+            <Route path="/third" element={<ThirdPage />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </authContext.Provider>
