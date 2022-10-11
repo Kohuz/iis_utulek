@@ -1,0 +1,65 @@
+@startuml
+/' skinparam groupInheritance 2 '/
+
+note "There is only one Walk schedule to rule them all" as N1
+
+entity "User" {
+    Name
+    Surname
+    Birth Date
+}
+
+entity "Task" {}
+
+entity "Walk" {
+    Start Date
+    End Date
+}
+
+entity "Reservation" {
+
+}
+Walk ||..o{ Reservation
+
+entity "Animal" {
+    Name
+    Type
+    Photo
+    Age
+}
+Walk }o..|| Animal
+
+entity "Animal Event" as AnimalEvent {
+    Name
+    Date
+    Commentary
+    Type
+}
+Animal ||..o{ AnimalEvent
+
+entity "Veterinarian" {
+    Adress
+    Bank Account
+}
+User <|-- Veterinarian
+AnimalEvent }o..o| Veterinarian
+
+entity "Volunteer" {
+
+}
+User <|-- Volunteer
+Reservation }o..|| Volunteer
+
+entity "Admin" {
+
+}
+User <|-- Admin
+
+entity "Caretaker" {
+    Bank Account
+}
+User <|-- Caretaker
+Walk }o..|| Caretaker
+
+
+@enduml
