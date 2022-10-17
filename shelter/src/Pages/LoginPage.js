@@ -116,7 +116,6 @@ function LoginPage({ setLogged, logged }) {
               <Button type="submit" variant="outlined">
                 Přihlásit se
               </Button>
-              <h3>{process.env.REACT_APP_BASE_URL}</h3>
             </div>
           </form>
         </>

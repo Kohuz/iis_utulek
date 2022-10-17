@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import HomePage from "./Pages/HomePage";
 import LoginPage from "./Pages/LoginPage";
+import ProfilePage from "Pages/ProfilePage";
 import Navbar from "Components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
@@ -71,6 +72,9 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[3]} />}>
             <Route path="/third" element={<ThirdPage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[1,2,3]} />}>
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Routes>
       </ThemeProvider>
