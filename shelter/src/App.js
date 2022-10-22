@@ -8,11 +8,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import authContext from "Helpers/AuthContext";
-import FirstPage from "Pages/FirstPage";
-import SecondPage from "Pages/SecondPage";
+import CaretakerPage from "Pages/CaretakerPage";
+import VeteranianPage from "Pages/VeteraninanPage";
 import ThirdPage from "Pages/ThirdPage";
 import RequireAuth from "Components/RequireAuth";
 import Unauthorized from "Pages/Unauthorized";
+import AnimalsPage from "Pages/AnimalsPage";
+import CreateUserPage from "Pages/CreateUserPage";
+import VeterinarianPage from "Pages/VeteraninanPage";
+import VolunteerPage from "Pages/VolunteerPage";
 
 const theme = createTheme({
   palette: {
@@ -33,6 +37,13 @@ const theme = createTheme({
     },
   },
 });
+
+const rolesDict = {
+  Admin: 1,
+  Caretaker: 2,
+  Veterinarian: 3,
+  Volunteeer: 4,
+};
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -61,20 +72,24 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/animals" element={<AnimalsPage />} />
           <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
             <Route path="/" element={<HomePage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
-            <Route path="/first" element={<FirstPage />} />
+            <Route path="/caretaker" element={<CaretakerPage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[2]} />}>
-            <Route path="/second" element={<SecondPage />} />
+            <Route path="/veteranian" element={<VeterinarianPage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[3]} />}>
-            <Route path="/third" element={<ThirdPage />} />
+            <Route path="/volunteer" element={<VolunteerPage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1,2,3]} />}>
+          <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
             <Route path="/profile" element={<ProfilePage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[1]} />}>
+            <Route path="/create_user" element={<CreateUserPage />} />
           </Route>
         </Routes>
       </ThemeProvider>

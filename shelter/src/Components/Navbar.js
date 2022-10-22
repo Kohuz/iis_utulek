@@ -101,19 +101,24 @@ const Navbar = () => {
             }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button onClick={() => navigate("/animals")}>
+              <Typography textAlign="center">Zvířata</Typography>
+            </Button>
             {roles?.includes(1) ? (
-              <Button onClick={() => navigate("/first")}>
-                <Typography textAlign="center">first Page</Typography>
+              <Button onClick={() => navigate("/caretaker")}>
+                <Typography textAlign="center">Pečovatel</Typography>
               </Button>
             ) : null}
             {roles?.includes(2) ? (
-              <Button onClick={() => navigate("/second")}>
-                <Typography textAlign="center">SecondPage</Typography>
+              <Button onClick={() => navigate("/veteranian")}>
+                <Typography textAlign="center">Veteřinář</Typography>
               </Button>
             ) : null}
             {roles?.includes(3) ? (
-              <Button onClick={() => navigate("/third")}>
-                <Typography textAlign="center">ThirdPage</Typography>
+              <Button onClick={() => navigate("/volunteer")}>
+                <Typography textAlign="center">
+                  Dobrovolníci a venčení
+                </Typography>
               </Button>
             ) : null}
             <Button
@@ -156,11 +161,18 @@ const Navbar = () => {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={handleLogout}>
-                    <Typography textAlign="center">Logout</Typography>
+                    <Typography textAlign="center">Odhlásit se</Typography>
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("/profile")} >
-                    <Typography textAlign="center">Profile</Typography>
+                  <MenuItem onClick={() => navigate("/profile")}>
+                    <Typography textAlign="center">Profil</Typography>
                   </MenuItem>
+                  {roles?.includes(1) ? (
+                    <MenuItem onClick={() => navigate("/create_user")}>
+                      <Typography textAlign="center">
+                        Vytvořit uživatele
+                      </Typography>
+                    </MenuItem>
+                  ) : null}
                 </Menu>
               </>
             ) : (
