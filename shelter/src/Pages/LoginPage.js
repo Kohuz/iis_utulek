@@ -55,7 +55,7 @@ function LoginPage({ setLogged, logged }) {
       //TODO: Add ifs for response codes
     }
 
-    const roles = [1, 2];
+    const roles = [1, 2, 3];
     const auth = "true";
     const token = "token";
     setFormUsername("");
