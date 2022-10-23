@@ -1,7 +1,35 @@
+import AnimalCard from "Components/AnimalCard";
 import React from "react";
 
 function AnimalsPage() {
-  return <div>AnimalsPage</div>;
+  const animals = [
+    {
+      name: "Alík",
+      type: "Pes",
+      age: 3,
+    },
+    {
+      name: "Micinka",
+      type: "Kočka",
+      age: 5,
+    },
+    {
+      name: "Žofka",
+      type: "Leguán",
+      age: 6,
+    },
+  ];
+  return (
+    <>
+      {animals.map((animal) => (
+        <AnimalCard
+          name={animal.name}
+          type={animal.type}
+          age={animal.age}
+        ></AnimalCard>
+      ))}
+    </>
+  );
 }
 
 export default AnimalsPage;
