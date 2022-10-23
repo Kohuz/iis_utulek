@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   Button,
   MenuItem,
+  Divider,
   FormGroup,
   TextField,
   Typography,
@@ -23,8 +24,13 @@ const useStyles = makeStyles({
     flexDirection: "column",
     marginTop: "3%",
   },
-  log: {
-    marginTop: "13px",
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "25%",
+    marginRight: "25%",
+    flexDirection: "column",
   },
 });
 function CreateUserPage() {
@@ -33,54 +39,51 @@ function CreateUserPage() {
   const [care, setCare] = useState(false);
 
   return (
-    <>
-      <div className={classes.form}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Typography variant="h3">Vytvořit nového uživatele</Typography>
-        </Box>
-      </div>
-      <div className={classes.form}>
-        <Typography variant="h4">Role</Typography>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                defaultChecked
-                checked={vet}
-                onChange={() => setVet(!vet)}
-              />
-            }
-            label="Veterinář"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={care} onChange={() => setCare(!care)} />
-            }
-            label="Pečovatel"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <CreateInfo />
-            </Grid>
-            <Grid item xs={4}>
-              {vet ? <Address /> : null}
-            </Grid>
-            <Grid item xs={4}>
-              {care ? (
-                <FormControlLabel
-                  control={<TextField></TextField>}
-                  labelPlacement="top"
-                  label="Bankovní účet"
-                />
-              ) : null}
-            </Grid>
+    <div className={classes.container}>
+      <Typography gutterBottom variant="h3">
+        Vytvořit nového uživatele
+      </Typography>
+      <Divider variant="middle" />
+      <FormGroup>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <CreateInfo />
           </Grid>
-        </FormGroup>
-        <Button variant="outlined">Vytvořit</Button>
-      </div>
-    </>
+          <Grid item xs={4}>
+            <Typography variant="h4">Role</Typography>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    defaultChecked
+                    checked={vet}
+                    onChange={() => setVet(!vet)}
+                  />
+                }
+                label="Veterinář"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox checked={care} onChange={() => setCare(!care)} />
+                }
+                label="Pečovatel"
+              />
+            </FormGroup>
+          </Grid>
+          <Grid item xs={4}>
+            {care ? (
+              <FormControlLabel
+                control={<TextField></TextField>}
+                labelPlacement="top"
+                label="Bankovní účet"
+              />
+            ) : null}
+            {vet ? <Address /> : null}
+          </Grid>
+        </Grid>
+      </FormGroup>
+      <Button variant="outlined">Vytvořit</Button>
+    </div>
   );
 }
 
