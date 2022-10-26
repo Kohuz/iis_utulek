@@ -1,0 +1,10 @@
+FROM mysql:latest
+
+ENV MYSQL_DATABASE=shelter \
+    MYSQL_ROOT_PASSWORD=test
+
+# All files *.sql found in dest location will be executed, more info can be
+# found in the official container image docs on docker hub
+ADD schema.sql /docker-entrypoint-initdb.d
+
+EXPOSE 3306
