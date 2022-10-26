@@ -7,7 +7,6 @@ fi
 
 podman run \
     --detach \
-    --name=utulek-db \
-    --env="MYSQL_ROOT_PASSWORD=test" \
+    --name=shelter-db \
     --publish 6603:3306 \
-    mysql
+    shelter_db

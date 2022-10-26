@@ -5,4 +5,9 @@ then
     exit 1
 fi
 
-mysql -uroot -ptest -h127.0.0.1 -P6603
+mysql \
+    --database=shelter \
+    -uroot \
+    -ptest \
+    -h127.0.0.1 \
+    -P6603
