@@ -1,6 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import AddAnimal from "Dialogs/AddAnimal";
+import AnimalCard from "Components/AnimalCard";
 
 function CaretakerPage() {
   const [open, setOpen] = useState(false);
@@ -12,6 +13,23 @@ function CaretakerPage() {
   const handleClose = () => {
     setOpen(false);
   };
+  const animals = [
+    {
+      name: "Alík",
+      type: "Pes",
+      age: 3,
+    },
+    {
+      name: "Micinka",
+      type: "Kočka",
+      age: 5,
+    },
+    {
+      name: "Žofka",
+      type: "Leguán",
+      age: 6,
+    },
+  ];
   return (
     <>
       <AddAnimal open={open} handleClose={handleClose} />
@@ -19,9 +37,14 @@ function CaretakerPage() {
         Zavést nové zvíře
       </Button>
 
-      <Typography>Zvíře 1</Typography>
-      <Typography>Zvíře 2</Typography>
-      <Typography>Zvíře 3</Typography>
+      {animals.map((animal) => (
+        <AnimalCard
+          name={animal.name}
+          type={animal.type}
+          age={animal.age}
+          from={"care"}
+        ></AnimalCard>
+      ))}
     </>
   );
 }

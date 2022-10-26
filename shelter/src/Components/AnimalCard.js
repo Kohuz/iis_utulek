@@ -11,10 +11,10 @@ import authContext from "Helpers/AuthContext";
 import dog from "../dog.png";
 import { rolesDict, checkRoles } from "../Helpers/Roles";
 
-function AnimalCard({ name, type, age }) {
+function AnimalCard({ name, type, age, from }) {
   const { authenticated, roles } = useContext(authContext);
   return (
-    <Card sx={{ maxWidth: 500 }}>
+    <Card sx={{ maxWidth: 700 }}>
       <CardMedia component="img" height="100" image={dog} alt="exampleDog" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -25,12 +25,16 @@ function AnimalCard({ name, type, age }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {authenticated ? <Button size="small">Vyvenčit</Button> : null}
-        {checkRoles(roles, [rolesDict["Admin"], rolesDict["Caretaker"]]) ? (
+        {from === "animals" ? <Button size="small">Vyvenčit</Button> : null}
+        {from == "care" ? (
           <Button size="small">Vytvořit požadavek na veterináře</Button>
         ) : null}
-        {checkRoles(roles, [rolesDict["Admin"], rolesDict["Caretaker"]]) ? (
-          <Button size="small">Vytvořit rozvrh venčení</Button>
+        {from === "care" ? <Button size="small">Venčení zvířete</Button> : null}
+        {from === "veterinarian" ? (
+          <Button size="small">Editovat zdravotní záznam</Button>
+        ) : null}
+        {from === "veterinarian" || from === "care" ? (
+          <Button size="small">Smazat zvíře</Button>
         ) : null}
       </CardActions>
     </Card>

@@ -26,6 +26,7 @@ function AnimalsPage() {
           name={animal.name}
           type={animal.type}
           age={animal.age}
+          from={"animals"}
         ></AnimalCard>
       ))}
     </>
