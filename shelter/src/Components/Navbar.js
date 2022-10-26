@@ -12,10 +12,11 @@ import {
   MenuItem,
   IconButton,
   ToggleButton,
+  Badge,
   ToggleButtonGroup,
 } from "@mui/material";
 import dog from "../dog.png";
-
+import ErrorIcon from "@mui/icons-material/Error";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import AdbIcon from "@mui/icons-material/Adb";
@@ -34,6 +35,9 @@ const useStyles = makeStyles({
   },
   img: {
     width: "8%",
+  },
+  notif: {
+    marginLeft: "3px",
   },
 });
 
@@ -63,7 +67,7 @@ const Navbar = () => {
     setRoles([]);
     setAccessToken("");
     setUsername("");
-    sessionStorage.clear();
+    localStorage.clear();
     navigate("/");
   };
 
@@ -77,6 +81,8 @@ const Navbar = () => {
     setUsername,
     username,
   } = useContext(authContext);
+
+  const notif = 5;
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -107,6 +113,9 @@ const Navbar = () => {
             {roles?.includes(1) ? (
               <Button onClick={() => navigate("/caretaker")}>
                 <Typography textAlign="center">Pečovatel</Typography>
+                <Badge className={classes.notif} badgeContent={4} color="error">
+                  <ErrorIcon color="warning" />
+                </Badge>
               </Button>
             ) : null}
             {roles?.includes(2) ? (
@@ -115,10 +124,16 @@ const Navbar = () => {
               </Button>
             ) : null}
             {roles?.includes(3) ? (
+              <Button onClick={() => navigate("/schedules")}>
+                <Typography textAlign="center">Venčení</Typography>
+              </Button>
+            ) : null}
+            {roles?.includes(3) ? (
               <Button onClick={() => navigate("/volunteer")}>
-                <Typography textAlign="center">
-                  Dobrovolníci a venčení
-                </Typography>
+                <Typography textAlign="center">Dobrovolníci</Typography>
+                <Badge className={classes.notif} badgeContent={4} color="error">
+                  <ErrorIcon color="warning" />
+                </Badge>
               </Button>
             ) : null}
             <Button

@@ -66,10 +66,10 @@ function LoginPage({ setLogged, logged }) {
     setAccessToken(token);
     setUsername(formUsername);
 
-    sessionStorage.setItem("username", formUsername);
-    sessionStorage.setItem("authenticated", auth);
-    sessionStorage.setItem("roles", JSON.stringify(roles));
-    sessionStorage.setItem("token", token);
+    localStorage.setItem("username", formUsername);
+    localStorage.setItem("authenticated", auth);
+    localStorage.setItem("roles", JSON.stringify(roles));
+    localStorage.setItem("token", token);
 
     navigate(from, { replace: true });
   };
