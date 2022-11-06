@@ -18,6 +18,8 @@ import CreateUserPage from "Pages/CreateUserPage";
 import VeterinarianPage from "Pages/VeteraninanPage";
 import VolunteerPage from "Pages/VolunteerPage";
 import SchedulesPage from "Pages/SchedulesPage";
+import Schedule from "Components/Schedule";
+import HealthRecord from "Components/HealthRecord";
 
 const theme = createTheme({
   palette: {
@@ -68,13 +70,18 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/animals" element={<AnimalsPage />} />
           <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
+            <Route path="/animals/:id" element={<Schedule />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
             <Route path="/" element={<HomePage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/caretaker" element={<CaretakerPage />} />
+            <Route path="/caretaker/:id" element={<Schedule />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[2]} />}>
             <Route path="/veteranian" element={<VeterinarianPage />} />
+            <Route path="/veteranian/:id" element={<HealthRecord />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[3]} />}>
             <Route path="/volunteer" element={<VolunteerPage />} />
