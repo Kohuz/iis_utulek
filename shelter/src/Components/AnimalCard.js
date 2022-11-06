@@ -10,9 +10,11 @@ import React, { useContext } from "react";
 import authContext from "Helpers/AuthContext";
 import dog from "../dog.png";
 import { rolesDict, checkRoles } from "../Helpers/Roles";
+import { useNavigate } from "react-router-dom";
 
-function AnimalCard({ name, type, age, from }) {
+function AnimalCard({ id, name, type, age, from, openRequest }) {
   const { authenticated, roles } = useContext(authContext);
+  const navigate = useNavigate();
   return (
     <Card sx={{ maxWidth: 700 }}>
       <CardMedia component="img" height="100" image={dog} alt="exampleDog" />
@@ -25,13 +27,25 @@ function AnimalCard({ name, type, age, from }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {from === "animals" ? <Button size="small">Vyvenčit</Button> : null}
-        {from == "care" ? (
-          <Button size="small">Vytvořit požadavek na veterináře</Button>
+        {from === "animals" ? (
+          <Button size="small" onClick={() => navigate("/animals/" + id)}>
+            Vyvenčit
+          </Button>
         ) : null}
-        {from === "care" ? <Button size="small">Venčení zvířete</Button> : null}
+        {from == "care" ? (
+          <Button size="small" onClick={() => openRequest()}>
+            Vytvořit požadavek na veterináře
+          </Button>
+        ) : null}
+        {from === "care" ? (
+          <Button size="small" onClick={() => navigate("/caretaker/" + id)}>
+            Venčení zvířete
+          </Button>
+        ) : null}
         {from === "veterinarian" ? (
-          <Button size="small">Editovat zdravotní záznam</Button>
+          <Button size="small" onClick={() => navigate("/veteranian/" + id)}>
+            Editovat zdravotní záznam
+          </Button>
         ) : null}
         {from === "veterinarian" || from === "care" ? (
           <Button size="small">Smazat zvíře</Button>
