@@ -2,203 +2,10 @@ import React from "react";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import timetable from "../Helpers/temp_arrays";
 
 function Schedule() {
-  const hours = [
-    {
-      time: 8,
-      chosen: false,
-    },
-    {
-      time: 9,
-      chosen: false,
-    },
-    {
-      time: 10,
-      chosen: false,
-    },
-    {
-      time: 11,
-      chosen: false,
-    },
-  ];
-  const [table, setTable] = useState([
-    {
-      day: "Pondělí",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Úterý",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Středa",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Čtvrtek",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Pátek",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Sobota",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: true,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: true,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-    {
-      day: "Neděle",
-      hours: [
-        {
-          time: 8,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 9,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 10,
-          chosen: false,
-          taken: false,
-        },
-        {
-          time: 11,
-          chosen: false,
-          taken: false,
-        },
-      ],
-    },
-  ]);
+  const [table, setTable] = useState(timetable);
   const { id } = useParams();
   const path = window.location.pathname;
   return (
@@ -213,21 +20,21 @@ function Schedule() {
                 <td>
                   <Button
                     variant="contained"
-                    color={hour.chosen ? "error" : "success"}
-                    disabled={hour.taken}
+                    color={hour.walk ? "error" : "success"}
+                    disabled={hour.event}
                     onClick={() => {
                       let newArr = [...table];
                       let val = newArr
                         .find((x) => x.day === day.day)
-                        .hours.find((y) => y.time === hour.time).chosen;
+                        .hours.find((y) => y.time === hour.time).walk;
                       console.log(
                         newArr
                           .find((x) => x.day === day.day)
-                          .hours.find((y) => y.time === hour.time).chosen
+                          .hours.find((y) => y.time === hour.time).walk
                       );
                       newArr
                         .find((x) => x.day === day.day)
-                        .hours.find((y) => y.time === hour.time).chosen = !val;
+                        .hours.find((y) => y.time === hour.time).walk = !val;
                       setTable(newArr);
                     }}
                   >
@@ -246,4 +53,3 @@ function Schedule() {
 }
 
 export default Schedule;
-

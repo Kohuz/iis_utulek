@@ -20,6 +20,8 @@ import VolunteerPage from "Pages/VolunteerPage";
 import SchedulesPage from "Pages/SchedulesPage";
 import Schedule from "Components/Schedule";
 import HealthRecord from "Components/HealthRecord";
+import AnimalEventCreate from "Components/AnimalEventCreate";
+import AdminSchedule from "Components/AdminSchedule";
 
 const theme = createTheme({
   palette: {
@@ -77,11 +79,15 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/caretaker" element={<CaretakerPage />} />
-            <Route path="/caretaker/:id" element={<Schedule />} />
+            <Route path="/caretaker/:id" element={<AnimalEventCreate />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[2]} />}>
             <Route path="/veteranian" element={<VeterinarianPage />} />
             <Route path="/veteranian/:id" element={<HealthRecord />} />
+            <Route
+              path="/veteranian/event/:id"
+              element={<AnimalEventCreate />}
+            />
           </Route>
           <Route element={<RequireAuth allowedRoles={[3]} />}>
             <Route path="/volunteer" element={<VolunteerPage />} />

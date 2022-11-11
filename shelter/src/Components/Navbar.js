@@ -113,14 +113,14 @@ const Navbar = () => {
             {roles?.includes(1) ? (
               <Button onClick={() => navigate("/caretaker")}>
                 <Typography textAlign="center">Pečovatel</Typography>
-                <Badge className={classes.notif} badgeContent={4} color="error">
-                  <ErrorIcon color="warning" />
-                </Badge>
               </Button>
             ) : null}
             {roles?.includes(2) ? (
               <Button onClick={() => navigate("/veteranian")}>
                 <Typography textAlign="center">Veteřinář</Typography>
+                <Badge className={classes.notif} badgeContent={4} color="error">
+                  <ErrorIcon color="warning" />
+                </Badge>
               </Button>
             ) : null}
             {roles?.includes(3) ? (

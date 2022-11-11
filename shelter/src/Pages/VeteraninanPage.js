@@ -1,5 +1,6 @@
 import React from "react";
 import AnimalCard from "Components/AnimalCard";
+import RequestCard from "Components/RequestCard";
 
 function VeterinarianPage() {
   const animals = [
@@ -22,12 +23,26 @@ function VeterinarianPage() {
       age: 6,
     },
   ];
+  const requests = [
+    {
+      id: 1,
+      animal: "Alík",
+      author: "Pepa",
+      date: "27/11/2022",
+    },
+    {
+      id: 2,
+      animal: "Žofka",
+      author: "Pepa",
+      date: "28/11/2022",
+    },
+  ];
   return (
     <>
       <h3>Požadavky</h3>
-      <p>Požadavek 1</p>
-      <p>Požadavek 2</p>
-      <p>Požadavek 3</p>
+      {requests.map((request) => (
+        <RequestCard request={request}></RequestCard>
+      ))}
       <h3>Zvířata</h3>
       {animals.map((animal) => (
         <AnimalCard
