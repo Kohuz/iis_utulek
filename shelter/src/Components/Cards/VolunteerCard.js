@@ -11,12 +11,12 @@ import {
 import React, { useContext } from "react";
 import authContext from "Helpers/AuthContext";
 import { deepOrange } from "@mui/material/colors";
-import dog from "../dog.png";
+import dog from "../../dog.png";
 
 function VolunteerCard({ name, surname, birthDate, verified }) {
   const { authenticated, roles } = useContext(authContext);
   return (
-    <Card sx={{ maxWidth: 700 }}>
+    <Card sx={{ maxWidth: 700, marginBottom: "1%" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: deepOrange[500] }} aria-label="recipe">
@@ -35,7 +35,11 @@ function VolunteerCard({ name, surname, birthDate, verified }) {
         </Typography>
       </CardContent>
       <CardActions>
+        {verified ? <Button size="small">Odstranit dobrovolníka</Button> : null}
         {!verified ? <Button size="small">Potvrdit dobrovolníka</Button> : null}
+        {!verified ? (
+          <Button size="small">Zamítnout dobrovolníka</Button>
+        ) : null}
       </CardActions>
     </Card>
   );

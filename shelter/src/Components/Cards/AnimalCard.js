@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 import authContext from "Helpers/AuthContext";
-import dog from "../dog.png";
-import { rolesDict, checkRoles } from "../Helpers/Roles";
-import { useNavigate } from "react-router-dom";
+import dog from "../../dog.png";
+import { rolesDict, checkRoles } from "../../Helpers/Roles";
+import { Link, useNavigate } from "react-router-dom";
 
-function AnimalCard({ id, name, type, age, from, openRequest }) {
+function AnimalCard({ animal, from, openRequest }) {
   const { authenticated, roles } = useContext(authContext);
   const navigate = useNavigate();
   return (
@@ -20,15 +20,18 @@ function AnimalCard({ id, name, type, age, from, openRequest }) {
       <CardMedia component="img" height="100" image={dog} alt="exampleDog" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {name}
+          {animal.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {type}, {age} roky
+          {animal.type}, {animal.age} roky
         </Typography>
       </CardContent>
       <CardActions>
         {from === "animals" ? (
-          <Button size="small" onClick={() => navigate("/animals/" + id)}>
+          <Button
+            size="small"
+            onClick={() => navigate("/animals/" + animal.id)}
+          >
             Vyvenčit
           </Button>
         ) : null}
@@ -38,12 +41,19 @@ function AnimalCard({ id, name, type, age, from, openRequest }) {
           </Button>
         ) : null}
         {from === "care" ? (
-          <Button size="small" onClick={() => navigate("/caretaker/" + id)}>
-            Venčení zvířete
+          <Button
+            size="small"
+            onClick={() => navigate("/caretaker/" + animal.id)}
+          >
+            Vytvořit rozvrh venčení
+            <Link to={"/caretaker/" + animal.id} state={animal} />
           </Button>
         ) : null}
         {from === "veterinarian" ? (
-          <Button size="small" onClick={() => navigate("/veteranian/" + id)}>
+          <Button
+            size="small"
+            onClick={() => navigate("/veteranian/" + animal.id)}
+          >
             Editovat zdravotní záznam
           </Button>
         ) : null}

@@ -1,6 +1,6 @@
 import { Button, Grid, Input, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import timetable from "../Helpers/temp_arrays";
 import AdminSchedule from "./AdminSchedule";
 function AnimalEventCreate() {
@@ -8,6 +8,7 @@ function AnimalEventCreate() {
   const { id } = useParams();
   const path = window.location.pathname;
   const [eventName, setEventName] = useState("");
+
   return (
     <>
       <Grid container spacing={2}>

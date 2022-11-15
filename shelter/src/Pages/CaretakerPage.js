@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import AddAnimal from "Dialogs/AddAnimal";
-import AnimalCard from "Components/AnimalCard";
+import AnimalCard from "Components/Cards/AnimalCard";
 import RequestDialog from "Dialogs/RequestDialog";
 
 function CaretakerPage() {
@@ -55,10 +55,7 @@ function CaretakerPage() {
         <AnimalCard
           openRequest={handleOpenRequest}
           key={animal.id}
-          id={animal.id}
-          name={animal.name}
-          type={animal.type}
-          age={animal.age}
+          animal={animal}
           from={"care"}
         ></AnimalCard>
       ))}
