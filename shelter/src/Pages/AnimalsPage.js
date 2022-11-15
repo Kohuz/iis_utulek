@@ -1,4 +1,4 @@
-import AnimalCard from "Components/AnimalCard";
+import AnimalCard from "Components/Cards/AnimalCard";
 import React from "react";
 
 function AnimalsPage() {
@@ -27,10 +27,7 @@ function AnimalsPage() {
       {animals.map((animal) => (
         <AnimalCard
           key={animal.id}
-          id={animal.id}
-          name={animal.name}
-          type={animal.type}
-          age={animal.age}
+          animal={animal}
           from={"animals"}
         ></AnimalCard>
       ))}

@@ -124,7 +124,7 @@ const Navbar = () => {
               </Button>
             ) : null}
             {roles?.includes(3) ? (
-              <Button onClick={() => navigate("/schedules")}>
+              <Button onClick={() => navigate("/walks")}>
                 <Typography textAlign="center">Venčení</Typography>
               </Button>
             ) : null}

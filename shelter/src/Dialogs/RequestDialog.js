@@ -12,11 +12,18 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import React, { useState } from "react";
+const useStyles = makeStyles({
+  field: {
+    marginBottom: "10px",
+  },
+});
 
 function RequestDialog({ open, handleClose }) {
   const types = ["Vyšetření", "Očkování", "Whatever"];
   const [type, setType] = useState("");
+  const classes = useStyles();
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -29,6 +36,7 @@ function RequestDialog({ open, handleClose }) {
         <DialogContent>
           <div>
             <TextField
+              className={classes.field}
               autoFocus
               required
               margin="dense"
@@ -40,6 +48,7 @@ function RequestDialog({ open, handleClose }) {
             />
           </div>
           <TextField
+            className={classes.field}
             required
             id="title"
             label="Text požadavku"
@@ -76,4 +85,3 @@ function RequestDialog({ open, handleClose }) {
 }
 
 export default RequestDialog;
-

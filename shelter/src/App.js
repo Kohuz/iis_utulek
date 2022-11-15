@@ -17,11 +17,12 @@ import AnimalsPage from "Pages/AnimalsPage";
 import CreateUserPage from "Pages/CreateUserPage";
 import VeterinarianPage from "Pages/VeteraninanPage";
 import VolunteerPage from "Pages/VolunteerPage";
-import SchedulesPage from "Pages/SchedulesPage";
+import WalksPage from "Pages/WalksPage";
 import Schedule from "Components/Schedule";
 import HealthRecord from "Components/HealthRecord";
 import AnimalEventCreate from "Components/AnimalEventCreate";
 import AdminSchedule from "Components/AdminSchedule";
+import WalkingSchedule from "Components/WalkingSchedule";
 
 const theme = createTheme({
   palette: {
@@ -79,7 +80,7 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/caretaker" element={<CaretakerPage />} />
-            <Route path="/caretaker/:id" element={<AnimalEventCreate />} />
+            <Route path="/caretaker/:id" element={<WalkingSchedule />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[2]} />}>
             <Route path="/veteranian" element={<VeterinarianPage />} />
@@ -93,7 +94,7 @@ function App() {
             <Route path="/volunteer" element={<VolunteerPage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[3]} />}>
-            <Route path="/schedules" element={<SchedulesPage />} />
+            <Route path="/walks" element={<WalksPage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
             <Route path="/profile" element={<ProfilePage />} />
@@ -101,6 +102,8 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/create_user" element={<CreateUserPage />} />
           </Route>
+
+          <Route path="*" element={<h1>Not found</h1>} />
         </Routes>
       </ThemeProvider>
     </authContext.Provider>

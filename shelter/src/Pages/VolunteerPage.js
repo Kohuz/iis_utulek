@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
-import AnimalCard from "Components/AnimalCard";
-import VolunteerCard from "Components/VolunteerCard";
+import VolunteerCard from "Components/Cards/VolunteerCard";
 import React from "react";
 
 function VolunteerPage() {

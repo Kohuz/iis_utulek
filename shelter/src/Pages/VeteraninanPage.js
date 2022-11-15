@@ -1,6 +1,6 @@
 import React from "react";
-import AnimalCard from "Components/AnimalCard";
-import RequestCard from "Components/RequestCard";
+import AnimalCard from "Components/Cards/AnimalCard";
+import RequestCard from "Components/Cards/RequestCard";
 
 function VeterinarianPage() {
   const animals = [
@@ -47,11 +47,8 @@ function VeterinarianPage() {
       {animals.map((animal) => (
         <AnimalCard
           key={animal.id}
-          id={animal.id}
-          name={animal.name}
-          type={animal.type}
-          age={animal.age}
-          from={"veterinarian"}
+          animal={animal}
+          from={"veteranian"}
         ></AnimalCard>
       ))}
     </>
