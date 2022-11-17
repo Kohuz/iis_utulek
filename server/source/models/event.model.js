@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
     stop : {
       type: Sequelize.DATETIME,
     },
+    state : {
+      type: Sequelize.STRING,
+    },
   });
 
   // Relations

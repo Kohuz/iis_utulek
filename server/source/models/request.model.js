@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
     type: {
       type: Sequelize.STRING,
     },
+    // pending, approved, rejected
+    state: {
+      type: Sequelize.STRING,
+    },
   });
 
   // Relations

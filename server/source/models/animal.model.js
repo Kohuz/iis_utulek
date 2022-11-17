@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
     age: {
       type: Sequelize.INTEGER,
     },
+    state: {
+      type: Sequelize.STRING,
+    },
   });
 
   // Relations
