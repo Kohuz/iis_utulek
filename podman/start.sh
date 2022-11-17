@@ -5,8 +5,30 @@ then
     exit 1
 fi
 
-podman run \
-    --detach \
-    --name=shelter-db \
-    --publish 6603:3306 \
-    shelter_db
+start_container() {
+    local ports=$1
+    local container_name=$2
+    podman run \
+        --detach \
+        --name="$container_name" \
+        --publish "$ports" \
+        "$container_name"
+}
+
+start_db () {
+    start_container "6603:3306" shelter_db
+}
+start_frontend () {
+    start_container "80:3000" shelter_frontend
+}
+start_backend() {
+    start_container "8585:80" shelter_backend
+}
+
+case $1 in
+    "db") start_db;;
+    "frontend") start_frontend;;
+    "backend") start_backend;;
+    "all") start_db; start_frontend; start_backend;;
+    *) echo "error: unknown container name" && exit 1;;
+esac

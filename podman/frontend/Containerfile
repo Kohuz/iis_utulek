@@ -1,0 +1,12 @@
+FROM node:14
+
+COPY shelter/ /iis_utulek
+
+WORKDIR /iis_utulek/
+
+RUN cd /iis_utulek \
+    && npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
