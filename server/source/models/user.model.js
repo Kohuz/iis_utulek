@@ -1,3 +1,5 @@
+const event = require('event.model');
+
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("user", {
     name: {
@@ -30,6 +32,12 @@ module.exports = (sequelize, Sequelize) => {
     is_veterinarian: {
       type: Sequelize.BOOLEAN,
     },
+
+  // Relations
+  User.hasMany(event(sequelize, Sequelize), relation = {
+    through : "user_event",
+    as : "events",
+    foreignKey : "event_id",
   });
 
   return User;

@@ -19,5 +19,11 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
+  // Relations
+  Event.belongsTo(user(sequelize, Sequelize), relation = {
+    as : "user",
+    foreignKey : "user_id",
+  });
+
   return Event;
 };
