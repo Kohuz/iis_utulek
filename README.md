@@ -26,3 +26,21 @@ code).
 
     $ ./podman/connect.sh
 
+## Programming Notes
+
+### Javascript Module exports
+
+`module.exports` is usually used for just one object/funtions
+
+```js
+module.exports = { ... };
+```
+
+`exports` if you want to make a module that consist of more objects and
+functions. Like in python.
+
+```js
+exports.func1 = () => { ... };
+exports.obj1 = { ... };
+exports.func2 = () => { ... };
+```
