@@ -1,4 +1,7 @@
 {
+  "name": "iis_utulek_backed",
+  "version": "1.0.0",
+  "main": "source/server.js",
   "dependencies": {
     "@cucumber/cucumber": "^8.6.0",
     "chai": "^4.3.6",
