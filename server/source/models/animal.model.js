@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
     state: {
       type: Sequelize.STRING,
     },
+    borrowed: {
+      type: Sequelize.BOOLEAN,
+    },
   });
 
   // Relations
