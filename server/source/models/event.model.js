@@ -2,7 +2,7 @@ const user = require('user.model');
 const animal = require('animal.model');
 
 module.exports = (sequelize, Sequelize) => {
-  const Event = sequelize.define("animal_event", {
+  const Event = sequelize.define("event", {
     date: {
       type: Sequelize.DATEONLY,
     },
