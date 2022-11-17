@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   // Relations
-  User.hasMany(event(sequelize, Sequelize), relation = {
+  Animal.hasMany(event(sequelize, Sequelize), relation = {
     through : "animal_event",
     as : "events",
     foreignKey : "event_id",
