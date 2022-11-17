@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
   });
-    //
+
   // Relations
   User.hasMany(event(sequelize, Sequelize), relation = {
     through : "animal_event",
