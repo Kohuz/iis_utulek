@@ -1,4 +1,5 @@
 const event = require('event.model');
+const request = require('request.model');
 
 module.exports = (sequelize, Sequelize) => {
   const Animal = sequelize.define("animal", {
@@ -21,6 +22,12 @@ module.exports = (sequelize, Sequelize) => {
     through : "animal_event",
     as : "events",
     foreignKey : "event_id",
+  });
+
+  Animal.hasMany(request(sequelize, Sequelize), relation = {
+    through : "animal_request",
+    as : "requests",
+    foreignKey : "requests_id",
   });
 
   return Animal;
