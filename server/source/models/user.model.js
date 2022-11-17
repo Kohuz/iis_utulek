@@ -32,6 +32,11 @@ module.exports = (sequelize, Sequelize) => {
     is_veterinarian: {
       type: Sequelize.BOOLEAN,
     },
+    // For volunteers, that they are verified
+    verified: {
+      type: Sequelize.BOOLEAN,
+    },
+  });
 
   // Relations
   User.hasMany(event(sequelize, Sequelize), relation = {
