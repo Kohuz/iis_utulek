@@ -25,5 +25,10 @@ module.exports = (sequelize, Sequelize) => {
     foreignKey : "user_id",
   });
 
+  Event.belongsTo(animal(sequelize, Se), relation = {
+      as : "animal",
+      foreignKey : "animal_id",
+  });
+
   return Event;
 };
