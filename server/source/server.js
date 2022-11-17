@@ -1,16 +1,12 @@
-const http = require('http');
+const express = require('express');
 
-const requestListener = function(req, res) {
-    res.writeHead(200);
-    const response = {
-        test: "Test",
-    };
-    res.end(JSON.stringify(response));
-}
+// Express Application, it is a global variable, that takes options for the
+// whole backend and it also executes everything.
+const app = express();
 
-function startServer() {
-    const server = http.createServer(requestListener);
-    server.listen(8080);
-}
+require("./routes/user.routes")(app);
 
-startServer();
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log('Server is running on port ' + PORT + '.')
+});
