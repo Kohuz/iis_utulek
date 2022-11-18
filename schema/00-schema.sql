@@ -24,7 +24,7 @@ CREATE TABLE users (
     is_caretaker BOOLEAN,
     is_veterinarian BOOLEAN,
     verified BOOLEAN,
-    PRIMARY KEY (user_id),
+    PRIMARY KEY (user_id)
 );
 
 -- User relational tables
@@ -34,7 +34,7 @@ CREATE TABLE user_event (
     event_id INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (user_id, event_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (event_id) REFERENCES events(event_id),
+    FOREIGN KEY (event_id) REFERENCES events(event_id)
 );
 
 CREATE TABLE user_request (
@@ -42,7 +42,7 @@ CREATE TABLE user_request (
     request_id INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (user_id, event_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (request_id) REFERENCES requests(request_id),
+    FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
 -- Event related tables
@@ -61,7 +61,7 @@ CREATE TABLE events (
     animal_id INTEGER UNSINGED DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (animal_id) REFERENCES animals(animals_id),
-    PRIMARY KEY (event_id),
+    PRIMARY KEY (event_id)
 );
 
 
@@ -76,7 +76,7 @@ CREATE TABLE animals (
     state VARCHAR(255) DEFAULT "sheltered",
     -- NOTE: isn't it redundant with the state field above?
     borrowed BOOLEAN,
-    PRIMARY KEY (animal_id),
+    PRIMARY KEY (animal_id)
 );
 
 -- Animal relational tables
@@ -86,7 +86,7 @@ CREATE TABLE animal_event (
     event_id INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (animal_id, event_id),
     FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
-    FOREIGN KEY (event_id) REFERENCES events(event_id),
+    FOREIGN KEY (event_id) REFERENCES events(event_id)
 );
 
 CREATE TABLE animal_request (
@@ -94,7 +94,7 @@ CREATE TABLE animal_request (
     request_id INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (animal_id, event_id),
     FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
-    FOREIGN KEY (request_id) REFERENCES requests(request_id),
+    FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
 
 
@@ -112,5 +112,5 @@ CREATE TABLE requests (
     animal_id INTEGER UNSINGED DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (animal_id) REFERENCES animals(animals_id),
-    PRIMARY KEY (event_id),
+    PRIMARY KEY (event_id)
 );
