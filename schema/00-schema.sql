@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS animal_event;
 DROP TABLE IF EXISTS animal_request;
 DROP TABLE IF EXISTS requests;
 
--------------------------------------------------------------------------------
 -- User tables
 
 CREATE TABLE users (
@@ -46,7 +45,6 @@ CREATE TABLE user_request (
     FOREIGN KEY (request_id) REFERENCES requests(request_id),
 );
 
--------------------------------------------------------------------------------
 -- Event related tables
 
 CREATE TABLE events (
@@ -67,7 +65,6 @@ CREATE TABLE events (
 );
 
 
--------------------------------------------------------------------------------
 -- Animal related tables
 
 CREATE TABLE animals (
@@ -101,7 +98,6 @@ CREATE TABLE animal_request (
 );
 
 
--------------------------------------------------------------------------------
 -- Request related tables
 
 CREATE TABLE requests (
