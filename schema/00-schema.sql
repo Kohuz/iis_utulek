@@ -51,11 +51,11 @@ CREATE TABLE users (
     surname VARCHAR(255) DEFAULT "",
     password VARCHAR(255) DEFAULT "",
     bank_acc_no INTEGER,
-    is_volunteer BOOLEAN,
-    is_admin BOOLEAN,
-    is_caretaker BOOLEAN,
-    is_veterinarian BOOLEAN,
-    verified BOOLEAN,
+    is_volunteer BOOLEAN DEFAULT false,
+    is_admin BOOLEAN DEFAULT false,
+    is_caretaker BOOLEAN DEFAULT false,
+    is_veterinarian BOOLEAN DEFAULT false,
+    verified BOOLEAN DEFAULT false,
     PRIMARY KEY (user_id)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE animals (
     age INTEGER,
     state VARCHAR(255) DEFAULT "sheltered",
     -- NOTE: isn't it redundant with the state field above?
-    borrowed BOOLEAN,
+    borrowed BOOLEAN DEFAULT false,
     PRIMARY KEY (animal_id)
 );
 
