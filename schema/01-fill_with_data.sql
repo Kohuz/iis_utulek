@@ -1,24 +1,24 @@
 USE shelter;
 
-INSERT INTO users (name, surname, password, bank_account, is_caretaker)
+INSERT INTO users (login, email, name, surname, password, bank_account, is_caretaker)
 VALUES
-    ("Petr", "Pečovatel", "123456", "000", true);
+    ("Petcarer", "petr@test.test", "Petr", "Pečovatel", "123456", "000", true);
 
 
-INSERT INTO users (name, surname, password, is_volunteer)
+INSERT INTO users (login, email, name, surname, password, is_volunteer)
 VALUES
-    ("Dan", "Dobrovolný", "another", true),
-    ("Dora", "Dobrovolná", "another", true);
+    ("Dobro1", "dobrovolny@test.test", "Dan", "Dobrovolný", "another", true),
+    ("Dobro2", "dobrovolna@test.test", "Dora", "Dobrovolná", "another", true);
 
 
-INSERT INTO users (name, surname, password, bank_account, is_veterinarian)
+INSERT INTO users (login, email, name, surname, password, bank_account, is_veterinarian)
 VALUES
-    ("Václav","Veterinář", "doktor123", "001", true),
-    ("Zdeněk","Zvěrolékař", "123doktro", "002", true);
+    ("veto1", "doctor1@veterinar-test.test", "Václav","Veterinář", "doktor123", "001", true),
+    ("veto2", "doctor2@veterinar-test.test", "Zdeněk","Zvěrolékař", "123doktro", "002", true);
 
-INSERT INTO users (name, surname, password, bank_account, is_admin)
+INSERT INTO users (login, email, name, surname, password, bank_account, is_admin)
 VALUES
-    ("Adam", "Ajťákovič", "random", "003", true);
+    ("Admin", "adam.admin@test.test", "Adam", "Ajťákovič", "random", "003", true);
 
 
 INSERT INTO animals (name, type, age)
