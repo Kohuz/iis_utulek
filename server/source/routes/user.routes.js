@@ -16,7 +16,7 @@ module.exports = (app) => {
   router.delete('/', user.delete);
 
   // Add that it could be done with email in documentation
-  router.delete('/', user.deleteNonRegistered);
+  router.delete('/clean', user.deleteNonRegistered);
 
   router.get('/', user.findAll);
 
