@@ -15,10 +15,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     start: {
-      type: Sequelize.DATETIME,
+      type: Sequelize.DATE,
     },
     stop: {
-      type: Sequelize.DATETIME,
+      type: Sequelize.DATE,
     },
     state: {
       type: Sequelize.STRING,
