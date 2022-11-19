@@ -1,5 +1,8 @@
 FROM mysql:latest
 
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
 ENV MYSQL_DATABASE=shelter \
     MYSQL_ROOT_PASSWORD=test
 
