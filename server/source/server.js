@@ -3,6 +3,8 @@ const express = require('express');
 // Express Application, it is a global variable, that takes options for the
 // whole backend and it also executes everything.
 const app = express();
+app.use(express.json());
+
 
 require('./routes/user.routes')(app);
 
