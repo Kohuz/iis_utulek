@@ -4,10 +4,12 @@
   "main": "source/server.js",
   "dependencies": {
     "@cucumber/cucumber": "^8.6.0",
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "chai": "^4.3.6",
     "express": "^4.18.1",
     "jest-cucumber": "^3.0.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.25.6",
     "supertest": "^6.2.4"
   },
   "scripts": {
