@@ -28,3 +28,25 @@ VALUES
     ("Adam", "Pes", "5"),
     ("Izidora", "Kočka", "1"),
     ("Akuma", "Kočka", "3");
+
+
+INSERT INTO events (date, commentary, type, start, stop, user_id, animal_id)
+VALUES
+    (
+        DATE_ADD(CURDATE(), INTERVAL 1 DAY),
+        "vaccination against rabies",
+        "appointment",
+        CONCAT(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' 11:00:00'),
+        CONCAT(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' 12:00:00'),
+        (SELECT user_id FROM users as u WHERE u.name = 'Petr'),
+        (SELECT animal_id FROM animals as a WHERE a.name = 'Adam')
+    ),
+    (
+        CURDATE(),
+        "",
+        "walk",
+        CONCAT(CURDATE(), ' 9:00:00'),
+        CONCAT(CURDATE(), ' 10:00:00'),
+        (SELECT user_id FROM users as u WHERE u.name = 'Dan'),
+        (SELECT animal_id FROM animals as a WHERE a.name = 'Alík')
+    );
