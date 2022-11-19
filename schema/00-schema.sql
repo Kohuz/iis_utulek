@@ -72,22 +72,6 @@ ALTER TABLE requests ADD (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE user_event (
-    user_id INTEGER UNSIGNED NOT NULL,
-    event_id INTEGER UNSIGNED NOT NULL,
-    PRIMARY KEY (user_id, event_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (event_id) REFERENCES events(event_id)
-);
-
-CREATE TABLE user_request (
-    user_id INTEGER UNSIGNED NOT NULL,
-    request_id INTEGER UNSIGNED NOT NULL,
-    PRIMARY KEY (user_id, request_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (request_id) REFERENCES requests(request_id)
-);
-
 
 
 -- Animal related tables
@@ -112,20 +96,4 @@ ALTER TABLE events ADD (
 ALTER TABLE requests ADD (
     animal_id INTEGER UNSIGNED DEFAULT 0,
     FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
-);
-
-CREATE TABLE animal_event (
-    animal_id INTEGER UNSIGNED NOT NULL,
-    event_id INTEGER UNSIGNED NOT NULL,
-    PRIMARY KEY (animal_id, event_id),
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
-    FOREIGN KEY (event_id) REFERENCES events(event_id)
-);
-
-CREATE TABLE animal_request (
-    animal_id INTEGER UNSIGNED NOT NULL,
-    request_id INTEGER UNSIGNED NOT NULL,
-    PRIMARY KEY (animal_id, request_id),
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
-    FOREIGN KEY (request_id) REFERENCES requests(request_id)
 );
