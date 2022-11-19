@@ -1,52 +1,65 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import timetable from "../Helpers/temp_arrays";
+import Day from "../Helpers/day";
+import DatePicker, { registerLocale } from "react-datepicker";
+import cs from "date-fns/locale/cs";
 
+import "react-datepicker/dist/react-datepicker.css";
+import { addDays } from "date-fns";
+registerLocale("cs", cs);
 function Schedule() {
-  const [table, setTable] = useState(timetable);
+  const [startDate, setStartDate] = useState(new Date());
+  const [day, setDay] = useState(Day);
   const { id } = useParams();
   const path = window.location.pathname;
   return (
     <>
       <table>
         <caption>Rozvrh {id}</caption>
+        <DatePicker
+          locale="cs"
+          minDate={new Date()}
+          maxDate={addDays(new Date(), 14)}
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
         <tbody>
-          {table.map((day) => (
-            <tr>
-              <h5>{day.day}</h5>
-              {day.hours.map((hour, j) => (
-                <td>
-                  <Button
-                    variant="contained"
-                    color={hour.walk ? "error" : "success"}
-                    disabled={hour.event}
-                    onClick={() => {
-                      let newArr = [...table];
-                      let val = newArr
-                        .find((x) => x.day === day.day)
-                        .hours.find((y) => y.time === hour.time).walk;
-                      console.log(
-                        newArr
-                          .find((x) => x.day === day.day)
-                          .hours.find((y) => y.time === hour.time).walk
-                      );
-                      newArr
-                        .find((x) => x.day === day.day)
-                        .hours.find((y) => y.time === hour.time).walk = !val;
-                      setTable(newArr);
-                    }}
-                  >
-                    {hour.time}
-                  </Button>
-                </td>
-              ))}
-            </tr>
-          ))}
+          <Button
+            onClick={() => {
+              let newArr = [...day];
+              newArr.forEach((hour) => {
+                hour.walk = !hour.walk;
+              });
+              setDay(newArr);
+            }}
+          >
+            Celý den
+          </Button>
+          <tr>
+            {day.map((hour, j) => (
+              <td>
+                <Button
+                  variant="contained"
+                  color={hour.walk ? "warning" : "success"}
+                  disabled={hour.event}
+                  onClick={() => {
+                    let newArr = [...day];
+                    let val = newArr.find((y) => y.time === hour.time).walk;
+                    console.log(newArr.find((y) => y.time === hour.time).walk);
+                    newArr.find((y) => y.time === hour.time).walk = !val;
+                    setDay(newArr);
+                  }}
+                >
+                  {hour.time}
+                </Button>
+              </td>
+            ))}
+          </tr>
         </tbody>
       </table>
-      <Button onClick={() => console.log(table)}>table content</Button>
+      <Button onClick={() => console.log(day)}>table content</Button>
       <Button>Rezervovat</Button>
     </>
   );

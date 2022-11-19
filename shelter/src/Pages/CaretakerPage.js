@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Grid } from "@mui/material";
 import React, { useState } from "react";
 import AddAnimal from "Dialogs/AddAnimal";
 import AnimalCard from "Components/Cards/AnimalCard";
@@ -50,15 +50,27 @@ function CaretakerPage() {
       <Button variant="outlined" onClick={handleOpenAddAnimal}>
         Zavést nové zvíře
       </Button>
-
-      {animals.map((animal) => (
-        <AnimalCard
-          openRequest={handleOpenRequest}
-          key={animal.id}
-          animal={animal}
-          from={"care"}
-        ></AnimalCard>
-      ))}
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          {animals.map((animal) => (
+            <AnimalCard
+              openRequest={handleOpenRequest}
+              key={animal.id}
+              animal={animal}
+              from={"care"}
+            ></AnimalCard>
+          ))}
+        </Grid>
+        <Grid item xs={6}>
+          <Typography>Vypůjčená zvířata</Typography>
+          <AnimalCard
+            openRequest={handleOpenRequest}
+            key={animals[0].id}
+            animal={animals[0]}
+            from={"care"}
+          ></AnimalCard>
+        </Grid>
+      </Grid>
     </>
   );
 }
