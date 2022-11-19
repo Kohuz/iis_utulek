@@ -3,8 +3,8 @@ module.exports = {
   USER: 'root',
   PASSWORD: 'test',
   DB: 'utulek',
-  object: {
     host: HOST,
+  options: {
     dialect: 'mysql',
     operatorsAliases: 0,
     pool: {

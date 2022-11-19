@@ -5,7 +5,7 @@ const databaseInstance = new Sequelize(
   config.DB,
   config.USER,
   config.PASSWORD,
-  config.object
+  config.options
 );
 
 const database = {
