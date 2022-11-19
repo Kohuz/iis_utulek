@@ -1,7 +1,7 @@
 const config = require('./config');
 const Sequelize = require('sequelize');
 
-const server = new Sequelize(
+const databaseInstance = new Sequelize(
   config.DB,
   config.USER,
   config.PASSWORD,
@@ -9,8 +9,8 @@ const server = new Sequelize(
 );
 
 const database = {
-  runner: Sequelize,
-  server: server,
+  instance: databaseInstance,
+  driver: Sequelize,
 };
 
 // Models instantiation:
