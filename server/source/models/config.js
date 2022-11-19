@@ -3,7 +3,7 @@ module.exports = {
   PORT: 6603,
   USER: 'root',
   PASSWORD: 'test',
-  DB: 'utulek',
+  DB: 'shelter',
   options: {
     host: this.HOST,
     port: 6603,
