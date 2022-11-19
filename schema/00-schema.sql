@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS requests;
 CREATE TABLE events (
     event_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     -- NOTE: in javascript models use DATE() filter function
-    date DATETIME,
+    date DATE,
     commentary VARCHAR(1024) DEFAULT "",
     type VARCHAR(255) DEFAULT "",
     start DATETIME,
@@ -33,7 +33,7 @@ CREATE TABLE events (
 
 CREATE TABLE requests (
     request_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    date DATETIME,
+    date DATE,
     commentary VARCHAR(1024) DEFAULT "",
     type VARCHAR(255) DEFAULT "",
     -- NOTE: valid values are pending|approved|rejected
