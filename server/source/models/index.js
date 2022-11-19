@@ -2,15 +2,15 @@ const config = require('config');
 const Sequelize = require('sequlize');
 
 const server = new Sequelize(
-    config.DB,
-    config.USER,
-    config.PASSWORD,
-    config.object
+  config.DB,
+  config.USER,
+  config.PASSWORD,
+  config.object
 );
 
 const database = {
-    runner : Sequelize,
-    server : server,
+  runner: Sequelize,
+  server: server,
 };
 
 // Models instantiation:

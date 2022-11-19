@@ -4,9 +4,9 @@ const express = require('express');
 // whole backend and it also executes everything.
 const app = express();
 
-require("./routes/user.routes")(app);
+require('./routes/user.routes')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT + '.')
+  console.log('Server is running on port ' + PORT + '.');
 });

@@ -1,28 +1,28 @@
-module.exports = app => {
-    const users = require("../controllers/user.controller")
-    const router = require('express').Router();
+module.exports = (app) => {
+  const users = require('../controllers/user.controller');
+  const router = require('express').Router();
 
-    router.post("/", user.create);
+  router.post('/', user.create);
 
-    router.post("/login", user.login);
+  router.post('/login', user.login);
 
-    // invalidate token
-    router.post("/logout", user.logout);
+  // invalidate token
+  router.post('/logout', user.logout);
 
-    router.put("/verify", user.verify);
+  router.put('/verify', user.verify);
 
-    router.put("/", user.update);
+  router.put('/', user.update);
 
-    router.delete("/", user.delete);
+  router.delete('/', user.delete);
 
-    // Add that it could be done with email in documentation
-    router.delete("/", user.deleteNonRegistered);
+  // Add that it could be done with email in documentation
+  router.delete('/', user.deleteNonRegistered);
 
-    router.get("/", user.findAll);
+  router.get('/', user.findAll);
 
-    router.get("/authenticate", user.authenticate);
+  router.get('/authenticate', user.authenticate);
 
-    router.get("/unverified", user.findAllUnverifiedCount);
+  router.get('/unverified', user.findAllUnverifiedCount);
 
-    app.use("/api/v1/user", router);
-}
+  app.use('/api/v1/user', router);
+};

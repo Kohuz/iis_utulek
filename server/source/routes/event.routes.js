@@ -1,20 +1,20 @@
-module.exports = app => {
-    const events = require("../controllers/user.controller")
-    const router = require('express').Router();
+module.exports = (app) => {
+  const events = require('../controllers/user.controller');
+  const router = require('express').Router();
 
-    router.post("/", events.create);
+  router.post('/', events.create);
 
-    router.delete("/", events.delete);
+  router.delete('/', events.delete);
 
-    router.put("/", events.update);
+  router.put('/', events.update);
 
-    // Add parameter for user ID and animal ID, it should work the same as
-    // for request (althrough there is animal).
-    // For user filter out only walks.
-    router.get("/", events.findAll);
+  // Add parameter for user ID and animal ID, it should work the same as
+  // for request (althrough there is animal).
+  // For user filter out only walks.
+  router.get('/', events.findAll);
 
-    // Return this structure for animal, it should be for 2 weeks ahead.
-        /* {
+  // Return this structure for animal, it should be for 2 weeks ahead.
+  /* {
             "day": "Pondělí",
             "hours": [
                 {
@@ -39,7 +39,7 @@ module.exports = app => {
                 }
             ]
         }, */
-    router.get("/schedule", events.getSchedule);
+  router.get('/schedule', events.getSchedule);
 
-    app.use("/api/v1/event", router);
-}
+  app.use('/api/v1/event', router);
+};

@@ -2,7 +2,7 @@ const event = require('event.model');
 const request = require('request.model');
 
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("user", {
+  const User = sequelize.define('user', {
     name: {
       type: Sequelize.STRING,
     },
@@ -40,17 +40,23 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   // Relations
-  User.hasMany(event(sequelize, Sequelize), relation = {
-    through : "user_event",
-    as : "events",
-    foreignKey : "event_id",
-  });
+  User.hasMany(
+    event(sequelize, Sequelize),
+    (relation = {
+      through: 'user_event',
+      as: 'events',
+      foreignKey: 'event_id',
+    })
+  );
 
-  User.hasMany(request(sequelize, Sequelize), relation = {
-    through : "user_request",
-    as : "requests",
-    foreignKey : "request_id",
-  });
+  User.hasMany(
+    request(sequelize, Sequelize),
+    (relation = {
+      through: 'user_request',
+      as: 'requests',
+      foreignKey: 'request_id',
+    })
+  );
 
   return User;
 };

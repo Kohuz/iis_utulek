@@ -2,7 +2,7 @@ const user = require('user.model');
 const animal = require('animal.model');
 
 module.exports = (sequelize, Sequelize) => {
-  const Request = sequelize.define("request", {
+  const Request = sequelize.define('request', {
     date: {
       type: Sequelize.DATEONLY,
     },
@@ -19,16 +19,21 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   // Relations
-  Request.belongsTo(user(sequelize, Sequelize), relation = {
-    as : "user",
-    foreignKey : "user_id",
-  });
+  Request.belongsTo(
+    user(sequelize, Sequelize),
+    (relation = {
+      as: 'user',
+      foreignKey: 'user_id',
+    })
+  );
 
-  Request.belongsTo(animal(sequelize, Se), relation = {
-      as : "animal",
-      foreignKey : "animal_id",
-  });
+  Request.belongsTo(
+    animal(sequelize, Se),
+    (relation = {
+      as: 'animal',
+      foreignKey: 'animal_id',
+    })
+  );
 
   return Request;
 };
-

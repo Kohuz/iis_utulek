@@ -1,17 +1,17 @@
-module.exports = app => {
-    const animal = require("../controllers/animal.controller")
-    const router = require('express').Router();
+module.exports = (app) => {
+  const animal = require('../controllers/animal.controller');
+  const router = require('express').Router();
 
-    router.post("/", animals.create);
+  router.post('/', animals.create);
 
-    // takes boolean
-    router.post("/borrowed", animals.borrowed);
+  // takes boolean
+  router.post('/borrowed', animals.borrowed);
 
-    router.delete("/", animals.delete);
+  router.delete('/', animals.delete);
 
-    router.put("/", animals.update);
+  router.put('/', animals.update);
 
-    router.get("/", animals.findAll);
+  router.get('/', animals.findAll);
 
-    app.use("/api/v1/animal", router);
-}
+  app.use('/api/v1/animal', router);
+};
