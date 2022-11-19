@@ -1,10 +1,20 @@
 const express = require('express');
+const token = require('./helpers/token');
 
 // Express Application, it is a global variable, that takes options for the
 // whole backend and it also executes everything.
 const app = express();
 app.use(express.json());
 
+// This way there is going to be automatic authentication to all API calls
+app.use('/api', (req, res, next) => {
+  // We want to be able to login with our current API
+  if (req.url == '/v1/user/login' || req.url == '/v1/user/login/') {
+    next();
+  } else {
+    token.authenticate(req, res, next);
+  }
+});
 
 require('./routes/user.routes')(app);
 
