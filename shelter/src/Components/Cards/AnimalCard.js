@@ -27,7 +27,7 @@ function AnimalCard({ animal, from, openRequest }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {from === "animals" ? (
+        {authenticated && from == "animals" ? (
           <Button
             size="small"
             onClick={() => navigate("/animals/" + animal.id)}
