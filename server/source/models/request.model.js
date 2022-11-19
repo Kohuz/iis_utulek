@@ -1,6 +1,3 @@
-const user = require('user.model');
-const animal = require('animal.model');
-
 module.exports = (sequelize, Sequelize) => {
   const Request = sequelize.define('request', {
     date: {
@@ -17,23 +14,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
   });
-
-  // Relations
-  Request.belongsTo(
-    user(sequelize, Sequelize),
-    (relation = {
-      as: 'user',
-      foreignKey: 'user_id',
-    })
-  );
-
-  Request.belongsTo(
-    animal(sequelize, Se),
-    (relation = {
-      as: 'animal',
-      foreignKey: 'animal_id',
-    })
-  );
-
   return Request;
 };
