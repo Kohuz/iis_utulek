@@ -1,6 +1,6 @@
 USE shelter;
 
-INSERT INTO users (name, surname, password, bank_acc_no, is_caretaker)
+INSERT INTO users (name, surname, password, bank_account, is_caretaker)
 VALUES
     ("Petr", "Pečovatel", "123456", "000", true);
 
@@ -11,12 +11,12 @@ VALUES
     ("Dora", "Dobrovolná", "another", true);
 
 
-INSERT INTO users (name, surname, password, bank_acc_no, is_veterinarian)
+INSERT INTO users (name, surname, password, bank_account, is_veterinarian)
 VALUES
     ("Václav","Veterinář", "doktor123", "001", true),
     ("Zdeněk","Zvěrolékař", "123doktro", "002", true);
 
-INSERT INTO users (name, surname, password, bank_acc_no, is_admin)
+INSERT INTO users (name, surname, password, bank_account, is_admin)
 VALUES
     ("Adam", "Ajťákovič", "random", "003", true);
 
