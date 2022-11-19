@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Animal = sequelize.define('animal', {
+    animal_id: {
+      type: Sequelize.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: Sequelize.STRING,
     },

@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Event = sequelize.define('event', {
+    event_id: {
+      type: Sequelize.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     date: {
       type: Sequelize.DATEONLY,
     },
