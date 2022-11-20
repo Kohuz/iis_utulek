@@ -191,7 +191,12 @@ const Navbar = () => {
                 </Menu>
               </>
             ) : (
-              <Button onClick={() => navigate("login")}>Login</Button>
+              <>
+                <Button onClick={() => navigate("login")}>Přihlásit se</Button>
+                <Button onClick={() => navigate("register")}>
+                  Registrovat
+                </Button>
+              </>
             )}
           </Box>
         </Toolbar>
