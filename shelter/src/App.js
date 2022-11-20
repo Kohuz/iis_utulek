@@ -10,7 +10,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import authContext from "Helpers/AuthContext";
 import CaretakerPage from "Pages/CaretakerPage";
 import VeteranianPage from "Pages/VeteraninanPage";
-import ThirdPage from "Pages/ThirdPage";
+import RegisterPage from "Pages/RegisterPage";
 import RequireAuth from "Components/RequireAuth";
 import Unauthorized from "Pages/Unauthorized";
 import AnimalsPage from "Pages/AnimalsPage";
@@ -70,6 +70,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/animals" element={<AnimalsPage />} />
           <Route element={<RequireAuth allowedRoles={[1, 2, 3]} />}>
