@@ -103,21 +103,31 @@ exports.update = (req, res) => {
   res.status(200).send();
 };
 
-exports.delete = (req, res) => {
+exports.deleteById = (req, res) => {
   USER.debug.log('delete called');
 
-  const UrlQuery = url.parse(req.url, true).query;
-  if (Object.keys(UrlQuery).length === 0) {
-    res.status(401).send({
-      message: 'You have to provide some query',
+  const id = req.params.id;
+
+  database.user
+    .destroy({
+      where: { user_id: id },
+    })
+    .then((retCode) => {
+      if (retCode == 1) {
+        res.send({
+          message: 'User was deleted successfully!',
+        });
+      } else {
+        res.send({
+          message: 'Cannot delete User with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete User with id=' + id,
+      });
     });
-  }
-
-  database.user.destroy({
-    where: UrlQuery,
-  });
-
-  res.status(200).send();
 };
 
 // FIXME: some other tables are related to the users, therefore we are

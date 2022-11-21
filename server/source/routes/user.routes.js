@@ -13,7 +13,7 @@ module.exports = (app) => {
 
   router.put('/', user.update);
 
-  router.delete('/', user.delete);
+  router.delete('/:id(\\d+)', user.deleteById);
 
   // Add that it could be done with email in documentation
   router.delete('/clean', user.deleteNonRegistered);
