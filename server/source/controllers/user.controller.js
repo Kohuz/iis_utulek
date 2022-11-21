@@ -186,12 +186,6 @@ exports.findById = (req, res) => {
     });
 };
 
-exports.authenticate = (req, res) => {
-  USER.debug.log('authenticate called');
-
-  res.status(501).send();
-};
-
 exports.findAllUnverifiedCount = (req, res) => {
   USER.debug.log('find all unverified count called');
 

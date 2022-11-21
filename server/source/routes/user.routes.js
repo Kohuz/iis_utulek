@@ -17,8 +17,6 @@ module.exports = (app) => {
 
   router.get('/', user.findAll);
 
-  router.get('/authenticate', user.authenticate);
-
   router.get('/unverified', user.findAllUnverifiedCount);
 
   app.use('/api/v1/user', router);
