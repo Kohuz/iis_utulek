@@ -12,7 +12,33 @@ const USER = {
 
 exports.create = (req, res) => {
   USER.debug.log('Create called');
-  res.status(501).send();
+
+  const user = {
+    name: req.body.name,
+    surname: req.body.surname,
+    birth_date: req.body.birth_date,
+    password: req.body.password, // TODO HASH THIS!!!!!!!
+    bank_account: req.body.bank_account ?? '',
+    address: req.body.address ?? '',
+    is_volunteer: req.body.is_volunteer ?? false,
+    is_admin: req.body.is_admin ?? false,
+    is_caretaker: req.body.is_caretaker ?? false,
+    is_veterinarian: req.body.is_veterinarian ?? false,
+    verified: req.body.verified ?? false,
+  };
+
+  database.user
+    .create(user)
+    .then((data) => {
+      res.status(200).send({
+        message: 'User created successfully!',
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Sorry, some error occurred' + err,
+      });
+    });
 };
 
 exports.login = (req, res) => {
@@ -128,6 +154,27 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || 'Some error occurred while retrieving tutorials.',
+      });
+    });
+};
+
+exports.findById = (req, res) => {
+  const id = req.params.id;
+
+  database.user
+    .findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: 'Cannot find user with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving user with id=' + id,
       });
     });
 };

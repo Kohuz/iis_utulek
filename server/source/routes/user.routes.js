@@ -18,6 +18,8 @@ module.exports = (app) => {
   // Add that it could be done with email in documentation
   router.delete('/clean', user.deleteNonRegistered);
 
+  router.get('/:id(\\d+)', user.findById);
+
   router.get('/', user.findAll);
 
   router.get('/authenticate', user.authenticate);
