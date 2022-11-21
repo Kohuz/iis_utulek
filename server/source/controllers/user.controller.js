@@ -79,28 +79,31 @@ exports.logout = (req, res) => {
   res.status(501).send();
 };
 
-exports.verify = (req, res) => {
-  USER.debug.log('verify called');
-
-  res.status(501).send();
-};
-
-exports.update = (req, res) => {
+exports.updateById = (req, res) => {
   USER.debug.log('update called');
 
-  // const UrlQuery = url.parse(req.url, true).query;
-  const UrlQuery = req.query;
-  if (Object.keys(UrlQuery).length === 0) {
-    res.status(401).send({
-      message: 'You have to provide some query',
+  const id = req.params.id;
+
+  database.user
+    .update(req.body, {
+      where: { user_id: id },
+    })
+    .then((retCode) => {
+      if (retCode == 1) {
+        res.send({
+          message: 'User was updated successfully!',
+        });
+      } else {
+        res.send({
+          message: 'Cannot update User with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not update User with id=' + id,
+      });
     });
-  }
-
-  database.user.update(req.body, {
-    where: UrlQuery,
-  });
-
-  res.status(200).send();
 };
 
 exports.deleteById = (req, res) => {
