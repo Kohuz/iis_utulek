@@ -6,9 +6,6 @@ module.exports = (app) => {
 
   router.post('/login', user.login);
 
-  // invalidate token
-  router.post('/logout', user.logout);
-
   router.put('/:id(\\d+)', user.updateById);
 
   router.delete('/:id(\\d+)', user.deleteById);

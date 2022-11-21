@@ -73,12 +73,6 @@ exports.login = (req, res) => {
     });
 };
 
-exports.logout = (req, res) => {
-  USER.debug.log('logout called');
-
-  res.status(501).send();
-};
-
 exports.updateById = (req, res) => {
   USER.debug.log('update called');
 
