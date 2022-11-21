@@ -201,5 +201,16 @@ exports.authenticate = (req, res) => {
 exports.findAllUnverifiedCount = (req, res) => {
   USER.debug.log('find all unverified count called');
 
-  res.status(501).send();
+  database.user
+    .findAll({ where: { verified: false } })
+    .then((data) => {
+      res.status(200).send({
+        length: data.length,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Error retrieving unverified count: ' + err,
+      });
+    });
 };
