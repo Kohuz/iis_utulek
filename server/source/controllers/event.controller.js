@@ -2,35 +2,59 @@ const database = require('../models');
 const url = require('url');
 const token = require('../helpers/token');
 
-const USER = {
+const EVENT = {
   debug: {
     log: (msg) => {
-      console.log('user:', msg);
+      console.log('event:', msg);
     },
   },
 };
 
 exports.create = (req, res) => {
-  USER.debug.log('create called');
-  res.status(500).send({ message: 'Not implemented!' });
+  EVENT.debug.log('create called');
+
+  const event = {
+    date: new Date(),
+    commentary: req.body.commentary,
+    type: req.body.type,
+    start: req.body.start,
+    stop: req.body.stop,
+    state: req.body.state ?? 'pending',
+    animal_id: req.body.animal_id,
+    user_id: req.body.user_id,
+  };
+
+  database.event
+    .create(event)
+    .then((data) => {
+      res.status(200).send({
+        message: 'Event created successfully!',
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Sorry, some error occurred' + err,
+      });
+    });
 };
 
 exports.delete = (req, res) => {
-  USER.debug.log('delete called');
+  EVENT.debug.log('delete called');
   res.status(500).send({ message: 'Not implemented!' });
 };
 
 exports.update = (req, res) => {
-  USER.debug.log('update called');
+  EVENT.debug.log('update called');
   res.status(500).send({ message: 'Not implemented!' });
 };
 
 exports.findAll = (req, res) => {
+  EVENT.debug.log('find all called');
   USER.debug.log('find all called');
   res.status(500).send({ message: 'Not implemented!' });
 };
 
 exports.getSchedule = (req, res) => {
-  USER.debug.log('get schedule called');
+  EVENT.debug.log('get schedule called');
   res.status(500).send({ message: 'Not implemented!' });
 };
