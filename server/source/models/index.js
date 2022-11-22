@@ -30,16 +30,40 @@ database.animal = AnimalModel(database.instance, database.driver);
 const RequestModel = require('./request.model');
 database.request = RequestModel(database.instance, database.driver);
 
-database.user.hasMany(database.event);
-database.event.belongsTo(database.user);
+database.user.hasMany(database.event, {
+  foreignKey: 'user_id',
+  as: 'events',
+});
+database.event.belongsTo(database.user, {
+  foreignKey: 'user_id',
+  as: 'user',
+});
 
-database.user.hasMany(database.request);
-database.request.belongsTo(database.user);
+database.user.hasMany(database.request, {
+  foreignKey: 'user_id',
+  as: 'requests',
+});
+database.request.belongsTo(database.user, {
+  foreignKey: 'user_id',
+  as: 'user',
+});
 
-database.animal.hasMany(database.event);
-database.event.belongsTo(database.animal);
+database.animal.hasMany(database.event, {
+  foreignKey: 'animal_id',
+  as: 'events',
+});
+database.event.belongsTo(database.animal, {
+  foreignKey: 'animal_id',
+  as: 'animal',
+});
 
-database.animal.hasMany(database.request);
-database.request.belongsTo(database.animal);
+database.animal.hasMany(database.request, {
+  foreignKey: 'animal_id',
+  as: 'requests',
+});
+database.request.belongsTo(database.animal, {
+  foreignKey: 'animal_id',
+  as: 'animal',
+});
 
 module.exports = database;
