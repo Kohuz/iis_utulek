@@ -1,77 +1,73 @@
-import React from "react";
-import { useState, useRef, useEffect, useContext } from "react";
-import { TextField, Button, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios/axios";
-import authContext from "Helpers/AuthContext";
+import React from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { TextField, Button, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios/axios';
+import authContext from 'Helpers/AuthContext';
 
 const useStyles = makeStyles({
   addComponent: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "1%",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
   },
   log: {
-    marginTop: "13px",
+    marginTop: '13px',
   },
 });
 
-const LOGIN_URL = "future login url";
+const LOGIN_URL = '/user/login';
 
 function LoginPage({ setLogged, logged }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || '/';
   const classes = useStyles();
   const userRef = useRef();
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
-  const [err, setErr] = useState("false");
-  const [formUsername, setFormUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [err, setErr] = useState('false');
+  const [formUsername, setFormUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ formUsername, password }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            withCredentials: true,
-          },
+    axios
+      .post(LOGIN_URL, JSON.stringify({ formUsername, password }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          //TODO roles
+          const roles = [1, 2, 3];
+          const auth = 'true';
+          const token = response.data.message;
+          setFormUsername('');
+          setPassword('');
+          setSuccess(true);
+          setAuthenticated(auth);
+          setRoles(roles);
+          setAccessToken(token);
+          setUsername(formUsername);
+
+          localStorage.setItem('username', formUsername);
+          localStorage.setItem('authenticated', auth);
+          localStorage.setItem('roles', JSON.stringify(roles));
+          localStorage.setItem('token', token);
+
+          navigate(from, { replace: true });
+        } else {
         }
-      );
-    } catch (err) {
-      if (!err?.response) {
-        setErr("No error message");
-      }
-      //TODO: Add ifs for response codes
-    }
-
-    const roles = [1, 2, 3];
-    const auth = "true";
-    const token = "token";
-    setFormUsername("");
-    setPassword("");
-    setSuccess(true);
-    setAuthenticated(auth);
-    setRoles(roles);
-    setAccessToken(token);
-    setUsername(formUsername);
-
-    localStorage.setItem("username", formUsername);
-    localStorage.setItem("authenticated", auth);
-    localStorage.setItem("roles", JSON.stringify(roles));
-    localStorage.setItem("token", token);
-
-    navigate(from, { replace: true });
+      })
+      .catch((response) => {});
   };
 
   return (

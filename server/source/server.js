@@ -1,10 +1,12 @@
 const express = require('express');
+var cors = require('cors');
 const token = require('./helpers/token');
 
 // Express Application, it is a global variable, that takes options for the
 // whole backend and it also executes everything.
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // This way there is going to be automatic authentication to all API calls
 app.use('/api', (req, res, next) => {

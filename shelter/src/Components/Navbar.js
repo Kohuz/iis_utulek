@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from 'react';
+import useInterval from 'Helpers/useInterval';
+import axios from 'axios/axios';
 import {
   AppBar,
   Box,
@@ -14,33 +16,35 @@ import {
   ToggleButton,
   Badge,
   ToggleButtonGroup,
-} from "@mui/material";
-import dog from "../dog.png";
-import ErrorIcon from "@mui/icons-material/Error";
-import MenuIcon from "@mui/icons-material/Menu";
+} from '@mui/material';
+import dog from '../dog.png';
+import ErrorIcon from '@mui/icons-material/Error';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import AdbIcon from "@mui/icons-material/Adb";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import AdbIcon from '@mui/icons-material/Adb';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { makeStyles } from "@mui/styles";
-import { NavigateBeforeSharp } from "@mui/icons-material";
-import authContext from "Helpers/AuthContext";
+import { makeStyles } from '@mui/styles';
+import { NavigateBeforeSharp } from '@mui/icons-material';
+import authContext from 'Helpers/AuthContext';
 
 const useStyles = makeStyles({
   btnGroup: {
     border: 0,
   },
   btn: {
-    minWidth: "120px",
+    minWidth: '120px',
   },
   img: {
-    width: "8%",
+    width: '8%',
   },
   notif: {
-    marginLeft: "3px",
+    marginLeft: '3px',
   },
 });
 
+const VOLUNTEERS_URL = '/user/unverified';
+const REQUEST_URL = '/user';
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -65,11 +69,28 @@ const Navbar = () => {
   const handleLogout = () => {
     setAuthenticated(false);
     setRoles([]);
-    setAccessToken("");
-    setUsername("");
+    setAccessToken('');
+    setUsername('');
     localStorage.clear();
-    navigate("/");
+    navigate('/');
   };
+  const [volunteers, setVolunteers] = useState(0);
+  const [error, setError] = useState(null);
+
+  const fetchData = () => {
+    axios
+      .get(VOLUNTEERS_URL + '?token=' + localStorage.getItem('token'))
+      .then((response) => {
+        console.log(response);
+        setVolunteers(response.data.length);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useInterval(fetchData, 5000);
+  useEffect(fetchData, []);
 
   const {
     setAuthenticated,
@@ -89,7 +110,7 @@ const Navbar = () => {
         <Toolbar disableGutters>
           <img className={classes.img} src={dog}></img>
 
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -97,26 +118,26 @@ const Navbar = () => {
             href=""
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           ></Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button onClick={() => navigate("/animals")}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Button onClick={() => navigate('/animals')}>
               <Typography textAlign="center">Zvířata</Typography>
             </Button>
             {roles?.includes(1) ? (
-              <Button onClick={() => navigate("/caretaker")}>
+              <Button onClick={() => navigate('/caretaker')}>
                 <Typography textAlign="center">Pečovatel</Typography>
               </Button>
             ) : null}
             {roles?.includes(2) ? (
-              <Button onClick={() => navigate("/veteranian")}>
+              <Button onClick={() => navigate('/veteranian')}>
                 <Typography textAlign="center">Veteřinář</Typography>
                 <Badge className={classes.notif} badgeContent={4} color="error">
                   <ErrorIcon color="warning" />
@@ -124,14 +145,18 @@ const Navbar = () => {
               </Button>
             ) : null}
             {roles?.includes(3) ? (
-              <Button onClick={() => navigate("/walks")}>
+              <Button onClick={() => navigate('/walks')}>
                 <Typography textAlign="center">Venčení</Typography>
               </Button>
             ) : null}
             {roles?.includes(3) ? (
-              <Button onClick={() => navigate("/volunteer")}>
+              <Button onClick={() => navigate('/volunteer')}>
                 <Typography textAlign="center">Dobrovolníci</Typography>
-                <Badge className={classes.notif} badgeContent={4} color="error">
+                <Badge
+                  className={classes.notif}
+                  badgeContent={volunteers}
+                  color="error"
+                >
                   <ErrorIcon color="warning" />
                 </Badge>
               </Button>
@@ -160,17 +185,17 @@ const Navbar = () => {
                   </IconButton>
                 </Tooltip>
                 <Menu
-                  sx={{ mt: "45px" }}
+                  sx={{ mt: '45px' }}
                   id="menu-appbar"
                   anchorEl={anchorElUser}
                   anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
@@ -178,11 +203,11 @@ const Navbar = () => {
                   <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">Odhlásit se</Typography>
                   </MenuItem>
-                  <MenuItem onClick={() => navigate("/profile")}>
+                  <MenuItem onClick={() => navigate('/profile')}>
                     <Typography textAlign="center">Profil</Typography>
                   </MenuItem>
                   {roles?.includes(1) ? (
-                    <MenuItem onClick={() => navigate("/create_user")}>
+                    <MenuItem onClick={() => navigate('/create_user')}>
                       <Typography textAlign="center">
                         Vytvořit uživatele
                       </Typography>
@@ -192,8 +217,8 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Button onClick={() => navigate("login")}>Přihlásit se</Button>
-                <Button onClick={() => navigate("register")}>
+                <Button onClick={() => navigate('login')}>Přihlásit se</Button>
+                <Button onClick={() => navigate('register')}>
                   Registrovat
                 </Button>
               </>
