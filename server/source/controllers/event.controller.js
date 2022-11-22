@@ -40,7 +40,28 @@ exports.create = (req, res) => {
 
 exports.delete = (req, res) => {
   EVENT.debug.log('delete called');
-  res.status(500).send({ message: 'Not implemented!' });
+  const id = req.params.id;
+
+  database.event
+    .destroy({
+      where: { event_id: id },
+    })
+    .then((retCode) => {
+      if (retCode == 1) {
+        res.send({
+          message: 'Event was deleted successfully!',
+        });
+      } else {
+        res.status(400).send({
+          message: 'Cannot delete Event with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Event with id=' + id,
+      });
+    });
 };
 
 exports.update = (req, res) => {
