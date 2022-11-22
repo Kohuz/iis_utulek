@@ -10,6 +10,13 @@ const USER = {
   },
 };
 
+const rolesDict = {
+  Admin: 1,
+  Caretaker: 2,
+  Veterinarian: 3,
+  Volunteer: 4,
+};
+
 exports.create = (req, res) => {
   USER.debug.log('Create called');
 
@@ -62,8 +69,32 @@ exports.login = (req, res) => {
       },
     })
     .then((data) => {
+      if (data.length == 0) {
+        res.status(403).send({
+          message: 'Invalid login/email or password',
+        });
+
+        return;
+      }
+
+      let roles = [];
+
+      if (data[0].is_admin) {
+        roles.push(rolesDict.Admin);
+      }
+      if (data[0].is_caretaker) {
+        roles.push(rolesDict.Caretaker);
+      }
+      if (data[0].is_veterinarian) {
+        roles.push(rolesDict.Veterinarian);
+      }
+      if (data[0].is_volunteer) {
+        roles.push(rolesDict.Volunteer);
+      }
+
       res.status(200).send({
-        message: token.generateAccess(data.user_id),
+        token: token.generateAccess(data.user_id),
+        roles: roles,
       });
     })
     .catch((err) => {
