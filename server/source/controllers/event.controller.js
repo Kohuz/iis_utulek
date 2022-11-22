@@ -64,9 +64,31 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+exports.updateById = (req, res) => {
   EVENT.debug.log('update called');
-  res.status(500).send({ message: 'Not implemented!' });
+
+  const id = req.params.id;
+
+  database.event
+    .update(req.body, {
+      where: { event_id: id },
+    })
+    .then((retCode) => {
+      if (retCode == 1) {
+        res.send({
+          message: 'Event was updated successfully!',
+        });
+      } else {
+        res.status(400).send({
+          message: 'Cannot update Event with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not update Event with id=' + id,
+      });
+    });
 };
 
 exports.findAll = (req, res) => {

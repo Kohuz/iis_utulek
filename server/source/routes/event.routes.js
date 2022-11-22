@@ -6,7 +6,7 @@ module.exports = (app) => {
 
   router.delete('/:id(\\d+)', events.delete);
 
-  router.put('/', events.update);
+  router.put('/:id(\\d+)', events.updateById);
 
   // Add parameter for user ID and animal ID, it should work the same as
   // for request (althrough there is animal).
