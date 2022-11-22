@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-const LOGIN_URL = "future login url";
+const LOGIN_URL = "/user/login";
 
 function LoginPage({ setLogged, logged }) {
   const navigate = useNavigate();
@@ -44,34 +44,33 @@ function LoginPage({ setLogged, logged }) {
         {
           headers: {
             "Content-Type": "application/json",
-            withCredentials: true,
+            "Access-Control-Allow-Origin": "*",
           },
         }
       );
+      const roles = [1, 2, 3];
+      const auth = "true";
+      const token = "token";
+      setFormUsername("");
+      setPassword("");
+      setSuccess(true);
+      setAuthenticated(auth);
+      setRoles(roles);
+      setAccessToken(token);
+      setUsername(formUsername);
+
+      localStorage.setItem("username", formUsername);
+      localStorage.setItem("authenticated", auth);
+      localStorage.setItem("roles", JSON.stringify(roles));
+      localStorage.setItem("token", token);
+
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErr("No error message");
       }
       //TODO: Add ifs for response codes
     }
-
-    const roles = [1, 2, 3];
-    const auth = "true";
-    const token = "token";
-    setFormUsername("");
-    setPassword("");
-    setSuccess(true);
-    setAuthenticated(auth);
-    setRoles(roles);
-    setAccessToken(token);
-    setUsername(formUsername);
-
-    localStorage.setItem("username", formUsername);
-    localStorage.setItem("authenticated", auth);
-    localStorage.setItem("roles", JSON.stringify(roles));
-    localStorage.setItem("token", token);
-
-    navigate(from, { replace: true });
   };
 
   return (
