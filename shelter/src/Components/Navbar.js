@@ -78,15 +78,17 @@ const Navbar = () => {
   const [error, setError] = useState(null);
 
   const fetchData = () => {
-    axios
-      .get(VOLUNTEERS_URL + '?token=' + localStorage.getItem('token'))
-      .then((response) => {
-        console.log(response);
-        setVolunteers(response.data.length);
-      })
-      .catch((error) => {
-        setError(error);
-      });
+    if (authenticated) {
+      axios
+        .get(VOLUNTEERS_URL + '?token=' + localStorage.getItem('token'))
+        .then((response) => {
+          console.log(response);
+          setVolunteers(response.data.length);
+        })
+        .catch((error) => {
+          setError(error);
+        });
+    }
   };
 
   useInterval(fetchData, 5000);

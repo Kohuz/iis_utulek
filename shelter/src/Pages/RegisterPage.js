@@ -1,82 +1,67 @@
-import React from "react";
-import { useState, useRef, useEffect, useContext } from "react";
-import { TextField, Button, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios/axios";
-import authContext from "Helpers/AuthContext";
+import React from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { TextField, Button, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios/axios';
+import authContext from 'Helpers/AuthContext';
 
 const useStyles = makeStyles({
   addComponent: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "1%",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
   },
   log: {
-    marginTop: "13px",
+    marginTop: '13px',
   },
 });
 
-const REGISTER_URL = "future login url";
+const REGISTER_URL = '/user/register';
 
 function RegisterPage({ setLogged, logged }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || '/';
   const classes = useStyles();
   const userRef = useRef();
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
-  const [err, setErr] = useState("false");
-  const [formName, setFormName] = useState("");
-  const [formSurname, setFormSurname] = useState("");
-  const [formEmail, setFormEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [err, setErr] = useState('false');
+  const [formName, setFormName] = useState('');
+  const [formSurname, setFormSurname] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // try {
-    //   const response = await axios.post(
-    //     REGISTER_URL,
-    //     JSON.stringify({ formUsername, password }),
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         withCredentials: true,
-    //       },
-    //     }
-    //   );
-    // } catch (err) {
-    //   if (!err?.response) {
-    //     setErr("No error message");
-    //   }
-    //   //TODO: Add ifs for response codes
-    // }
-
-    const roles = [1, 2, 3];
-    const auth = "true";
-    const token = "token";
-    setFormName("");
-    setFormSurname("");
-    setFormEmail("");
-    setPassword("");
-    setSuccess(true);
-    setAuthenticated(auth);
-    setRoles(roles);
-    setAccessToken(token);
-    // setUsername(formUsername);
-
-    // localStorage.setItem("username", formUsername);
-    // localStorage.setItem("authenticated", auth);
-    // localStorage.setItem("roles", JSON.stringify(roles));
-    localStorage.setItem("token", token);
-
-    navigate(from, { replace: true });
+    axios
+      .post(
+        REGISTER_URL,
+        JSON.stringify({
+          name: formName,
+          surname: formSurname,
+          email: formEmail,
+          password: password,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+          navigate(from, { replace: true });
+        } else {
+        }
+      })
+      .catch((response) => {});
   };
 
   return (
@@ -112,7 +97,7 @@ function RegisterPage({ setLogged, logged }) {
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
                 onChange={(e) => setFormSurname(e.target.value)}
-                value={setFormSurname}
+                value={formSurname}
                 id="formusername"
                 label="Přijmení"
                 type="text"
@@ -172,4 +157,3 @@ function RegisterPage({ setLogged, logged }) {
 }
 
 export default RegisterPage;
-

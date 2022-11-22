@@ -59,6 +59,9 @@ function VolunteerPage() {
             surname={user.type}
             birthDate={user.age}
             verified={user.verified}
+            users={users}
+            setUsers={setUsers}
+            fetchData={fetchData}
           ></VolunteerCard>
         ))}
       <Typography>Dobrovolníci</Typography>
@@ -71,6 +74,9 @@ function VolunteerPage() {
             surname={user.surname}
             birthDate={user.age}
             verified={user.verified}
+            users={users}
+            setUsers={setUsers}
+            fetchData={fetchData}
           ></VolunteerCard>
         ))}
     </>

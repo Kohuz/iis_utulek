@@ -16,7 +16,7 @@ exports.create = (req, res) => {
   const user = {
     name: req.body.name,
     surname: req.body.surname,
-    birth_date: req.body.birth_date,
+    email: req.body.email,
     password: req.body.password, // TODO HASH THIS!!!!!!!
     bank_account: req.body.bank_account ?? '',
     address: req.body.address ?? '',
