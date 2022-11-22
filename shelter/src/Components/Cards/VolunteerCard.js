@@ -14,8 +14,9 @@ import authContext from 'Helpers/AuthContext';
 import { deepOrange } from '@mui/material/colors';
 import dog from '../../dog.png';
 
-const VERIFY_URL = '/user';
+const USER_URL = '/user';
 function VolunteerCard({
+  id,
   name,
   surname,
   birthDate,
@@ -28,8 +29,8 @@ function VolunteerCard({
 
   const verify = (id) => {
     axios
-      .post(
-        VERIFY_URL + '/' + id + '?token=' + localStorage.getItem('token'),
+      .put(
+        USER_URL + '/' + id + '?token=' + localStorage.getItem('token'),
         JSON.stringify({ verified: true }),
         {
           headers: {
@@ -40,6 +41,18 @@ function VolunteerCard({
       )
       .then((response) => {
         if (response.status == 200) {
+          //TODO: do this more efficiently
+          fetchData();
+        }
+      });
+  };
+
+  const remove = (id) => {
+    axios
+      .delete(USER_URL + '/' + id + '?token=' + localStorage.getItem('token'))
+      .then((response) => {
+        if (response.status == 200) {
+          //TODO: do this more efficiently
           fetchData();
         }
       });
@@ -64,14 +77,35 @@ function VolunteerCard({
         </Typography>
       </CardContent>
       <CardActions>
-        {verified ? <Button size="small">Odstranit dobrovolníka</Button> : null}
+        {verified ? (
+          <Button
+            onClick={() => {
+              remove(id);
+            }}
+            size="small"
+          >
+            Odstranit dobrovolníka
+          </Button>
+        ) : null}
         {!verified ? (
-          <Button size="small" onClick={verify}>
+          <Button
+            size="small"
+            onClick={() => {
+              verify(id);
+            }}
+          >
             Potvrdit dobrovolníka
           </Button>
         ) : null}
         {!verified ? (
-          <Button size="small">Zamítnout dobrovolníka</Button>
+          <Button
+            size="small"
+            onClick={() => {
+              remove(id);
+            }}
+          >
+            Zamítnout dobrovolníka
+          </Button>
         ) : null}
       </CardActions>
     </Card>

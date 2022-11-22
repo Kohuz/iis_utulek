@@ -37,7 +37,7 @@ function RegisterPage({ setLogged, logged }) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post(
@@ -47,6 +47,7 @@ function RegisterPage({ setLogged, logged }) {
           surname: formSurname,
           email: formEmail,
           password: password,
+          is_volunteer: true,
         }),
         {
           headers: {

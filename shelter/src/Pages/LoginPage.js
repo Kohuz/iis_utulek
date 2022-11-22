@@ -38,7 +38,7 @@ function LoginPage({ setLogged, logged }) {
     e.preventDefault();
 
     axios
-      .post(LOGIN_URL, JSON.stringify({ formUsername, password }), {
+      .post(LOGIN_URL, JSON.stringify({ email: formUsername, password }), {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -47,9 +47,9 @@ function LoginPage({ setLogged, logged }) {
       .then((response) => {
         if (response.status == 200) {
           //TODO roles
-          const roles = [1, 2, 3];
+          const roles = response.data.roles;
           const auth = 'true';
-          const token = response.data.message;
+          const token = response.data.token;
           setFormUsername('');
           setPassword('');
           setSuccess(true);

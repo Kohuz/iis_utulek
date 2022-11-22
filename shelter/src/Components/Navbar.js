@@ -133,12 +133,12 @@ const Navbar = () => {
             <Button onClick={() => navigate('/animals')}>
               <Typography textAlign="center">Zvířata</Typography>
             </Button>
-            {roles?.includes(1) ? (
+            {roles?.includes(2) ? (
               <Button onClick={() => navigate('/caretaker')}>
                 <Typography textAlign="center">Pečovatel</Typography>
               </Button>
             ) : null}
-            {roles?.includes(2) ? (
+            {roles?.includes(3) ? (
               <Button onClick={() => navigate('/veteranian')}>
                 <Typography textAlign="center">Veteřinář</Typography>
                 <Badge className={classes.notif} badgeContent={4} color="error">
@@ -146,12 +146,12 @@ const Navbar = () => {
                 </Badge>
               </Button>
             ) : null}
-            {roles?.includes(3) ? (
+            {roles?.includes(4) ? (
               <Button onClick={() => navigate('/walks')}>
                 <Typography textAlign="center">Venčení</Typography>
               </Button>
             ) : null}
-            {roles?.includes(3) ? (
+            {roles?.includes(2) ? (
               <Button onClick={() => navigate('/volunteer')}>
                 <Typography textAlign="center">Dobrovolníci</Typography>
                 <Badge

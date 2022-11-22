@@ -5,14 +5,14 @@ import {
   Typography,
   CardActions,
   Button,
-} from "@mui/material";
-import React, { useContext } from "react";
-import authContext from "Helpers/AuthContext";
-import dog from "../../dog.png";
-import { rolesDict, checkRoles } from "../../Helpers/Roles";
-import { Link, useNavigate } from "react-router-dom";
+} from '@mui/material';
+import React, { useContext } from 'react';
+import authContext from 'Helpers/AuthContext';
+import dog from '../../dog.png';
+import { rolesDict, checkRoles } from '../../Helpers/Roles';
+import { Link, useNavigate } from 'react-router-dom';
 
-function AnimalCard({ animal, from, openRequest }) {
+function AnimalCard({ animal, from, fetchData, openRequest }) {
   const { authenticated, roles } = useContext(authContext);
   const navigate = useNavigate();
   return (
@@ -27,37 +27,37 @@ function AnimalCard({ animal, from, openRequest }) {
         </Typography>
       </CardContent>
       <CardActions>
-        {authenticated && from == "animals" ? (
+        {authenticated && from == 'animals' ? (
           <Button
             size="small"
-            onClick={() => navigate("/animals/" + animal.id)}
+            onClick={() => navigate('/animals/' + animal.id)}
           >
             Vyvenčit
           </Button>
         ) : null}
-        {from == "care" ? (
+        {from == 'care' ? (
           <Button size="small" onClick={() => openRequest()}>
             Vytvořit požadavek na veterináře
           </Button>
         ) : null}
-        {from === "care" ? (
+        {from === 'care' ? (
           <Button
             size="small"
-            onClick={() => navigate("/caretaker/" + animal.id)}
+            onClick={() => navigate('/caretaker/' + animal.id)}
           >
             Vytvořit rozvrh venčení
-            <Link to={"/caretaker/" + animal.id} state={animal} />
+            <Link to={'/caretaker/' + animal.id} state={animal} />
           </Button>
         ) : null}
-        {from === "veterinarian" ? (
+        {from === 'veterinarian' ? (
           <Button
             size="small"
-            onClick={() => navigate("/veteranian/" + animal.id)}
+            onClick={() => navigate('/veteranian/' + animal.id)}
           >
             Editovat zdravotní záznam
           </Button>
         ) : null}
-        {from === "veterinarian" || from === "care" ? (
+        {from === 'veterinarian' || from === 'care' ? (
           <Button size="small">Smazat zvíře</Button>
         ) : null}
       </CardActions>

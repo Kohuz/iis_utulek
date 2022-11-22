@@ -7,26 +7,7 @@ const USERS_URL = '/user';
 function VolunteerPage() {
   const [users, setUsers] = React.useState([]);
   const [error, setError] = React.useState(null);
-  // const users = [
-  //   {
-  //     name: "Pepa",
-  //     surname: "Jouda",
-  //     birthDate: "exampleDate",
-  //     verified: false,
-  //   },
-  //   {
-  //     name: "Mike",
-  //     surname: "Pán",
-  //     birthDate: "exampleDate",
-  //     verified: true,
-  //   },
-  //   {
-  //     name: "Marek",
-  //     surname: "Pazdera",
-  //     birthDate: "exampleDate",
-  //     verified: true,
-  //   },
-  // ];
+
   const fetchData = () => {
     axios
       .get(USERS_URL + '?token=' + localStorage.getItem('token'))
@@ -55,6 +36,7 @@ function VolunteerPage() {
         .map((user) => (
           <VolunteerCard
             key={user.user_id}
+            id={user.user_id}
             name={user.name}
             surname={user.type}
             birthDate={user.age}
@@ -71,6 +53,7 @@ function VolunteerPage() {
           <VolunteerCard
             key={user.user_id}
             name={user.name}
+            id={user.user_id}
             surname={user.surname}
             birthDate={user.age}
             verified={user.verified}

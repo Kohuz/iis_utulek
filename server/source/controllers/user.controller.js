@@ -61,10 +61,7 @@ exports.login = (req, res) => {
   database.user
     .findAll({
       where: {
-        [database.driver.Op.or]: [
-          { login: req.body.login },
-          { email: req.body.email },
-        ],
+        email: req.body.email,
         password: req.body.password,
       },
     })
@@ -78,17 +75,17 @@ exports.login = (req, res) => {
       }
 
       let roles = [];
-
-      if (data[0].is_admin) {
+      let values = data[0].dataValues;
+      if (values.is_admin) {
         roles.push(rolesDict.Admin);
       }
-      if (data[0].is_caretaker) {
+      if (values.is_caretaker) {
         roles.push(rolesDict.Caretaker);
       }
-      if (data[0].is_veterinarian) {
+      if (values.is_veterinarian) {
         roles.push(rolesDict.Veterinarian);
       }
-      if (data[0].is_volunteer) {
+      if (values.is_volunteer) {
         roles.push(rolesDict.Volunteer);
       }
 
