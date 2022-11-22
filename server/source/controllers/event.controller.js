@@ -38,7 +38,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.deleteById = (req, res) => {
   EVENT.debug.log('delete called');
   const id = req.params.id;
 
@@ -93,8 +93,19 @@ exports.updateById = (req, res) => {
 
 exports.findAll = (req, res) => {
   EVENT.debug.log('find all called');
-  USER.debug.log('find all called');
-  res.status(500).send({ message: 'Not implemented!' });
+  const id = req.params.id;
+
+  database.animal
+    .findByPk(id, { include: ['events'] })
+    .then((animal) => {
+      // TODO handle missing ID
+      res.status(200).send(animal);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Failed to get events for animal ' + err,
+      });
+    });
 };
 
 exports.getSchedule = (req, res) => {

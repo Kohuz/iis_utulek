@@ -4,7 +4,7 @@ module.exports = (app) => {
 
   router.post('/', events.create);
 
-  router.delete('/:id(\\d+)', events.delete);
+  router.delete('/:id(\\d+)', events.deleteById);
 
   router.put('/:id(\\d+)', events.updateById);
 

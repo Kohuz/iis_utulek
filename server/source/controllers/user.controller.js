@@ -146,7 +146,7 @@ exports.deleteById = (req, res) => {
           message: 'User was deleted successfully!',
         });
       } else {
-        res.send({
+        res.status(400).send({
           message: 'Cannot delete User with id=' + id,
         });
       }
