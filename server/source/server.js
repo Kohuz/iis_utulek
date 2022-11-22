@@ -11,7 +11,12 @@ app.use(cors());
 // This way there is going to be automatic authentication to all API calls
 app.use('/api', (req, res, next) => {
   // We want to be able to login with our current API
-  if (req.url == '/v1/user/login' || req.url == '/v1/user/login/') {
+  if (
+    req.url == '/v1/user/login' ||
+    req.url == '/v1/user/login/' ||
+    req.url == '/v1/user/register' ||
+    req.url == '/v1/user/register/'
+  ) {
     next();
   } else {
     token.authenticate(req, res, next);
