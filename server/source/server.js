@@ -19,6 +19,7 @@ app.use('/api', (req, res, next) => {
 });
 
 require('./routes/user.routes')(app);
+require('./routes/event.routes')(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
