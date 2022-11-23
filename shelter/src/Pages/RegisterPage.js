@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect, useContext } from 'react';
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography, Alert } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios/axios';
@@ -12,6 +12,15 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '1%',
+  },
+  alert: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
+  },
+  alertDiv: {
+    width: '20%',
   },
   log: {
     marginTop: '13px',
@@ -29,7 +38,8 @@ function RegisterPage({ setLogged, logged }) {
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
-  const [err, setErr] = useState('false');
+  const [errPass, setErrPass] = useState(false);
+  const [errEmail, setErrEmail] = useState(false);
   const [formName, setFormName] = useState('');
   const [formSurname, setFormSurname] = useState('');
   const [formEmail, setFormEmail] = useState('');
@@ -37,8 +47,24 @@ function RegisterPage({ setLogged, logged }) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateEmail(formEmail)) {
+      setErrEmail(true);
+      return;
+    }
+    if (password != passwordConfirm) {
+      setErrPass(true);
+      return;
+    }
+
     axios
       .post(
         REGISTER_URL,
@@ -105,13 +131,25 @@ function RegisterPage({ setLogged, logged }) {
                 variant="outlined"
               ></TextField>
             </div>
+            {errEmail ? (
+              <div className={classes.alert}>
+                <div className={classes.alertDiv}>
+                  <Alert variant="outlined" severity="error">
+                    Nevalidní email
+                  </Alert>
+                </div>
+              </div>
+            ) : null}
             <div className={classes.addComponent}>
               <TextField
                 required
                 ref={userRef}
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setFormEmail(e.target.value)}
+                onChange={(e) => {
+                  setFormEmail(e.target.value);
+                  setErrEmail(false);
+                }}
                 value={formEmail}
                 id="formusername"
                 label="mail"
@@ -119,12 +157,24 @@ function RegisterPage({ setLogged, logged }) {
                 variant="outlined"
               ></TextField>
             </div>
+            {errPass ? (
+              <div className={classes.alert}>
+                <div className={classes.alertDiv}>
+                  <Alert variant="outlined" severity="error">
+                    Hesla se neshodují
+                  </Alert>
+                </div>
+              </div>
+            ) : null}
             <div className={classes.addComponent}>
               <TextField
                 required
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrPass(false);
+                }}
                 value={password}
                 id="password"
                 label="Heslo"
@@ -137,7 +187,10 @@ function RegisterPage({ setLogged, logged }) {
                 required
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                onChange={(e) => {
+                  setPasswordConfirm(e.target.value);
+                  setErrPass(false);
+                }}
                 value={passwordConfirm}
                 id="password"
                 label="Heslo znovu"
