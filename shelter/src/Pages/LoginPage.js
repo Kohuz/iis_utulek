@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useRef, useEffect, useContext } from 'react';
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography, Alert } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios/axios';
@@ -12,6 +12,15 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '1%',
+  },
+  alert: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
+  },
+  alertDiv: {
+    width: '20%',
   },
   log: {
     marginTop: '13px',
@@ -29,7 +38,7 @@ function LoginPage({ setLogged, logged }) {
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
-  const [err, setErr] = useState('false');
+  const [err, setErr] = useState(false);
   const [formUsername, setFormUsername] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
@@ -65,9 +74,12 @@ function LoginPage({ setLogged, logged }) {
 
           navigate(from, { replace: true });
         } else {
+          setErr(true);
         }
       })
-      .catch((response) => {});
+      .catch((response) => {
+        setErr(true);
+      });
   };
 
   return (
@@ -81,6 +93,15 @@ function LoginPage({ setLogged, logged }) {
               Přihlášení
             </Typography>
           </div>
+          {err ? (
+            <div className={classes.alert}>
+              <div className={classes.alertDiv}>
+                <Alert variant="outlined" severity="error">
+                  Špatné jméno nebo heslo
+                </Alert>
+              </div>
+            </div>
+          ) : null}
           <form onSubmit={handleSubmit}>
             <div className={classes.addComponent}>
               <TextField
