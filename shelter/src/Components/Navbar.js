@@ -215,6 +215,11 @@ const Navbar = () => {
                       </Typography>
                     </MenuItem>
                   ) : null}
+                  {roles?.includes(1) ? (
+                    <MenuItem onClick={() => navigate('/users')}>
+                      <Typography textAlign="center">Uživatelé</Typography>
+                    </MenuItem>
+                  ) : null}
                 </Menu>
               </>
             ) : (

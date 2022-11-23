@@ -22,6 +22,7 @@ import Schedule from 'Components/Schedule';
 import HealthRecord from 'Components/HealthRecord';
 import AnimalEventCreate from 'Components/AnimalEventCreate';
 import AdminSchedule from 'Components/AdminSchedule';
+import UserPage from 'Pages/UserPage';
 import WalkingSchedule from 'Components/WalkingSchedule';
 
 const theme = createTheme({
@@ -102,6 +103,9 @@ function App() {
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/create_user" element={<CreateUserPage />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[1]} />}>
+            <Route path="/users" element={<UserPage />} />
           </Route>
 
           <Route path="*" element={<h1>Not found</h1>} />

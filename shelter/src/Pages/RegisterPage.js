@@ -38,6 +38,7 @@ function RegisterPage({ setLogged, logged }) {
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
+  const [sent, setSent] = useState(false);
   const [errPass, setErrPass] = useState(false);
   const [errEmail, setErrEmail] = useState(false);
   const [formName, setFormName] = useState('');
@@ -55,13 +56,16 @@ function RegisterPage({ setLogged, logged }) {
       );
   };
   const handleSubmit = (e) => {
+    setSent(true);
     e.preventDefault();
     if (!validateEmail(formEmail)) {
       setErrEmail(true);
+      setSent(false);
       return;
     }
     if (password != passwordConfirm) {
       setErrPass(true);
+      setSent(false);
       return;
     }
 
@@ -89,6 +93,7 @@ function RegisterPage({ setLogged, logged }) {
         }
       })
       .catch((response) => {});
+    setSent(false);
   };
 
   return (
@@ -199,7 +204,7 @@ function RegisterPage({ setLogged, logged }) {
               ></TextField>
             </div>
             <div className={classes.addComponent}>
-              <Button type="submit" variant="outlined">
+              <Button type="submit" disabled={sent} variant="outlined">
                 Registrovat se
               </Button>
             </div>

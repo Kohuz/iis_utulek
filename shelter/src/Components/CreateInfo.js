@@ -1,5 +1,5 @@
-import { TextField, FormControlLabel } from "@mui/material";
-import React from "react";
+import { TextField, FormControlLabel } from '@mui/material';
+import React from 'react';
 
 function CreateInfo() {
   return (
@@ -13,6 +13,11 @@ function CreateInfo() {
         control={<TextField></TextField>}
         labelPlacement="top"
         label="Přijmení"
+      />
+      <FormControlLabel
+        control={<TextField></TextField>}
+        labelPlacement="top"
+        label="Email"
       />
       <FormControlLabel
         control={<TextField type="password"></TextField>}

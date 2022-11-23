@@ -8,15 +8,14 @@ import {
   CardHeader,
   Avatar,
 } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios/axios';
 import authContext from 'Helpers/AuthContext';
 import { deepOrange } from '@mui/material/colors';
 import dog from '../../dog.png';
 
 const USER_URL = '/user';
-function VolunteerCard({ user, users, setUsers, fetchData }) {
-  const [loading, setLoading] = useState(false);
+function UserCard({ user, users, setUsers, fetchData }) {
   const { authenticated, roles } = useContext(authContext);
   const verify = (id) => {
     axios
@@ -32,9 +31,9 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
       )
       .then((response) => {
         if (response.status == 200) {
-          // let newArr = [...users];
-          // newArr.find((user) => user.user_id).verified = true;
-          // setUsers([...newArr]);
+          //let newArr = [...users];
+          //newArr.find((user) => user.id).verified = true;
+          //setUsers([...newArr]);
 
           fetchData();
         }
@@ -52,58 +51,42 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
       });
   };
   return (
-    <Card sx={{ maxWidth: 700, marginBottom: '1%' }}>
-      <CardHeader
-        avatar={
+    <>
+      <Card sx={{ maxWidth: 700, marginBottom: '1%' }}>
+        <CardContent>
           <Avatar sx={{ bgcolor: deepOrange[500] }} aria-label="recipe">
             {user.name[0]}
           </Avatar>
-        }
-      />
+          <Typography gutterBottom>
+            {user.name}
+            {user.surname}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {user.birthDate}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            onClick={() => {
+              remove(user.id);
+            }}
+            size="small"
+          >
+            Odstranit uživatele
+          </Button>
 
-      <CardContent>
-        <Typography gutterBottom variant="h5">
-          {user.name}
-          {user.surname}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {user.birthDate}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        {user.verified ? (
-          <Button
-            onClick={() => {
-              remove(user.user_id);
-            }}
-            size="small"
-          >
-            Odstranit dobrovolníka
-          </Button>
-        ) : null}
-        {!user.verified ? (
           <Button
             size="small"
             onClick={() => {
-              verify(user.user_id);
+              verify(user.id);
             }}
           >
-            Potvrdit dobrovolníka
+            Upravit uživatele
           </Button>
-        ) : null}
-        {!user.verified ? (
-          <Button
-            size="small"
-            onClick={() => {
-              remove(user.user_id);
-            }}
-          >
-            Zamítnout dobrovolníka
-          </Button>
-        ) : null}
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+    </>
   );
 }
 
-export default VolunteerCard;
+export default UserCard;

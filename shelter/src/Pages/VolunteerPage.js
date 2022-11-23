@@ -36,11 +36,7 @@ function VolunteerPage() {
         .map((user) => (
           <VolunteerCard
             key={user.user_id}
-            id={user.user_id}
-            name={user.name}
-            surname={user.type}
-            birthDate={user.age}
-            verified={user.verified}
+            user={user}
             users={users}
             setUsers={setUsers}
             fetchData={fetchData}
@@ -52,11 +48,7 @@ function VolunteerPage() {
         .map((user) => (
           <VolunteerCard
             key={user.user_id}
-            name={user.name}
-            id={user.user_id}
-            surname={user.surname}
-            birthDate={user.age}
-            verified={user.verified}
+            user={user}
             users={users}
             setUsers={setUsers}
             fetchData={fetchData}
