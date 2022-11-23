@@ -18,6 +18,7 @@ import Address from 'Components/Address';
 import CreateInfo from 'Components/CreateInfo';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { validateEmail } from 'Helpers/validateEmail';
 
 const useStyles = makeStyles({
   form: {
@@ -45,13 +46,7 @@ const useStyles = makeStyles({
     width: '20%',
   },
 });
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-};
+
 const REGISTER_URL = '/user/register';
 function CreateUserPage() {
   const navigate = useNavigate();

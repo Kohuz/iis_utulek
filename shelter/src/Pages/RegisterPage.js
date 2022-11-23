@@ -5,6 +5,7 @@ import { makeStyles } from '@mui/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios/axios';
 import authContext from 'Helpers/AuthContext';
+import { validateEmail } from 'Helpers/validateEmail';
 
 const useStyles = makeStyles({
   addComponent: {
@@ -48,13 +49,6 @@ function RegisterPage({ setLogged, logged }) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
   const handleSubmit = (e) => {
     setSent(true);
     e.preventDefault();

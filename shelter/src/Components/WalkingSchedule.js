@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import timetable from "../Helpers/temp_arrays";
+import { Button } from '@mui/material';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import timetable from '../Helpers/temp_arrays';
 function WalkingSchedule() {
   const [table, setTable] = useState(timetable);
   const { id } = useParams();
@@ -26,7 +26,7 @@ function WalkingSchedule() {
               >
                 Venčit celý den
               </Button>
-              {day.hours.map((hour, j) => (
+              {/* {day.hours.map((hour, j) => (
                 <td>
                   <Button
                     variant="contained"
@@ -46,8 +46,8 @@ function WalkingSchedule() {
                   >
                     {hour.time}
                   </Button>
-                </td>
-              ))}
+                </td> */}
+              {/* ))} */}
             </tr>
           ))}
         </tbody>
