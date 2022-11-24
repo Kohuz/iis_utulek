@@ -10,6 +10,12 @@ const EVENT = {
   },
 };
 
+const eventType = {
+  walk: 'walk',
+  can_walk: 'can_walk',
+  exam: 'examination',
+};
+
 exports.create = (req, res) => {
   EVENT.debug.log('create called');
 
