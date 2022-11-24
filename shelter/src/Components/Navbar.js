@@ -78,7 +78,7 @@ const Navbar = () => {
   const [error, setError] = useState(null);
 
   const fetchData = () => {
-    if (authenticated) {
+    if (authenticated && roles.includes(2)) {
       axios
         .get(VOLUNTEERS_URL + '?token=' + localStorage.getItem('token'))
         .then((response) => {
@@ -154,13 +154,15 @@ const Navbar = () => {
             {roles?.includes(2) ? (
               <Button onClick={() => navigate('/volunteer')}>
                 <Typography textAlign="center">Dobrovolníci</Typography>
-                <Badge
-                  className={classes.notif}
-                  badgeContent={volunteers}
-                  color="error"
-                >
-                  <ErrorIcon color="warning" />
-                </Badge>
+                {volunteers != 0 ? (
+                  <Badge
+                    className={classes.notif}
+                    badgeContent={volunteers}
+                    color="error"
+                  >
+                    <ErrorIcon color="warning" />
+                  </Badge>
+                ) : null}
               </Button>
             ) : null}
             <Button

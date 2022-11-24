@@ -80,6 +80,7 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[1, 2, 3, 4]} />}>
             <Route path="/" element={<HomePage />} />
           </Route>
+
           <Route element={<RequireAuth allowedRoles={[1, 2]} />}>
             <Route path="/caretaker" element={<CaretakerPage />} />
             <Route path="/caretaker/:id" element={<WalkingSchedule />} />

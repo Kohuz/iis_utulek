@@ -19,9 +19,6 @@ module.exports = (sequelize, Sequelize) => {
       age: {
         type: Sequelize.INTEGER,
       },
-      state: {
-        type: Sequelize.STRING,
-      },
       borrowed: {
         type: Sequelize.BOOLEAN,
       },
