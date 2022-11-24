@@ -1,5 +1,7 @@
 FROM node:14
 
+ENV TOKEN_SECRET="someVerySecretTokenForIIS"
+
 COPY server/ /iis_server
 
 WORKDIR /iis_server/
