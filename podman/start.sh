@@ -15,7 +15,7 @@ start_container() {
 }
 
 start_db_container() {
-    local container_name=$2
+    local container_name=$1
     podman run \
         --detach \
         --name="$container_name" \
