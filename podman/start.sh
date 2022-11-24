@@ -10,8 +10,8 @@ start_container() {
     local container_name=$2
     podman run \
         --detach \
+        --network="host" \
         --name="$container_name" \
-        --publish "$ports" \
         "$container_name"
 }
 
