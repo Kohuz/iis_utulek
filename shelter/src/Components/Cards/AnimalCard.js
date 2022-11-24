@@ -11,10 +11,23 @@ import authContext from 'Helpers/AuthContext';
 import dog from '../../dog.png';
 import { rolesDict, checkRoles } from '../../Helpers/Roles';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios/axios';
 
+const DELETE_URL = '/animal';
 function AnimalCard({ animal, from, fetchData, openRequest }) {
   const { authenticated, roles } = useContext(authContext);
   const navigate = useNavigate();
+  const handleDelete = (id) => {
+    axios
+      .delete(DELETE_URL + '/' + id + '?token=' + localStorage.getItem('token'))
+      .then((response) => {
+        if (response.status == 200) {
+          fetchData();
+        }
+      });
+    fetchData();
+  };
+
   return (
     <Card sx={{ maxWidth: 700 }}>
       <CardMedia component="img" height="100" image={dog} alt="exampleDog" />
@@ -58,7 +71,14 @@ function AnimalCard({ animal, from, fetchData, openRequest }) {
           </Button>
         ) : null}
         {from === 'veterinarian' || from === 'care' ? (
-          <Button size="small">Smazat zvíře</Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleDelete(animal.animal_id);
+            }}
+          >
+            Smazat zvíře
+          </Button>
         ) : null}
       </CardActions>
     </Card>

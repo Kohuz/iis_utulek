@@ -7,7 +7,7 @@ module.exports = (app) => {
   // takes boolean
   // router.post('/borrowed', animals.borrowed);
 
-  // router.delete('/', animals.delete);
+  router.delete('/:id(\\d+)', animals.deleteById);
 
   // router.put('/', animals.update);
 
