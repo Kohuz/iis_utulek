@@ -44,7 +44,7 @@ function VolunteerPage() {
         ))}
       <Typography>Dobrovolníci</Typography>
       {users
-        .filter((user) => user.verified)
+        .filter((user) => user.verified && user.is_volunteer)
         .map((user) => (
           <VolunteerCard
             key={user.user_id}

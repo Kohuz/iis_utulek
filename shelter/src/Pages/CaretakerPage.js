@@ -1,8 +1,11 @@
-import { Button, Typography, Grid } from "@mui/material";
-import React, { useState } from "react";
-import AddAnimal from "Dialogs/AddAnimal";
-import AnimalCard from "Components/Cards/AnimalCard";
-import RequestDialog from "Dialogs/RequestDialog";
+import { Button, Typography, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import AddAnimal from 'Dialogs/AddAnimal';
+import AnimalCard from 'Components/Cards/AnimalCard';
+import RequestDialog from 'Dialogs/RequestDialog';
+import axios from 'axios/axios';
+
+const ANIMALS_URL = '/animal';
 
 function CaretakerPage() {
   const [openAddAnimal, setOpenAddAnimal] = useState(false);
@@ -13,6 +16,7 @@ function CaretakerPage() {
 
   const handleCloseAddAnimal = () => {
     setOpenAddAnimal(false);
+    fetchData();
   };
   const [openRequest, setOpenRequest] = useState(false);
   //functions for handling the dialog opening
@@ -23,26 +27,23 @@ function CaretakerPage() {
   const handleCloseRequest = () => {
     setOpenRequest(false);
   };
-  const animals = [
-    {
-      id: 1,
-      name: "Alík",
-      type: "Pes",
-      age: 3,
-    },
-    {
-      id: 2,
-      name: "Micinka",
-      type: "Kočka",
-      age: 5,
-    },
-    {
-      id: 3,
-      name: "Žofka",
-      type: "Leguán",
-      age: 6,
-    },
-  ];
+  const [animals, setAnimals] = useState([]);
+  const [error, setError] = useState(null);
+
+  const fetchData = () => {
+    axios
+      .get(ANIMALS_URL + '?token=' + localStorage.getItem('token'))
+      .then((response) => {
+        console.log(response);
+        setAnimals(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchData, []);
+
   return (
     <>
       <AddAnimal open={openAddAnimal} handleClose={handleCloseAddAnimal} />
@@ -57,19 +58,19 @@ function CaretakerPage() {
               openRequest={handleOpenRequest}
               key={animal.id}
               animal={animal}
-              from={"care"}
+              from={'care'}
             ></AnimalCard>
           ))}
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Typography>Vypůjčená zvířata</Typography>
           <AnimalCard
             openRequest={handleOpenRequest}
             key={animals[0].id}
             animal={animals[0]}
-            from={"care"}
+            from={'care'}
           ></AnimalCard>
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
