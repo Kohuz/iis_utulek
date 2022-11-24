@@ -1,9 +1,10 @@
 import { Button, FormControlLabel, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { validateEmail } from 'Helpers/validateEmail';
 import axios from 'axios/axios';
 import { useNavigate } from 'react-router-dom';
+import authContext from 'Helpers/AuthContext';
 
 const useStyles = makeStyles({
   form: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 
 const USR_URL = '/user/';
 function ProfilePage() {
+  const { roles } = useContext(authContext);
   const navigate = useNavigate();
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -39,13 +41,24 @@ function ProfilePage() {
       return;
     }
 
+    let updateObject = {};
+    if (email != '') {
+      updateObject.email = email;
+    }
+    if (password != '') {
+      updateObject.password = password;
+    }
+    if (address != '') {
+      updateObject.address = address;
+    }
+    if (bankAccount != '') {
+      updateObject.bankAccount = bankAccount;
+    }
     axios
       .put(
-        USR_URL,
+        USR_URL + '?token=' + localStorage.getItem('token'),
         JSON.stringify({
-          email: email,
-          password: password,
-          is_volunteer: true,
+          updateObject,
         }),
         {
           headers: {
@@ -64,34 +77,63 @@ function ProfilePage() {
   };
   return (
     <>
-      <form>
-        <div className={classes.form}>
-          <Typography variant="h4">Změna hesla</Typography>
-          <TextField label="Heslo"></TextField>
+      <div className={classes.form}>
+        <Typography variant="h4">Změna hesla</Typography>
+        <FormControlLabel
+          control={
+            <TextField
+              autoComplete="off"
+              InputLabelProps={{ style: { fontSize: 20 } }}
+              inputProps={{ style: { fontSize: 21 } }}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              id="password"
+              label="Heslo"
+              type="password"
+              variant="outlined"
+            ></TextField>
+          }
+          labelPlacement="top"
+          label="Heslo"
+        />
 
-          <TextField label="Potvrdit heslo"></TextField>
-          <Button variant="outlined"> Potvrdit změnu</Button>
-        </div>
-      </form>
-      <form>
-        <div className={classes.form}>
-          <Typography variant="h4">Změna dalších údajů</Typography>
-          <FormControlLabel
-            control={
-              <TextField
-                InputLabelProps={{ style: { fontSize: 20 } }}
-                inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                id="email"
-                label="Email"
-                type="email"
-                variant="outlined"
-              ></TextField>
-            }
-            labelPlacement="top"
-            label="Email"
-          />
+        <FormControlLabel
+          control={
+            <TextField
+              InputLabelProps={{ style: { fontSize: 20 } }}
+              inputProps={{ style: { fontSize: 21 } }}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              value={setPasswordConfirm}
+              id="passwordConfirm"
+              label="Heslo znovu"
+              type="password"
+              variant="outlined"
+            ></TextField>
+          }
+          labelPlacement="top"
+          label="Heslo znovu  "
+        />
+      </div>
+
+      <div className={classes.form}>
+        <Typography variant="h4">Změna dalších údajů</Typography>
+        <FormControlLabel
+          control={
+            <TextField
+              InputLabelProps={{ style: { fontSize: 20 } }}
+              inputProps={{ style: { fontSize: 21 } }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              id="email"
+              label="Email"
+              type="email"
+              variant="outlined"
+            ></TextField>
+          }
+          labelPlacement="top"
+          label="Email"
+        />
+        {roles.includes(3) ? (
           <FormControlLabel
             control={
               <TextField
@@ -108,6 +150,8 @@ function ProfilePage() {
             labelPlacement="top"
             label="Bankovní účet"
           />
+        ) : null}
+        {roles.includes(2) || roles.includes(3) ? (
           <FormControlLabel
             control={
               <TextField
@@ -124,10 +168,18 @@ function ProfilePage() {
             labelPlacement="top"
             label="Adresa"
           />
+        ) : null}
 
-          <Button variant="outlined"> Potvrdit změnu</Button>
-        </div>
-      </form>
+        <Button
+          disabled={
+            password == '' && email == '' && bankAccount == '' && address == ''
+          }
+          variant="outlined"
+          onClick={() => handleSubmit()}
+        >
+          Potvrdit změnu
+        </Button>
+      </div>
     </>
   );
 }
