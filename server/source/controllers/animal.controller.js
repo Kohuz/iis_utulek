@@ -53,16 +53,29 @@ exports.findAll = (req, res) => {
       });
     });
 };
-exports.delete = (req, res) => {
+exports.deleteById = (req, res) => {
   ANIMAL.debug.log('delete called');
-  res.status(501).send();
-  return;
 
-  database.animal.destroy({
-    where: {
-      verified: false,
-    },
-  });
+  const id = req.params.id;
 
-  res.status(200).send();
+  database.animal
+    .destroy({
+      where: { animal_id: id },
+    })
+    .then((retCode) => {
+      if (retCode == 1) {
+        res.send({
+          message: 'Animal was deleted successfully!',
+        });
+      } else {
+        res.status(400).send({
+          message: 'Cannot delete Animal with id=' + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not delete Animal with id=' + id,
+      });
+    });
 };
