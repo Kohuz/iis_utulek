@@ -6,8 +6,7 @@ then
 fi
 
 start_container() {
-    local ports=$1
-    local container_name=$2
+    local container_name=$1
     podman run \
         --detach \
         --network="host" \
@@ -15,14 +14,23 @@ start_container() {
         "$container_name"
 }
 
+start_db_container() {
+    local container_name=$2
+    podman run \
+        --detach \
+        --name="$container_name" \
+        --publish "6603:3306" \
+        "$container_name"
+}
+
 start_db () {
-    start_container "6603:3306" shelter_db
+    start_db_container shelter_db
 }
 start_frontend () {
-    start_container "80:3000" shelter_frontend
+    start_container shelter_frontend
 }
 start_backend() {
-    start_container "8585:80" shelter_backend
+    start_container shelter_backend
 }
 
 case $1 in
