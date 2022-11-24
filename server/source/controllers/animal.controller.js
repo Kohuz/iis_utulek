@@ -53,3 +53,16 @@ exports.findAll = (req, res) => {
       });
     });
 };
+exports.delete = (req, res) => {
+  ANIMAL.debug.log('delete called');
+  res.status(501).send();
+  return;
+
+  database.animal.destroy({
+    where: {
+      verified: false,
+    },
+  });
+
+  res.status(200).send();
+};
