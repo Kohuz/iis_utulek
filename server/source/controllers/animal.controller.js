@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving users',
+        message: err.message || 'Some error occurred while retrieving animals',
       });
     });
 };
