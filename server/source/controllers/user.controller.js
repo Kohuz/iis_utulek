@@ -217,7 +217,7 @@ exports.findAllUnverifiedCount = (req, res) => {
   USER.debug.log('find all unverified count called');
 
   database.user
-    .findAll({ where: { verified: false } })
+    .findAll({ where: { verified: false, is_volunteer: true } })
     .then((data) => {
       res.status(200).send({
         length: data.length,
