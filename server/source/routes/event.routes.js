@@ -15,27 +15,27 @@ module.exports = (app) => {
 
   // Return this structure for animal, it should be for 2 weeks ahead.
   /* {
-            "day": "Pondělí",
+            "day": "pondělí",
             "hours": [
                 {
                     "time": 8,
-                    "walk": true,
-                    "event": false,
+                    "can_walk": false,
+                    "events": ["exam"], // e.g vaccination
                 },
                 {
                     "time": 9,
-                    "walk": true,
-                    "event": false,
+                    "can_walk": false,
+                    "events": ["exam"], // vaccination
                 },
                 {
                     "time": 10,
-                    "walk": true,
-                    "event": false,
+                    "can_walk": true, 
+                    "events": ["can_walk"], // vaccination has ended
                 },
                 {
                     "time": 11,
-                    "walk": false,
-                    "event": false,
+                    "can_walk": true,
+                    "events": ["can_walk"],
                 }
             ]
         }, */
