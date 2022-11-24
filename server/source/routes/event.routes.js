@@ -11,7 +11,7 @@ module.exports = (app) => {
   // Add parameter for user ID and animal ID, it should work the same as
   // for request (althrough there is animal).
   // For user filter out only walks.
-  router.get('/', events.findAll);
+  router.get('/animal/:id(\\d+)', events.findAllForAnimal);
 
   // Return this structure for animal, it should be for 2 weeks ahead.
   /* {

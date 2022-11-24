@@ -97,15 +97,15 @@ exports.updateById = (req, res) => {
     });
 };
 
-exports.findAll = (req, res) => {
-  EVENT.debug.log('find all called');
+exports.findAllForAnimal = (req, res) => {
+  EVENT.debug.log('find all for animal called');
   const id = req.params.id;
 
   database.animal
     .findByPk(id, { include: ['events'] })
     .then((animal) => {
       // TODO handle missing ID
-      res.status(200).send(animal);
+      res.status(200).send(animal.events);
     })
     .catch((err) => {
       res.status(500).send({
