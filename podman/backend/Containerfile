@@ -7,6 +7,6 @@ WORKDIR /iis_server/
 RUN cd /iis_server \
     && npm install
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD [ "npm", "start" ]
