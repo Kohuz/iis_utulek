@@ -104,8 +104,13 @@ exports.findAllForAnimal = (req, res) => {
   database.animal
     .findByPk(id, { include: ['events'] })
     .then((animal) => {
-      // TODO handle missing ID
-      res.status(200).send(animal.events);
+      if (animal === null || animal.events === null) {
+        res.status(404).send({
+          message: 'Animal not found',
+        });
+      } else {
+        res.status(200).send(animal.events);
+      }
     })
     .catch((err) => {
       res.status(500).send({

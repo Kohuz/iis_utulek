@@ -39,7 +39,8 @@ module.exports = (app) => {
                 }
             ]
         }, */
-  router.get('/schedule', events.getSchedule);
+
+  router.get('/animal/:id(\\d+)/schedule', events.getSchedule);
 
   app.use('/api/v1/event', router);
 };
