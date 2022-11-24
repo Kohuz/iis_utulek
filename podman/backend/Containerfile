@@ -9,4 +9,4 @@ RUN cd /iis_server \
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "node", "source/server.js" ]
