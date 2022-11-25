@@ -30,10 +30,30 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Sorry, some error occurred" + err,
       });
     });
 };
+
+exports.borrowed = (req, res) => {
+  ANIMAL.debug.log('borrowed called');
+
+  database.animal
+    .findAll({
+      where: {
+        borrowed: true,
+      },
+    })
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving animals',
+      });
+    });
+};
+
 exports.findAll = (req, res) => {
   ANIMAL.debug.log("find all called");
   ANIMAL.debug.log(req.query);
