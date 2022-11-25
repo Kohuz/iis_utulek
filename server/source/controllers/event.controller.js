@@ -46,6 +46,58 @@ exports.create = (req, res) => {
     });
 };
 
+exports.createOnDay = (req, res) => {
+  EVENT.debug.log('create on day called');
+
+  let consequent_hours = []; // e.g. [[1,2,3], [6,7,8], [10,11], [13]]
+  let hours = req.body.hours.sort((a, b) => a - b);
+
+  hours.forEach((h) => {
+    if (consequent_hours.length == 0) {
+      consequent_hours.push([h]);
+      return;
+    }
+
+    let last_sequence = consequent_hours[consequent_hours.length - 1];
+    let last_hour = last_sequence[last_sequence.length - 1];
+
+    if (h - last_hour != 1) {
+      consequent_hours.push([h]);
+    } else {
+      last_sequence.push(h);
+      consequent_hours[consequent_hours.length - 1] = last_sequence;
+    }
+  });
+
+  let events_to_create = consequent_hours.map((a) => {
+    let start = new Date(req.body.day);
+    let end = new Date(req.body.day);
+    start.setHours(a[0]);
+
+    end.setHours(a[a.length - 1]);
+    end.setMinutes(59);
+
+    let event = Object.assign({}, req.body.event);
+    event.start = start;
+    event.stop = end;
+
+    return event;
+  });
+
+  database.event
+    .bulkCreate(events_to_create)
+    .then((d) => {
+      res.status(200).send({
+        message: 'Events created successfully!',
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Sorry, some error occurred' + err,
+      });
+    });
+};
+
 exports.deleteById = (req, res) => {
   EVENT.debug.log('delete called');
   const id = req.params.id;

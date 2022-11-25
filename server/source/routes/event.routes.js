@@ -4,6 +4,8 @@ module.exports = (app) => {
 
   router.post('/', events.create);
 
+  router.post('/day', events.createOnDay);
+
   router.delete('/:id(\\d+)', events.deleteById);
 
   router.put('/:id(\\d+)', events.updateById);
