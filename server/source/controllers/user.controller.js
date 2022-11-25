@@ -90,6 +90,7 @@ exports.login = (req, res) => {
 
       res.status(200).send({
         token: token.generateAccess(values.user_id, roles),
+        user_data: data,
         roles: roles,
       });
     })
