@@ -47,7 +47,6 @@ CREATE TABLE requests (
 
 CREATE TABLE users (
     user_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    login VARCHAR(255) DEFAULT "",
     email VARCHAR(255) DEFAULT "",
     name VARCHAR(255) DEFAULT "",
     surname VARCHAR(255) DEFAULT "",
