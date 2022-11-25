@@ -1,6 +1,6 @@
 const database = require('../models');
 const url = require('url');
-const token = require('../helpers/token');
+const webtoken = require('jsonwebtoken');
 const moment = require('moment');
 const { Op } = require('sequelize');
 
@@ -82,6 +82,45 @@ exports.createOnDay = (req, res) => {
     event.stop = end;
 
     return event;
+  });
+
+  database.event
+    .bulkCreate(events_to_create)
+    .then((d) => {
+      res.status(200).send({
+        message: 'Events created successfully!',
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Sorry, some error occurred' + err,
+      });
+    });
+};
+
+exports.addWalkDays = (req, res) => {
+  EVENT.debug.log('add walk days called');
+
+  // verify was already done
+  var user_token = webtoken.decode(req.headers['authorization'].split(' ')[1]);
+
+  let events_to_create = req.body.map((day) => {
+    let start = new Date(day);
+    let end = new Date(day);
+    end.setHours(23);
+    end.setMinutes(59);
+
+    return {
+      commentary: 'Available for walks',
+      type: eventType.can_walk,
+
+      date: start,
+      start: start,
+      stop: end,
+
+      animal_id: req.params.id,
+      user_id: user_token.id,
+    };
   });
 
   database.event

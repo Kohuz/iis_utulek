@@ -15,6 +15,8 @@ module.exports = (app) => {
   // For user filter out only walks.
   router.get('/animal/:id(\\d+)', events.findAllForAnimal);
 
+  router.post('/animal/:id(\\d+)/walkDays', events.addWalkDays);
+
   // Return this structure for animal, it should be for 2 weeks ahead.
   /* {
             "day": "pondělí",
