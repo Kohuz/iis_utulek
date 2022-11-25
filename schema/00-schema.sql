@@ -91,10 +91,14 @@ CREATE TABLE animals (
 
 ALTER TABLE events ADD (
     animal_id INTEGER UNSIGNED DEFAULT 0,
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+    FOREIGN KEY (animal_id)
+        REFERENCES animals(animal_id)
+        ON DELETE CASCADE
 );
 
 ALTER TABLE requests ADD (
     animal_id INTEGER UNSIGNED DEFAULT 0,
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+    FOREIGN KEY (animal_id)
+        REFERENCES animals(animal_id)
+        ON DELETE CASCADE
 );
