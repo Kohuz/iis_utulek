@@ -89,7 +89,7 @@ exports.login = (req, res) => {
       }
 
       res.status(200).send({
-        token: token.generateAccess(data.user_id),
+        token: token.generateAccess(values.user_id, roles),
         roles: roles,
       });
     })

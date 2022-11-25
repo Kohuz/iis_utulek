@@ -14,10 +14,15 @@ const TOKEN = {
 };
 TOKEN.init();
 
-exports.generateAccess = (id) => {
-  return webtoken.sign({ token_id: id }, process.env.TOKEN_SECRET, {
-    expiresIn: '20000s',
-  });
+exports.generateAccess = (id, role) => {
+  return webtoken.sign(
+    {
+      id: id,
+      role: role,
+    },
+    process.env.TOKEN_SECRET,
+    { expiresIn: '20000s' }
+  );
 };
 
 // Express callback functions for token authentication, because of that it
