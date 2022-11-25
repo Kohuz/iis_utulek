@@ -28,17 +28,15 @@ exports.generateAccess = (id, role) => {
 // Express callback functions for token authentication, because of that it
 // has a third argument, next.
 exports.authenticate = (req, res, next) => {
-  const token = req.query.token;
+  const authHeader = req.headers['authorization'];
+  const token = authHeader ? authHeader.split(' ')[1] : null;
 
   if (!token) {
     res.status(401).send({
-      message: 'Token does not exists',
+      message: 'Token was not provided',
     });
     return;
   }
-
-  // It is not needed from this point and it complicates existing code
-  delete req.query.token;
 
   webtoken.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     TOKEN.debug.log(err);
