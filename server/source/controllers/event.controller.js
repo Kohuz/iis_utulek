@@ -196,12 +196,17 @@ exports.getSchedule = (req, res) => {
           }
         });
 
-        days[days.length - 1].hours.push({
-          time: now_date.hour(),
-          events: event_types,
-          can_walk:
-            event_types.includes(eventType.can_walk) && event_types.length == 1,
-        });
+        let now_hour = now_date.hour();
+
+        if (now_hour >= 8 && now_hour <= 17) {
+          days[days.length - 1].hours.push({
+            time: now_hour,
+            events: event_types,
+            can_walk:
+              event_types.includes(eventType.can_walk) &&
+              event_types.length == 1,
+          });
+        }
       }
 
       res.status(200).send(days);
