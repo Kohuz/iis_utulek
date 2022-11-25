@@ -1,41 +1,41 @@
-const database = require('../models');
-const url = require('url');
-const token = require('../helpers/token');
+const database = require("../models");
+const url = require("url");
+const token = require("../helpers/token");
 
 const ANIMAL = {
   debug: {
     log: (msg) => {
-      console.log('animal:', msg);
+      console.log("animal:", msg);
     },
   },
 };
 
 exports.create = (req, res) => {
-  ANIMAL.debug.log('create called');
+  ANIMAL.debug.log("create called");
 
   const animal = {
     name: req.body.name,
     type: req.body.type,
-    commentary: req.body.commentary ?? '',
+    commentary: req.body.commentary ?? "",
     age: req.body.age,
-    borrowed: 'false',
+    borrowed: "false",
   };
 
   database.animal
     .create(animal)
     .then((data) => {
       res.status(200).send({
-        message: 'Animal created successfully!',
+        message: "Animal created successfully!",
       });
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Sorry, some error occurred' + err,
+        message: "Sorry, some error occurred" + err,
       });
     });
 };
 exports.findAll = (req, res) => {
-  ANIMAL.debug.log('find all called');
+  ANIMAL.debug.log("find all called");
   ANIMAL.debug.log(req.query);
 
   const UrlQuery = req.query;
@@ -49,12 +49,34 @@ exports.findAll = (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving animals',
+        message: err.message || "Some error occurred while retrieving animals",
       });
     });
 };
+
+exports.findById = (req, res) => {
+  const id = req.params.id;
+
+  database.animal
+    .findByPk(id)
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: "Cannot find animal with id=" + id,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving animal with id=" + id,
+      });
+    });
+};
+
 exports.deleteById = (req, res) => {
-  ANIMAL.debug.log('delete called');
+  ANIMAL.debug.log("delete called");
 
   const id = req.params.id;
 
@@ -65,17 +87,17 @@ exports.deleteById = (req, res) => {
     .then((retCode) => {
       if (retCode == 1) {
         res.send({
-          message: 'Animal was deleted successfully!',
+          message: "Animal was deleted successfully!",
         });
       } else {
         res.status(400).send({
-          message: 'Cannot delete Animal with id=' + id,
+          message: "Cannot delete Animal with id=" + id,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: 'Could not delete Animal with id=' + id,
+        message: "Could not delete Animal with id=" + id,
       });
     });
 };

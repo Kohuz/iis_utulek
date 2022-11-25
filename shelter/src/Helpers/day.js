@@ -27,7 +27,7 @@ let Day = [
   {
     time: 13,
     walk: false,
-    event: false,
+    event: true,
   },
   {
     time: 14,
@@ -52,4 +52,3 @@ let Day = [
 ];
 
 export default Day;
-

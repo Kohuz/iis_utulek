@@ -6,8 +6,12 @@ import AdminSchedule from "./AdminSchedule";
 import DatePicker, { registerLocale } from "react-datepicker";
 import cs from "date-fns/locale/cs";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios/axios";
 import { addDays } from "date-fns";
+import { useEffect } from "react";
 registerLocale("cs", cs);
+
+const ANIMAL_URL = "/animal";
 
 function AnimalEventCreate() {
   const { id } = useParams();
@@ -18,6 +22,22 @@ function AnimalEventCreate() {
   const [date, setDate] = useState(new Date());
   const [dateFrom, setDateFrom] = useState(new Date());
   const [dateTo, setDateTo] = useState(new Date());
+
+  const [animal, setAnimal] = useState({});
+  const [error, setError] = useState(null);
+  const fetchData = () => {
+    axios
+      .get(ANIMAL_URL + "/" + id + "?token=" + localStorage.getItem("token"))
+      .then((response) => {
+        console.log(response);
+        setAnimal(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchData, []);
 
   return (
     <>
@@ -35,7 +55,11 @@ function AnimalEventCreate() {
                 selected={date}
                 onChange={(date) => setDate(date)}
               />
-              <AdminSchedule id={id} table={table} setTable={setTable} />
+              <AdminSchedule
+                id={animal.animal_id}
+                table={table}
+                setTable={setTable}
+              />
             </>
           ) : (
             <>
