@@ -1,5 +1,4 @@
 const database = require('../models');
-const url = require('url');
 const token = require('../helpers/token');
 
 const USER = {
