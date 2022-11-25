@@ -10,7 +10,11 @@ function UserPage() {
 
   const fetchData = () => {
     axios
-      .get(USERS_URL + '?token=' + localStorage.getItem('token'))
+      .get(USERS_URL, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         console.log(response);
         setUsers(response.data);

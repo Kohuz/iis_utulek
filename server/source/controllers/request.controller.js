@@ -16,6 +16,7 @@ exports.create = (req, res) => {
   const request = {
     name: new Date(),
     type: req.body.type,
+    //title: req.body.title,
     commentary: req.body.commentary ?? '',
     state: 'pending',
     animal_id: req.body.animal_id,

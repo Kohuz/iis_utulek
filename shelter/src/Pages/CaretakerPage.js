@@ -32,7 +32,11 @@ function CaretakerPage() {
 
   const fetchData = () => {
     axios
-      .get(ANIMALS_URL + '?token=' + localStorage.getItem('token'))
+      .get(ANIMALS_URL, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         console.log(response);
         setAnimals(response.data);
@@ -46,6 +50,7 @@ function CaretakerPage() {
 
   return (
     <>
+      {/*TODO: CONTINUE HERE*/}
       <AddAnimal open={openAddAnimal} handleClose={handleCloseAddAnimal} />
       <RequestDialog open={openRequest} handleClose={handleCloseRequest} />
       <Button variant="outlined" onClick={handleOpenAddAnimal}>

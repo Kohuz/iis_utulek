@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import AnimalCard from "Components/Cards/AnimalCard";
-import RequestCard from "Components/Cards/RequestCard";
-import axios from "axios/axios";
+import React, { useState, useEffect } from 'react';
+import AnimalCard from 'Components/Cards/AnimalCard';
+import RequestCard from 'Components/Cards/RequestCard';
+import axios from 'axios/axios';
 
-const ANIMALS_URL = "/animal";
+const ANIMALS_URL = '/animal';
+const REQUEST_URL = '/request';
 
 function VeterinarianPage() {
   // const animals = [
@@ -31,7 +32,11 @@ function VeterinarianPage() {
 
   const fetchData = () => {
     axios
-      .get(ANIMALS_URL + "?token=" + localStorage.getItem("token"))
+      .get(ANIMALS_URL, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         console.log(response);
         setAnimals(response.data);
@@ -42,20 +47,39 @@ function VeterinarianPage() {
   };
 
   useEffect(fetchData, []);
-  const requests = [
-    {
-      id: 1,
-      animal: "Alík",
-      author: "Pepa",
-      date: "27/11/2022",
-    },
-    {
-      id: 2,
-      animal: "Žofka",
-      author: "Pepa",
-      date: "28/11/2022",
-    },
-  ];
+  const [requests, setRequests] = useState([]);
+
+  const fetchRequests = () => {
+    axios
+      .get(REQUEST_URL, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setRequests(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchRequests, []);
+  // const requests = [
+  //   {
+  //     id: 1,
+  //     animal: 'Alík',
+  //     author: 'Pepa',
+  //     date: '27/11/2022',
+  //   },
+  //   {
+  //     id: 2,
+  //     animal: 'Žofka',
+  //     author: 'Pepa',
+  //     date: '28/11/2022',
+  //   },
+  // ];
   return (
     <>
       <h3>Požadavky</h3>
@@ -67,7 +91,7 @@ function VeterinarianPage() {
         <AnimalCard
           key={animal.id}
           animal={animal}
-          from={"veteranian"}
+          from={'veteranian'}
         ></AnimalCard>
       ))}
     </>

@@ -11,24 +11,54 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useState } from "react";
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import React, { useState } from 'react';
+import axios from 'axios/axios';
 const useStyles = makeStyles({
   field: {
-    marginBottom: "10px",
+    marginBottom: '10px',
   },
 });
 
+const CREATE_URL = '/request';
 function RequestDialog({ open, handleClose }) {
-  const types = ["Vyšetření", "Očkování", "Whatever"];
-  const [type, setType] = useState("");
+  const types = ['Vyšetření', 'Očkování', 'Whatever'];
+  const [type, setType] = useState('');
+  const [title, setTitle] = useState('');
+  const [commentary, setCommentary] = useState('');
   const classes = useStyles();
 
   const handleChange = (event) => {
     setType(event.target.value);
   };
 
+  const send = () => {
+    axios
+      .post(
+        CREATE_URL,
+        JSON.stringify({
+          // title: title,
+          type: type,
+          commentary: commentary,
+          user_id: localStorage.getItem('userId'),
+        }),
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+          handleClose();
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -42,6 +72,8 @@ function RequestDialog({ open, handleClose }) {
               margin="dense"
               id="title"
               label="Název požadavku"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
               type="text"
               fullWidth
               variant="outlined"
@@ -53,6 +85,8 @@ function RequestDialog({ open, handleClose }) {
             id="title"
             label="Text požadavku"
             type="text"
+            onChange={(e) => setCommentary(e.target.value)}
+            value={commentary}
             fullWidth
             variant="outlined"
           ></TextField>
@@ -77,7 +111,9 @@ function RequestDialog({ open, handleClose }) {
           <Button size="large" onClick={handleClose}>
             Zrušit
           </Button>
-          <Button size="large">Odeslat</Button>
+          <Button size="large" onClick={send}>
+            Odeslat
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,22 +1,24 @@
-import React from "react";
-import { Button, TextField } from "@mui/material";
-import { useParams } from "react-router-dom";
-import Day from "../Helpers/day";
-import DatePicker, { registerLocale } from "react-datepicker";
-import cs from "date-fns/locale/cs";
-import axios from "axios/axios";
+import React from 'react';
+import { Button, TextField } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import Day from '../Helpers/day';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import cs from 'date-fns/locale/cs';
+import axios from 'axios/axios';
 
-import "react-datepicker/dist/react-datepicker.css";
-import { addDays } from "date-fns";
-import { useState } from "react";
-import { useEffect } from "react";
-registerLocale("cs", cs);
+import 'react-datepicker/dist/react-datepicker.css';
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+import { useEffect } from 'react';
+registerLocale('cs', cs);
 
-const ANIMAL_URL = "/animal";
+const ANIMAL_URL = '/animal';
 
 function Schedule() {
   const [startDate, setStartDate] = useState(new Date());
-  const [day, setDay] = useState(Day);
+  const [day, setDay] = useState([]);
+
+  //const [day, setDay] = useState([Day]);
   const { id } = useParams();
   const path = window.location.pathname;
 
@@ -24,7 +26,11 @@ function Schedule() {
   const [error, setError] = useState(null);
   const fetchData = () => {
     axios
-      .get(ANIMAL_URL + "/" + id + "?token=" + localStorage.getItem("token"))
+      .get(ANIMAL_URL + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         console.log(response);
         setAnimal(response.data);
@@ -35,6 +41,24 @@ function Schedule() {
   };
 
   useEffect(fetchData, []);
+
+  const fetchSchedule = () => {
+    axios
+      .get('event/animal/' + 3 + '/schedule', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response.data[0]);
+        setDay(response.data[0]);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchSchedule, []);
   return (
     <>
       <table>
@@ -63,7 +87,7 @@ function Schedule() {
               <td>
                 <Button
                   variant="contained"
-                  color={hour.walk ? "warning" : "success"}
+                  color={hour.walk ? 'warning' : 'success'}
                   disabled={hour.event}
                   onClick={() => {
                     let newArr = [...day];

@@ -56,7 +56,7 @@ function ProfilePage() {
     }
     axios
       .put(
-        USR_URL + '?token=' + localStorage.getItem('token'),
+        USR_URL,
         JSON.stringify({
           updateObject,
         }),
@@ -64,6 +64,7 @@ function ProfilePage() {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
         }
       )

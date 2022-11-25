@@ -7,14 +7,14 @@ import {
   Button,
   CardHeader,
   Avatar,
-} from "@mui/material";
-import React, { useContext, useState } from "react";
-import axios from "axios/axios";
-import authContext from "Helpers/AuthContext";
-import { deepOrange } from "@mui/material/colors";
-import dog from "../../dog.png";
+} from '@mui/material';
+import React, { useContext, useState } from 'react';
+import axios from 'axios/axios';
+import authContext from 'Helpers/AuthContext';
+import { deepOrange } from '@mui/material/colors';
+import dog from '../../dog.png';
 
-const USER_URL = "/user";
+const USER_URL = '/user';
 function VolunteerCard({ user, users, setUsers, fetchData }) {
   const [loading, setLoading] = useState(false);
   const { authenticated, roles } = useContext(authContext);
@@ -22,16 +22,13 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
     const newUsers = users.filter((user) => id !== user.user_id);
     setUsers(newUsers);
     axios
-      .put(
-        USER_URL + "/" + id + "?token=" + localStorage.getItem("token"),
-        JSON.stringify({ verified: true }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      )
+      .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
       .then((response) => {
         if (response.status == 200) {
           // let newArr = [...users];
@@ -47,7 +44,11 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
     const newUsers = users.filter((user) => id !== user.user_id);
     setUsers(newUsers);
     axios
-      .delete(USER_URL + "/" + id + "?token=" + localStorage.getItem("token"))
+      .delete(USER_URL + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         if (response.status == 200) {
           //TODO: do this more efficiently
@@ -56,7 +57,7 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
       });
   };
   return (
-    <Card sx={{ maxWidth: 700, marginBottom: "1%" }}>
+    <Card sx={{ maxWidth: 700, marginBottom: '1%' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: deepOrange[500] }} aria-label="recipe">

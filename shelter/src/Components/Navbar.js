@@ -44,6 +44,7 @@ const useStyles = makeStyles({
 });
 
 const VOLUNTEERS_URL = '/user/unverified';
+const REQUESTS_COUNT = '/request/pending/count';
 const REQUEST_URL = '/user';
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -75,12 +76,17 @@ const Navbar = () => {
     navigate('/');
   };
   const [volunteers, setVolunteers] = useState(0);
+  const [requests, setRequests] = useState(0);
   const [error, setError] = useState(null);
 
-  const fetchData = () => {
+  const fetchUnverified = () => {
     if (authenticated && roles.includes(2)) {
       axios
-        .get(VOLUNTEERS_URL + '?token=' + localStorage.getItem('token'))
+        .get(VOLUNTEERS_URL, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        })
         .then((response) => {
           console.log(response);
           setVolunteers(response.data.length);
@@ -91,8 +97,28 @@ const Navbar = () => {
     }
   };
 
-  useInterval(fetchData, 5000);
-  useEffect(fetchData, []);
+  useInterval(fetchUnverified, 5000);
+  useEffect(fetchUnverified, []);
+  const fetchRequests = () => {
+    if (authenticated && roles.includes(2)) {
+      axios
+        .get(REQUESTS_COUNT, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setRequests(response.data.length);
+        })
+        .catch((error) => {
+          setError(error);
+        });
+    }
+  };
+
+  useInterval(fetchRequests, 5000);
+  useEffect(fetchRequests, []);
 
   const {
     setAuthenticated,
@@ -141,9 +167,15 @@ const Navbar = () => {
             {roles?.includes(3) ? (
               <Button onClick={() => navigate('/veteranian')}>
                 <Typography textAlign="center">Veteřinář</Typography>
-                <Badge className={classes.notif} badgeContent={4} color="error">
-                  <ErrorIcon color="warning" />
-                </Badge>
+                {requests != 0 ? (
+                  <Badge
+                    className={classes.notif}
+                    badgeContent={requests}
+                    color="error"
+                  >
+                    <ErrorIcon color="warning" />
+                  </Badge>
+                ) : null}
               </Button>
             ) : null}
             {roles?.includes(4) ? (

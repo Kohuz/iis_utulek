@@ -28,7 +28,7 @@ function AddAnimal({ open, handleClose }) {
 
     axios
       .post(
-        CREATE_URL + '?token=' + localStorage.getItem('token'),
+        CREATE_URL,
         JSON.stringify({
           name: name,
           type: type,
@@ -37,6 +37,7 @@ function AddAnimal({ open, handleClose }) {
         }),
         {
           headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },

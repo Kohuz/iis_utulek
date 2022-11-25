@@ -51,6 +51,7 @@ function LoginPage({ setLogged, logged }) {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -71,6 +72,7 @@ function LoginPage({ setLogged, logged }) {
           localStorage.setItem('authenticated', auth);
           localStorage.setItem('roles', JSON.stringify(roles));
           localStorage.setItem('token', token);
+          localStorage.setItem('userId', response.data.user_data.user_id);
 
           navigate(from, { replace: true });
         } else {

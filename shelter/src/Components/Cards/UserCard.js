@@ -19,16 +19,13 @@ function UserCard({ user, users, setUsers, fetchData }) {
   const { authenticated, roles } = useContext(authContext);
   const verify = (id) => {
     axios
-      .put(
-        USER_URL + '/' + id + '?token=' + localStorage.getItem('token'),
-        JSON.stringify({ verified: true }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      )
+      .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         if (response.status == 200) {
           //let newArr = [...users];
@@ -42,7 +39,11 @@ function UserCard({ user, users, setUsers, fetchData }) {
 
   const remove = (id) => {
     axios
-      .delete(USER_URL + '/' + id + '?token=' + localStorage.getItem('token'))
+      .delete(USER_URL + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
         if (response.status == 200) {
           //TODO: do this more efficiently
