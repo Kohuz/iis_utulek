@@ -262,11 +262,13 @@ exports.getSchedule = (req, res) => {
 
         let last_day = days.length === 0 ? '' : days[days.length - 1].day;
         let now_day = now_date.locale('cs').format('dddd');
+        //let date = now_date.slice(0, 10);
 
         if (now_day !== last_day) {
           days.push({
             day: now_day,
             hours: [],
+            date: now_date.toString().slice(0, 10),
           });
         }
 

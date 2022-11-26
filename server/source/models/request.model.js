@@ -23,6 +23,12 @@ module.exports = (sequelize, Sequelize) => {
       state: {
         type: Sequelize.STRING,
       },
+      author: {
+        type: Sequelize.STRING,
+      },
+      animal_name: {
+        type: Sequelize.STRING,
+      },
     },
     {
       timestamps: false,

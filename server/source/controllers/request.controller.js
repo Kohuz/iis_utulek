@@ -18,6 +18,8 @@ exports.create = (req, res) => {
     type: req.body.type,
     commentary: req.body.commentary ?? '',
     state: 'pending',
+    author: req.body.author,
+    animal_name: req.body.animal_name,
     animal_id: req.body.animal_id,
     user_id: req.body.user_id,
   };
