@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 const CREATE_URL = '/request';
-function RequestDialog({ open, handleClose }) {
+function RequestDialog({ open, handleClose, id, name }) {
   const types = ['Vyšetření', 'Očkování', 'Whatever'];
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
@@ -42,6 +42,9 @@ function RequestDialog({ open, handleClose }) {
           type: type,
           commentary: commentary,
           user_id: localStorage.getItem('userId'),
+          animal_id: id,
+          author: localStorage.getItem('name'),
+          animal_name: name,
         }),
         {
           headers: {
@@ -62,7 +65,7 @@ function RequestDialog({ open, handleClose }) {
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Nový požadavek pro zvíře TODO</DialogTitle>
+        <DialogTitle>Nový požadavek pro zvíře {name} </DialogTitle>
         <DialogContent>
           <div>
             <TextField

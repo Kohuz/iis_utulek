@@ -52,19 +52,27 @@ function CaretakerPage() {
     <>
       {/*TODO: CONTINUE HERE*/}
       <AddAnimal open={openAddAnimal} handleClose={handleCloseAddAnimal} />
-      <RequestDialog open={openRequest} handleClose={handleCloseRequest} />
+      {/* <RequestDialog open={openRequest} handleClose={handleCloseRequest} /> */}
       <Button variant="outlined" onClick={handleOpenAddAnimal}>
         Zavést nové zvíře
       </Button>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           {animals.map((animal) => (
-            <AnimalCard
-              openRequest={handleOpenRequest}
-              key={animal.id}
-              animal={animal}
-              from={'care'}
-            ></AnimalCard>
+            <>
+              <AnimalCard
+                openRequest={handleOpenRequest}
+                key={animal.animal_id}
+                animal={animal}
+                from={'care'}
+              ></AnimalCard>
+              <RequestDialog
+                open={openRequest}
+                id={animal.animal_id}
+                name={animal.name}
+                handleClose={handleCloseRequest}
+              />
+            </>
           ))}
         </Grid>
         {/* <Grid item xs={6}>

@@ -97,7 +97,7 @@ const Navbar = () => {
     }
   };
 
-  useInterval(fetchUnverified, 5000);
+  //useInterval(fetchUnverified, 5000);
   useEffect(fetchUnverified, []);
   const fetchRequests = () => {
     if (authenticated && roles.includes(2)) {
@@ -117,7 +117,8 @@ const Navbar = () => {
     }
   };
 
-  useInterval(fetchRequests, 5000);
+  //TODO: UNCOMMENT
+  // useInterval(fetchRequests, 5000);
   useEffect(fetchRequests, []);
 
   const {

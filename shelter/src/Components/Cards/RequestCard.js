@@ -5,9 +5,9 @@ import {
   Typography,
   CardActions,
   Button,
-} from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+} from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RequestCard({ request }) {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function RequestCard({ request }) {
     <Card sx={{ maxWidth: 700 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Zvíře: {request.animal}
+          Zvíře: {request.animal_name}
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
           Autor: {request.author}
@@ -27,7 +27,7 @@ function RequestCard({ request }) {
       <CardActions>
         <Button
           size="small"
-          onClick={() => navigate("/veteranian/event/" + request.id)}
+          onClick={() => navigate('/veteranian/event/' + request.id)}
         >
           Naplánovat událost
         </Button>

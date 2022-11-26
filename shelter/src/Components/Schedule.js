@@ -13,10 +13,12 @@ import { useEffect } from 'react';
 registerLocale('cs', cs);
 
 const ANIMAL_URL = '/animal';
+const CREATE_URL = '/event/day';
 
 function Schedule() {
   const [startDate, setStartDate] = useState(new Date());
-  const [day, setDay] = useState([]);
+  const [schedule, setSchedule] = useState([]);
+  const [index, setIndex] = useState(0);
 
   //const [day, setDay] = useState([Day]);
   const { id } = useParams();
@@ -24,24 +26,6 @@ function Schedule() {
 
   const [animal, setAnimal] = useState({});
   const [error, setError] = useState(null);
-  const fetchData = () => {
-    axios
-      .get(ANIMAL_URL + '/' + id, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setAnimal(response.data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-  };
-
-  useEffect(fetchData, []);
-
   const fetchSchedule = () => {
     axios
       .get('event/animal/' + 3 + '/schedule', {
@@ -50,8 +34,7 @@ function Schedule() {
         },
       })
       .then((response) => {
-        console.log(response.data[0]);
-        setDay(response.data[0]);
+        setSchedule(response.data);
       })
       .catch((error) => {
         setError(error);
@@ -59,6 +42,67 @@ function Schedule() {
   };
 
   useEffect(fetchSchedule, []);
+  const fetchData = () => {
+    axios
+      .get(ANIMAL_URL + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        //console.log(response);
+        setAnimal(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  const createEvent = () => {
+    let arr = schedule[index].hours.filter((hour) =>
+      hour.events.includes('current_walk')
+    );
+    let s = arr.map((item) => item.time);
+    let date =
+      startDate.getFullYear() +
+      '-' +
+      (startDate.getMonth() + 1) +
+      '-' +
+      startDate.getDate();
+    axios
+      .post(
+        CREATE_URL,
+        JSON.stringify({
+          event: {
+            title: '',
+            type: 'walk',
+            animal_id: id,
+            user_id: parseInt(localStorage.getItem('userId')),
+          },
+
+          hours: s,
+          day: date,
+        }),
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+          fetchData();
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
+
+  useEffect(fetchData, []);
+
+  console.log(schedule[index]);
   return (
     <>
       <table>
@@ -68,44 +112,83 @@ function Schedule() {
           minDate={new Date()}
           maxDate={addDays(new Date(), 14)}
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={(date) => {
+            setStartDate(date);
+            let diff =
+              Math.floor((date - new Date()) / (1000 * 60 * 60 * 24)) + 1;
+            console.log(diff);
+            setIndex(diff);
+          }}
         />
+        {/*
         <tbody>
           <Button
             onClick={() => {
-              let newArr = [...day];
+              let newArr = [...schedule];
               newArr.forEach((hour) => {
                 hour.walk = !hour.walk;
               });
-              setDay(newArr);
+              setSchedule(newArr);
             }}
           >
             Celý den
-          </Button>
+          </Button> */}
+        <tbody>
           <tr>
-            {day.map((hour, j) => (
-              <td>
-                <Button
-                  variant="contained"
-                  color={hour.walk ? 'warning' : 'success'}
-                  disabled={hour.event}
-                  onClick={() => {
-                    let newArr = [...day];
-                    let val = newArr.find((y) => y.time === hour.time).walk;
-                    console.log(newArr.find((y) => y.time === hour.time).walk);
-                    newArr.find((y) => y.time === hour.time).walk = !val;
-                    setDay(newArr);
-                  }}
-                >
-                  {hour.time}
-                </Button>
-              </td>
-            ))}
+            {schedule.length != 0
+              ? schedule[index].hours.map((hour, j) => (
+                  <td>
+                    <Button
+                      variant="contained"
+                      color={
+                        hour.events.includes('current_walk')
+                          ? 'warning'
+                          : 'success'
+                      }
+                      disabled={
+                        hour.events.includes('appointment') ||
+                        hour.events.includes('exam')
+                      }
+                      onClick={() => {
+                        let newArr = [...schedule];
+
+                        let val = newArr[index].hours.find(
+                          (y) => y === hour
+                        ).events;
+
+                        // console.log(
+                        //   newArr.find((y) => y.time === hour.time).walk
+                        // );
+                        if (val.includes('current_walk')) {
+                          val.length = 0;
+                          console.log('eher');
+                        } else {
+                          val.push('current_walk');
+                        }
+
+                        // //newArr.find((y) => y.time === hour.time).walk = !val;
+                        setSchedule(newArr);
+                      }}
+                    >
+                      {hour.time}
+                    </Button>
+                  </td>
+                ))
+              : null}
           </tr>
         </tbody>
       </table>
-      <Button onClick={() => console.log(day)}>table content</Button>
-      <Button>Rezervovat</Button>
+      {/* {schedule.length != 0
+        ? schedule[index].hours.map((hour) => <p>{hour.time}</p>)
+        : null} */}
+      <Button
+        onClick={() => {
+          //console.log(schedule[index]);
+          createEvent();
+        }}
+      >
+        Rezervovat
+      </Button>
     </>
   );
 }
