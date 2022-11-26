@@ -216,7 +216,15 @@ exports.findAllForUser = (req, res) => {
   const id = req.params.id;
 
   database.user
-    .findByPk(id, { include: ['events'] })
+    .findByPk(id, {
+      include: [
+        {
+          model: database.event,
+          include: 'animal',
+          as: 'events',
+        },
+      ],
+    })
     .then((user) => {
       if (user === null || user.events === null) {
         res.status(404).send({
