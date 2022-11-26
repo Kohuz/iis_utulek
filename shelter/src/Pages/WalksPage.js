@@ -1,34 +1,35 @@
-import { Button, Typography, Grid, Box, Tabs, Tab } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import WalkCard from "Components/Cards/WalkCard";
-import Schedule from "Components/Schedule";
-import React, { useState } from "react";
+import { Button, Typography, Grid, Box, Tabs, Tab } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import WalkCard from 'Components/Cards/WalkCard';
+import Schedule from 'Components/Schedule';
+import axios from 'axios/axios';
+import React, { useState, useEffect } from 'react';
 
-const walks = [
-  {
-    id: 1,
-    animal: "Žofka",
-    date: "2022-11-13",
-  },
-  {
-    id: 2,
-    animal: "Alík",
-    date: "2022-11-13",
-  },
-  {
-    id: 3,
-    animal: "Žofka",
-    date: "2022-12-15",
-  },
-];
-const useStyles = makeStyles({
-  tabBox: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const WALKS_URL = 'event/animal/';
+
 function WalksPage() {
-  const classes = useStyles();
+  const [walks, setWalks] = useState([]);
+  const [error, setError] = useState(null);
+
+  const fetchData = () => {
+    axios
+      .get(WALKS_URL + localStorage.getItem('userId'), {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.length != 0) {
+          setWalks(response.data.filter((item) => item.type == 'walk'));
+        }
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchData, []);
   const [filter, setFilter] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -42,8 +43,8 @@ function WalksPage() {
   let date = new Date(y, m, d);
   return (
     <>
-      <Grid className={classes.tabBox} container>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Grid container>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={filter} onChange={handleChange}>
             <Tab label="Nadcházející" value={0} />
             <Tab label="Proběhlé" value={1} />

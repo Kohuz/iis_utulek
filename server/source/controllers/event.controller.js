@@ -211,6 +211,28 @@ exports.findAllForAnimal = (req, res) => {
     });
 };
 
+exports.findAllForUser = (req, res) => {
+  EVENT.debug.log('find all for user called');
+  const id = req.params.id;
+
+  database.user
+    .findByPk(id, { include: ['events'] })
+    .then((user) => {
+      if (user === null || user.events === null) {
+        res.status(404).send({
+          message: 'User not found',
+        });
+      } else {
+        res.status(200).send(user.events);
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Failed to get events for user ' + err,
+      });
+    });
+};
+
 exports.getSchedule = (req, res) => {
   EVENT.debug.log('get schedule called');
   const hour = 60 * 60 * 1000;
