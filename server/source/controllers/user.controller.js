@@ -1,5 +1,6 @@
 const database = require('../models');
 const token = require('../helpers/token');
+const bcrypt = require('bcrypt');
 
 const USER = {
   debug: {
@@ -7,6 +8,7 @@ const USER = {
       console.log('user:', msg);
     },
   },
+  saltRounds: 10,
 };
 
 const rolesDict = {
@@ -16,6 +18,20 @@ const rolesDict = {
   Volunteer: 4,
 };
 
+const generateHash = (password) => {
+  bcrypt
+    .hash(password, USER.saltRounds)
+    .then((hash) => {
+      return hash;
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err,
+      });
+      return null;
+    });
+};
+
 exports.create = (req, res) => {
   USER.debug.log('Create called');
 
@@ -23,7 +39,7 @@ exports.create = (req, res) => {
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
-    password: req.body.password, // TODO HASH THIS!!!!!!!
+    password: generateHash(req.body.password),
     bank_account: req.body.bank_account ?? '',
     address: req.body.address ?? '',
     is_volunteer: req.body.is_volunteer ?? false,
@@ -32,6 +48,10 @@ exports.create = (req, res) => {
     is_veterinarian: req.body.is_veterinarian ?? false,
     verified: req.body.verified ?? false,
   };
+
+  if (!user.password) {
+    return;
+  }
 
   database.user
     .create(user)
