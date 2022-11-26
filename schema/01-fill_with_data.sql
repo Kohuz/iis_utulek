@@ -25,7 +25,7 @@ VALUES
         'dobrovolna@test.test',
         'Dora',
         'Dobrovolná',
-        '$2b$10$Bm3GBVbfcwic.KZKahTS6O', --another
+        '$2b$10$Bm3GBVbfcwic.KZKahTS6O', -- another
         true
     );
 
