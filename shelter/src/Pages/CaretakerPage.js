@@ -28,6 +28,7 @@ function CaretakerPage() {
     setOpenRequest(false);
   };
   const [animals, setAnimals] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchData = () => {
@@ -48,6 +49,40 @@ function CaretakerPage() {
 
   useEffect(fetchData, []);
 
+  const fetchRequests = () => {
+    axios
+      .get('/request/' + localStorage.getItem('userId'), {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setRequests(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchRequests, []);
+  const remove = (id) => {
+    const newRequests = requests.filter((request) => id !== request.request_id);
+    setRequests(newRequests);
+    axios
+      .delete('request/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          fetchData();
+        }
+      })
+      .catch(() => fetchData());
+  };
+
   return (
     <>
       {/*TODO: CONTINUE HERE*/}
@@ -64,6 +99,9 @@ function CaretakerPage() {
                 openRequest={handleOpenRequest}
                 key={animal.animal_id}
                 animal={animal}
+                animals={animals}
+                setAnimals={setAnimals}
+                fetchData={fetchData}
                 from={'care'}
               ></AnimalCard>
               <RequestDialog
@@ -75,15 +113,19 @@ function CaretakerPage() {
             </>
           ))}
         </Grid>
-        {/* <Grid item xs={6}>
-          <Typography>Vypůjčená zvířata</Typography>
-          <AnimalCard
-            openRequest={handleOpenRequest}
-            key={animals[0].id}
-            animal={animals[0]}
-            from={'care'}
-          ></AnimalCard>
-        </Grid> */}
+        <Grid item xs={6}>
+          <Typography variant="h5">Zamítnuté žádosti</Typography>
+          {requests
+            .filter((request) => request.state == 'rejected')
+            .map((request) => (
+              <>
+                <Typography>Žádost na zvíře {request.animal_name}</Typography>
+                <Button onClick={() => remove(request.request_id)}>
+                  Odstranit žádost
+                </Button>
+              </>
+            ))}
+        </Grid>
       </Grid>
     </>
   );

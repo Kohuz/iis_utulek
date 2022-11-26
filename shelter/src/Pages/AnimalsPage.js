@@ -47,6 +47,8 @@ function AnimalsPage() {
               key={animal.animal_id}
               animal={animal}
               fetchData={fetchData}
+              animals={animals}
+              setAnimals={setAnimals}
               from={'animals'}
             ></AnimalCard>
           </Grid>

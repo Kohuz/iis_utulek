@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const CREATE_URL = '/request';
 function RequestDialog({ open, handleClose, id, name }) {
-  const types = ['Vyšetření', 'Očkování', 'Whatever'];
+  const types = ['Vyšetření', 'Očkování'];
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
   const [commentary, setCommentary] = useState('');
@@ -34,6 +34,7 @@ function RequestDialog({ open, handleClose, id, name }) {
   };
 
   const send = () => {
+    handleClose();
     axios
       .post(
         CREATE_URL,

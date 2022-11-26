@@ -7,26 +7,6 @@ const ANIMALS_URL = '/animal';
 const REQUEST_URL = '/request';
 
 function VeterinarianPage() {
-  // const animals = [
-  //   {
-  //     id: 1,
-  //     name: "Alík",
-  //     type: "Pes",
-  //     age: 3,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Micinka",
-  //     type: "Kočka",
-  //     age: 5,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Žofka",
-  //     type: "Leguán",
-  //     age: 6,
-  //   },
-  // ];
   const [animals, setAnimals] = useState([]);
   const [error, setError] = useState(null);
 
@@ -83,14 +63,23 @@ function VeterinarianPage() {
   return (
     <>
       <h3>Požadavky</h3>
-      {requests.map((request) => (
-        <RequestCard request={request}></RequestCard>
-      ))}
+      {requests
+        .filter((request) => request.state == 'pending')
+        .map((request) => (
+          <RequestCard
+            request={request}
+            requests={requests}
+            setRequests={setRequests}
+            fetchRequests={fetchRequests}
+          ></RequestCard>
+        ))}
       <h3>Zvířata</h3>
       {animals.map((animal) => (
         <AnimalCard
           key={animal.id}
           animal={animal}
+          animals={animals}
+          setAnimals={setAnimals}
           from={'veterinarian'}
         ></AnimalCard>
       ))}

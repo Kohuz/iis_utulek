@@ -9,15 +9,25 @@ import {
 import React, { useContext } from 'react';
 import authContext from 'Helpers/AuthContext';
 import dog from '../../dog.png';
+
 import { rolesDict, checkRoles } from '../../Helpers/Roles';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios/axios';
 
 const DELETE_URL = '/animal';
-function AnimalCard({ animal, from, fetchData, openRequest }) {
+function AnimalCard({
+  animal,
+  from,
+  fetchData,
+  openRequest,
+  animals,
+  setAnimals,
+}) {
   const { authenticated, roles } = useContext(authContext);
   const navigate = useNavigate();
   const handleDelete = (id) => {
+    const newAnimals = animals.filter((animal) => id !== animal.animal_id);
+    setAnimals(newAnimals);
     axios
       .delete(DELETE_URL + '/' + id, {
         headers: {
@@ -28,8 +38,8 @@ function AnimalCard({ animal, from, fetchData, openRequest }) {
         if (response.status == 200) {
           fetchData();
         }
-      });
-    fetchData();
+      })
+      .catch(() => fetchData());
   };
 
   return (
@@ -77,7 +87,7 @@ function AnimalCard({ animal, from, fetchData, openRequest }) {
         {from === 'veterinarian' ? (
           <Button
             size="small"
-            onClick={() => navigate('/veteranian/event/' + animal.animal_id)}
+            onClick={() => navigate('/veteranian/event/' + animals.animal_id)}
           >
             Vytvořit událost pro zvíře
           </Button>

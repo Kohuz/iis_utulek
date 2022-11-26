@@ -35,12 +35,12 @@ function WalksPage() {
   const handleChange = (event, newValue) => {
     setFilter(newValue);
   };
-  let q = new Date();
-  let m = q.getMonth();
-  let d = q.getDay();
-  let y = q.getFullYear();
+  // let q = new Date();
+  // let m = q.getMonth();
+  // let d = q.getDay();
+  // let y = q.getFullYear();
 
-  let date = new Date(y, m, d);
+  // let date = new Date(y, m, d);
   return (
     <>
       <Grid container>
@@ -53,10 +53,21 @@ function WalksPage() {
       </Grid>
       {walks
         .filter((walk) =>
-          filter ? new Date(walk.date) > date : new Date(walk.date) < date
+          filter
+            ? new Date(walk.start) < new Date()
+            : new Date(walk.start) > new Date()
         )
+        .sort(function (a, b) {
+          return new Date(b.start) - new Date(a.start);
+        })
         .map((walk) => (
-          <WalkCard walk={walk} />
+          <WalkCard
+            walk={walk}
+            walks={walks}
+            setWalks={setWalks}
+            upcoming={filter ? false : true}
+            fetchData={fetchData}
+          />
         ))}
     </>
   );

@@ -3,6 +3,7 @@ module.exports = (app) => {
   const router = require('express').Router();
 
   router.post('/', events.create);
+  router.get('/', events.findAll);
 
   router.post('/day', events.createOnDay);
 

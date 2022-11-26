@@ -38,6 +38,27 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAllwithId = (req, res) => {
+  REQUEST.debug.log('find all called');
+  REQUEST.debug.log(req.query);
+
+  database.request
+    .findAll({
+      where: {
+        user_id: req.params.id,
+      },
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving animals',
+      });
+    });
+};
+
 exports.findAll = (req, res) => {
   REQUEST.debug.log('find all called');
   REQUEST.debug.log(req.query);
@@ -55,8 +76,8 @@ exports.findAll = (req, res) => {
     });
 };
 exports.getPendingCount = (req, res) => {
-  REQUEST.debug.log('find all called');
-  REQUEST.debug.log(req.query);
+  // REQUEST.debug.log('find all called');
+  // REQUEST.debug.log(req.query);
 
   database.request
     .findAll({
@@ -65,7 +86,7 @@ exports.getPendingCount = (req, res) => {
       },
     })
     .then((data) => {
-      res.send(data.length);
+      res.send({ length: data.length });
     })
     .catch((err) => {
       console.log(err);
@@ -96,7 +117,7 @@ exports.getPending = (req, res) => {
 };
 
 exports.findAllwithId = (req, res) => {
-  EVENT.debug.log('find all for user called');
+  REQUEST.debug.log('find all for user called');
   const id = req.params.id;
 
   database.user

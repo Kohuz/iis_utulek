@@ -8,9 +8,58 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios/axios';
 
-function RequestCard({ request }) {
+function RequestCard({ request, requests, setRequests, fetchRequests }) {
   const navigate = useNavigate();
+  const reject = () => {
+    const newRequests = requests.filter(
+      (deleteReq) => deleteReq.request_id !== requests.request_id
+    );
+    setRequests(newRequests);
+    axios
+      .put(
+        'request/' + request.request_id,
+        JSON.stringify({
+          state: 'rejected',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+          fetchRequests();
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
+  const remove = () => {
+    const newRequests = requests.filter(
+      (deleteReq) => deleteReq.request_id !== requests.request_id
+    );
+    setRequests(newRequests);
+    axios
+      .delete('request/' + request.request_id, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          fetchRequests();
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
   return (
     <Card sx={{ maxWidth: 700 }}>
       <CardContent>
@@ -31,8 +80,12 @@ function RequestCard({ request }) {
         >
           Naplánovat událost
         </Button>
-
-        <Button size="small">Zamítnout</Button>
+        <Button size="small" onClick={() => remove()}>
+          Smazat jako vyřešenou
+        </Button>
+        <Button size="small" onClick={() => reject()}>
+          Zamítnout
+        </Button>
       </CardActions>
     </Card>
   );

@@ -25,7 +25,7 @@ function AddAnimal({ open, handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    handleClose();
     axios
       .post(
         CREATE_URL,

@@ -97,7 +97,7 @@ const Navbar = () => {
     }
   };
 
-  //useInterval(fetchUnverified, 5000);
+  useInterval(fetchUnverified, 5000);
   useEffect(fetchUnverified, []);
   const fetchRequests = () => {
     if (authenticated && roles.includes(2)) {
@@ -118,7 +118,7 @@ const Navbar = () => {
   };
 
   //TODO: UNCOMMENT
-  // useInterval(fetchRequests, 5000);
+  useInterval(fetchRequests, 5000);
   useEffect(fetchRequests, []);
 
   const {
@@ -215,10 +215,7 @@ const Navbar = () => {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                    <Avatar> {localStorage.getItem('name')[0]}</Avatar>
                   </IconButton>
                 </Tooltip>
                 <Menu

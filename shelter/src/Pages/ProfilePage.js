@@ -32,14 +32,14 @@ function ProfilePage() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const handleSubmit = () => {
-    if (!validateEmail(email)) {
-      setErrEmail(true);
-      return;
-    }
-    if (password != passwordConfirm) {
-      setErrPass(true);
-      return;
-    }
+    // if (!validateEmail(email)) {
+    //   setErrEmail(true);
+    //   return;
+    // }
+    // if (password != passwordConfirm) {
+    //   setErrPass(true);
+    //   return;
+    // }
 
     let updateObject = {};
     if (email != '') {
@@ -56,7 +56,7 @@ function ProfilePage() {
     }
     axios
       .put(
-        USR_URL,
+        USR_URL + '/' + localStorage.getItem('userId'),
         JSON.stringify({
           updateObject,
         }),

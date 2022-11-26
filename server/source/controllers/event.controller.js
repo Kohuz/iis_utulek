@@ -97,6 +97,23 @@ exports.createOnDay = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+  EVENT.debug.log('find all called');
+  EVENT.debug.log(req.query);
+
+  database.event
+    .findAll({})
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: err.message || 'Some error occurred while retrieving users',
+      });
+    });
+};
+
 exports.addWalkDays = (req, res) => {
   EVENT.debug.log('add walk days called');
 
