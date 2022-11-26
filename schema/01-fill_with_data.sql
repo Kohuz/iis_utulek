@@ -6,7 +6,7 @@ VALUES
         "petr@test.test",
         "Petr",
         "Pečovatel",
-        "123456",
+        "$2b$10$ZgDyhKAsE97AeBLXDQW20u", -- 123456
         "000",
         true
     );
@@ -18,14 +18,14 @@ VALUES
         "dobrovolny@test.test",
         "Dan",
         "Dobrovolný",
-        "another",
+        "$2b$10$hI5Yxn33SOQpaAKq0JrcNe", -- another
         true
     ),
     (
         "dobrovolna@test.test",
         "Dora",
         "Dobrovolná",
-        "another",
+        "$2b$10$Bm3GBVbfcwic.KZKahTS6O", --another
         true
     );
 
@@ -36,7 +36,7 @@ VALUES
         "doctor1@veterinar-test.test",
         "Václav",
         "Veterinář",
-        "doktor123",
+        "$2b$10$PKSEMh0GjycDvgfReeAw4u", -- doktor123
         "001",
         true
     ),
@@ -44,7 +44,7 @@ VALUES
         "doctor2@veterinar-test.test",
         "Zdeněk",
         "Zvěrolékař",
-        "123doktro",
+        "$2b$10$YAzTa63qSWdkkzalfCJVue", -- 123doktro
         "002",
         true
     );
@@ -56,7 +56,7 @@ VALUES
         "adam.admin@test.test",
         "Adam",
         "Ajťákovič",
-        "random",
+        "$2b$10$zq96t797FUjNRmBGe8S7hu", -- random
         "003",
         true,
         true
