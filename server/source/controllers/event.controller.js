@@ -103,7 +103,7 @@ exports.addWalkDays = (req, res) => {
   // verify was already done
   var user_token = webtoken.decode(req.headers['authorization'].split(' ')[1]);
 
-  let events_to_create = req.body.map((day) => {
+  let events_to_create = req.body.days.map((day) => {
     let start = new Date(day);
     let end = new Date(day);
     end.setHours(23);

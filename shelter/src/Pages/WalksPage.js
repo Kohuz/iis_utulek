@@ -5,7 +5,7 @@ import Schedule from 'Components/Schedule';
 import axios from 'axios/axios';
 import React, { useState, useEffect } from 'react';
 
-const WALKS_URL = 'event/animal/';
+const WALKS_URL = 'event/user/';
 
 function WalksPage() {
   const [walks, setWalks] = useState([]);

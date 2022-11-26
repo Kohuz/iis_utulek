@@ -5,15 +5,15 @@ import {
   Typography,
   CardContent,
   CardActions,
-} from "@mui/material";
-import React from "react";
+} from '@mui/material';
+import React from 'react';
 
 function WalkCard({ walk }) {
   return (
-    <Card sx={{ maxWidth: 700, marginTop: "1%" }}>
+    <Card sx={{ maxWidth: 700, marginTop: '1%' }}>
       <CardContent>
         <Typography gutterBottom variant="h5">
-          Procházka s {walk.animal}
+          Procházka s {walk.animal.name}
         </Typography>
         <Typography gutterBottom variant="h6">
           {walk.date}

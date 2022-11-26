@@ -120,6 +120,7 @@ function Schedule() {
             console.log(diff);
             setIndex(diff);
           }}
+          inline
         />
         {/*
         <tbody>
@@ -149,7 +150,8 @@ function Schedule() {
                       disabled={
                         hour.events.includes('appointment') ||
                         hour.events.includes('exam') ||
-                        hour.events.includes('walk')
+                        hour.events.includes('walk') ||
+                        !hour.can_walk
                       }
                       onClick={() => {
                         let newArr = [...schedule];
