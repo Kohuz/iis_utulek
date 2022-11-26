@@ -70,9 +70,6 @@ exports.create = (req, res) => {
 exports.login = (req, res) => {
   USER.debug.log('login called');
 
-  if (req.body.login == null) {
-    req.body.login = '';
-  }
   if (req.body.email == null) {
     req.body.email = '';
   }
@@ -81,20 +78,27 @@ exports.login = (req, res) => {
     .findAll({
       where: {
         email: req.body.email,
-        password: req.body.password,
       },
     })
     .then((data) => {
-      if (data.length == 0) {
-        res.status(403).send({
-          message: 'Invalid login/email or password',
-        });
-
-        return;
+      var values = null;
+      USER.debug.log(data);
+      for (i in data) {
+        if (bcrypt.compare(req.body.password, data[i].dataValues.password)) {
+          values = data[i].dataValues;
+        }
       }
 
+      if (!values) {
+        res.status(500).send({
+          message: 'Invalid login/email or password',
+        });
+      }
+
+      // We want the password to be excluded from the response data
+      delete values.password;
+
       let roles = [];
-      let values = data[0].dataValues;
       if (values.is_admin) {
         roles.push(rolesDict.Admin);
       }
@@ -110,7 +114,7 @@ exports.login = (req, res) => {
 
       res.status(200).send({
         token: token.generateAccess(values.user_id, roles),
-        user_data: data,
+        user_data: values,
         roles: roles,
       });
     })
