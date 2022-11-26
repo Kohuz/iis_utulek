@@ -19,11 +19,11 @@ CREATE TABLE events (
     event_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     -- NOTE: in javascript models use DATE() filter function
     date DATE,
-    commentary VARCHAR(1024) DEFAULT "",
-    type VARCHAR(255) DEFAULT "",
+    commentary VARCHAR(1024) DEFAULT '',
+    type VARCHAR(255) DEFAULT '',
     start DATETIME,
     stop DATETIME,
-    state VARCHAR(255) DEFAULT "pending",
+    state VARCHAR(255) DEFAULT 'pending',
     PRIMARY KEY (event_id)
 );
 
@@ -34,10 +34,10 @@ CREATE TABLE events (
 CREATE TABLE requests (
     request_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     date DATE,
-    commentary VARCHAR(1024) DEFAULT "",
-    type VARCHAR(255) DEFAULT "",
+    commentary VARCHAR(1024) DEFAULT '',
+    type VARCHAR(255) DEFAULT '',
     -- NOTE: valid values are pending|approved|rejected
-    state VARCHAR(255) DEFAULT "pending",
+    state VARCHAR(255) DEFAULT 'pending',
     PRIMARY KEY (request_id)
 );
 
@@ -47,13 +47,13 @@ CREATE TABLE requests (
 
 CREATE TABLE users (
     user_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    email VARCHAR(255) DEFAULT "",
-    name VARCHAR(255) DEFAULT "",
-    surname VARCHAR(255) DEFAULT "",
+    email VARCHAR(255) DEFAULT '',
+    name VARCHAR(255) DEFAULT '',
+    surname VARCHAR(255) DEFAULT '',
     birth_date DATE,
-    password VARCHAR(255) DEFAULT "",
-    bank_account VARCHAR(255) DEFAULT "",
-    address VARCHAR(255) DEFAULT "",
+    password VARCHAR(255) DEFAULT '',
+    bank_account VARCHAR(255) DEFAULT '',
+    address VARCHAR(255) DEFAULT '',
     is_volunteer BOOLEAN DEFAULT false,
     is_admin BOOLEAN DEFAULT false,
     is_caretaker BOOLEAN DEFAULT false,
@@ -79,11 +79,11 @@ ALTER TABLE requests ADD (
 
 CREATE TABLE animals (
     animal_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) DEFAULT "",
-    type VARCHAR(255) DEFAULT "",
-    commentary VARCHAR(1024) DEFAULT "",
+    name VARCHAR(255) DEFAULT '',
+    type VARCHAR(255) DEFAULT '',
+    commentary VARCHAR(1024) DEFAULT '',
     age INTEGER,
-    state VARCHAR(255) DEFAULT "sheltered",
+    state VARCHAR(255) DEFAULT 'sheltered',
     -- NOTE: isn't it redundant with the state field above?
     borrowed BOOLEAN DEFAULT false,
     PRIMARY KEY (animal_id)
