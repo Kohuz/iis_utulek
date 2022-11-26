@@ -74,6 +74,15 @@ function AnimalCard({ animal, from, fetchData, openRequest }) {
             Editovat zdravotní záznam
           </Button>
         ) : null}
+        {from === 'veterinarian' ? (
+          <Button
+            size="small"
+            onClick={() => navigate('/veteranian/event/' + animal.animal_id)}
+          >
+            Vytvořit událost pro zvíře
+          </Button>
+        ) : null}
+
         {from === 'veterinarian' || from === 'care' ? (
           <Button
             size="small"

@@ -91,7 +91,7 @@ function VeterinarianPage() {
         <AnimalCard
           key={animal.id}
           animal={animal}
-          from={'veteranian'}
+          from={'veterinarian'}
         ></AnimalCard>
       ))}
     </>

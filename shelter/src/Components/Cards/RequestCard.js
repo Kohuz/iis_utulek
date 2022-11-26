@@ -27,7 +27,7 @@ function RequestCard({ request }) {
       <CardActions>
         <Button
           size="small"
-          onClick={() => navigate('/veteranian/event/' + request.id)}
+          onClick={() => navigate('/veteranian/event/' + request.animal_id)}
         >
           Naplánovat událost
         </Button>

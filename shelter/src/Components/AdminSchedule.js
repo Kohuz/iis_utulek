@@ -1,43 +1,120 @@
-import { Button } from "@mui/material";
-import React from "react";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
+import React, { useState } from 'react';
+import axios from 'axios/axios';
+import { useParams } from 'react-router-dom';
 
-function AdminSchedule({ id, table, setTable }) {
+function AdminSchedule({
+  schedule,
+  setSchedule,
+  index,
+  type,
+  date,
+  eventName,
+  fetchData,
+  fetchSchedule,
+}) {
+  const { id } = useParams();
+  const createEvent = () => {
+    let arr = schedule[index].hours.filter((hour) =>
+      hour.events.includes('current event')
+    );
+    let s = arr.map((item) => item.time);
+    let cur_date =
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    console.log(eventName);
+    console.log(type);
+    console.log(s);
+    console.log(date);
+    console.log(id);
+    axios
+      .post(
+        '/event/day',
+        JSON.stringify({
+          event: {
+            commentary: eventName,
+            type: type,
+            animal_id: id,
+            user_id: parseInt(localStorage.getItem('userId')),
+          },
+
+          hours: s,
+          day: date,
+        }),
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+          fetchData();
+          fetchSchedule();
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
+
   return (
     <>
       <table>
         <caption>Rozvrh {id}</caption>
         <tbody>
-          <Button
-            onClick={() => {
-              let newArr = [...table];
-              newArr.forEach((hour) => {
-                hour.event = !hour.event;
-              });
-              setTable(newArr);
-            }}
-          >
-            Celý den
-          </Button>
-          {table.map((hour, j) => (
-            <td>
-              <Button
-                variant="contained"
-                color={hour.event ? "error" : hour.walk ? "warning" : "success"}
-                onClick={() => {
-                  let newArr = [...table];
-                  let val = newArr.find((y) => y.time === hour.time).event;
-                  console.log(newArr.find((y) => y.time === hour.time).event);
-                  newArr.find((y) => y.time === hour.time).event = !val;
-                  setTable(newArr);
-                }}
-              >
-                {hour.time}
-              </Button>
-            </td>
-          ))}
+          <tr>
+            {!schedule[index] ? <p>TODO: </p> : null}
+            {schedule[index] && schedule.length != 0
+              ? schedule[index].hours.map((hour, j) => (
+                  <td>
+                    <Button
+                      variant="contained"
+                      color={
+                        hour.events.includes('current event')
+                          ? 'warning'
+                          : hour.events.includes('walk')
+                          ? 'error'
+                          : 'success'
+                      }
+                      disabled={
+                        hour.events.includes('appointment') ||
+                        hour.events.includes('exam')
+                      }
+                      onClick={() => {
+                        let newArr = [...schedule];
+
+                        let val = newArr[index].hours.find(
+                          (y) => y === hour
+                        ).events;
+
+                        // console.log(
+                        //   newArr.find((y) => y.time === hour.time).walk
+                        // );
+                        if (val.includes('current event')) {
+                          val = val.splice(val.indexOf('current event'), 1);
+                        } else {
+                          val.push('current event');
+                        }
+
+                        setSchedule(newArr);
+                      }}
+                    >
+                      {hour.time}
+                    </Button>
+                  </td>
+                ))
+              : null}
+          </tr>
         </tbody>
-        <Button onClick={() => console.log(table)}>table content</Button>
-        <Button>Rezervovat</Button>
+        <Button onClick={() => console.log(schedule)}>table content</Button>
+        <Button onClick={() => createEvent()}>Rezervovat</Button>
       </table>
     </>
   );

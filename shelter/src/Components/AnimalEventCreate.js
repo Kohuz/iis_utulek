@@ -1,4 +1,14 @@
-import { Button, Grid, Input, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  Grid,
+  Input,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Day from '../Helpers/day';
@@ -25,6 +35,56 @@ function AnimalEventCreate() {
 
   const [animal, setAnimal] = useState({});
   const [error, setError] = useState(null);
+  const types = ['appointment', 'exam'];
+  const [type, setType] = useState('exam');
+  const [schedule, setSchedule] = useState([]);
+  const [index, setIndex] = useState(0);
+
+  const fetchSchedule = () => {
+    axios
+      .get('event/animal/' + id + '/schedule', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        setSchedule(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  const send = () => {
+    axios
+      .post(
+        '/event',
+        JSON.stringify({
+          // title: title,
+          commentary: eventName,
+          user_id: localStorage.getItem('userId'),
+          animal_id: id,
+          type: type,
+          start: dateFrom,
+          stop: dateTo,
+        }),
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status == 200) {
+        } else {
+        }
+      })
+      .catch((response) => {});
+  };
+
+  useEffect(fetchSchedule, []);
   const fetchData = () => {
     axios
       .get(ANIMAL_URL, {
@@ -57,12 +117,24 @@ function AnimalEventCreate() {
                 locale="cs"
                 minDate={new Date()}
                 selected={date}
-                onChange={(date) => setDate(date)}
+                onChange={(date) => {
+                  setDate(date);
+                  let diff =
+                    Math.floor((date - new Date()) / (1000 * 60 * 60 * 24)) + 1;
+                  console.log(diff);
+                  setIndex(diff);
+                }}
+                inline
               />
               <AdminSchedule
-                id={animal.animal_id}
-                table={table}
-                setTable={setTable}
+                type={type}
+                schedule={schedule}
+                setSchedule={setSchedule}
+                index={index}
+                date={date}
+                eventName={eventName}
+                fetchData={fetchData}
+                fetchSchedule={fetchSchedule}
               />
             </>
           ) : (
@@ -97,9 +169,34 @@ function AnimalEventCreate() {
             variant="outlined"
           ></TextField>
 
-          <Button type="submit" variant="outlined">
-            Vytvořit
-          </Button>
+          <FormControl sx={{ minWidth: '500px' }}>
+            <InputLabel id="demo-simple-select-label">
+              Druh požadavku
+            </InputLabel>
+            <Select
+              fullWidth
+              label="Druh požadavku"
+              id="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              {types.map((type) => (
+                <MenuItem value={type}>{type}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {!oneDay ? (
+            <Button
+              type="submit"
+              variant="outlined"
+              onClick={() => {
+                send();
+              }}
+            >
+              Vytvořit
+            </Button>
+          ) : null}
         </Grid>
       </Grid>
     </>

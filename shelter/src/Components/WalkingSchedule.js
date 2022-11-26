@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import timetable from '../Helpers/temp_arrays';
-import { addDays } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import axios from 'axios/axios';
 function WalkingSchedule() {
   //const [table, setTable] = useState(timetable);
@@ -69,7 +69,7 @@ function WalkingSchedule() {
                     setTable(newArr);
                   }}
                 >
-                  venčit
+                  venčit {format(addDays(new Date(), 7 * i + j), 'dd.MM')}
                 </Button>
               ))}
             </tr>
