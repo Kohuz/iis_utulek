@@ -28,7 +28,7 @@ function Schedule() {
   const [error, setError] = useState(null);
   const fetchSchedule = () => {
     axios
-      .get('event/animal/' + 3 + '/schedule', {
+      .get('event/animal/' + id + '/schedule', {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
@@ -94,6 +94,7 @@ function Schedule() {
       .then((response) => {
         if (response.status == 200) {
           fetchData();
+          fetchSchedule();
         } else {
         }
       })
@@ -147,7 +148,8 @@ function Schedule() {
                       }
                       disabled={
                         hour.events.includes('appointment') ||
-                        hour.events.includes('exam')
+                        hour.events.includes('exam') ||
+                        hour.events.includes('walk')
                       }
                       onClick={() => {
                         let newArr = [...schedule];
