@@ -81,8 +81,8 @@ exports.createOnDay = (req, res) => {
     let end = moment.tz(req.body.day + ' ' + end_hour + ':59', 'Europe/Prague');
 
     let event = Object.assign({}, req.body.event);
-    event.start = start;
-    event.stop = end;
+    event.start = start.toDate();
+    event.stop = end.toDate();
 
     return event;
   });
