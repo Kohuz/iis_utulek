@@ -17,6 +17,8 @@ const eventType = {
   can_walk: 'can_walk',
   exam: 'examination',
 };
+exports.eventType = eventType;
+
 exports.create = (req, res) => {
   EVENT.debug.log('create called');
 
