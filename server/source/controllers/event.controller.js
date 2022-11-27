@@ -283,11 +283,9 @@ exports.getSchedule = (req, res) => {
         {
           model: database.event,
           where: {
-            start: {
-              [Op.gte]: from,
-            },
             stop: {
-              [Op.lte]: to,
+              // Get all events that have not ended yet
+              [Op.gte]: from,
             },
           },
           order: [['start', 'ASC']],
@@ -321,7 +319,7 @@ exports.getSchedule = (req, res) => {
         now_date.milliseconds(0);
 
         let last_day = days.length === 0 ? '' : days[days.length - 1].day;
-        let now_day = now_date.locale('cs').format('dddd');
+        let now_day = now_date.tz('Europe/Prague').locale('cs').format('dddd');
 
         if (now_day !== last_day) {
           days.push({
