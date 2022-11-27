@@ -40,6 +40,7 @@ function WalkingSchedule() {
       })
       .then((response) => {
         if (response.status == 200) {
+          alert('Rozvrh na venčení uložen úspěšně');
         } else {
         }
       })
@@ -98,7 +99,9 @@ function WalkingSchedule() {
         </tbody>
       </table>
 
-      <Button onClick={() => handleSubmit()}>Uložit</Button>
+      <Button size="large" variant="outlined" onClick={() => handleSubmit()}>
+        Uložit
+      </Button>
     </>
   );
 }
