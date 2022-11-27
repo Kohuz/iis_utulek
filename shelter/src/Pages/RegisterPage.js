@@ -39,8 +39,8 @@ function RegisterPage({ setLogged, logged }) {
   const { setAccessToken, setAuthenticated, setUsername, setRoles } =
     useContext(authContext);
 
-  const [sent, setSent] = useState(false);
   const [errPass, setErrPass] = useState(false);
+  const [errPassLen, setErrPassLen] = useState(false);
   const [errEmail, setErrEmail] = useState(false);
   const [formName, setFormName] = useState('');
   const [formSurname, setFormSurname] = useState('');
@@ -50,19 +50,22 @@ function RegisterPage({ setLogged, logged }) {
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
-    setSent(true);
     e.preventDefault();
+    let ret = false;
+
     if (!validateEmail(formEmail)) {
       setErrEmail(true);
-      setSent(false);
-      return;
+      ret = true;
     }
     if (password != passwordConfirm) {
       setErrPass(true);
-      setSent(false);
-      return;
+      ret = true;
     }
-
+    if (password.length < 6) {
+      setErrPassLen(true);
+      ret = true;
+    }
+    if (ret) return;
     axios
       .post(
         REGISTER_URL,
@@ -89,7 +92,6 @@ function RegisterPage({ setLogged, logged }) {
         }
       })
       .catch((response) => {});
-    setSent(false);
   };
 
   return (
@@ -136,7 +138,7 @@ function RegisterPage({ setLogged, logged }) {
               <div className={classes.alert}>
                 <div className={classes.alertDiv}>
                   <Alert variant="outlined" severity="error">
-                    Nevalidní email
+                    Neplatná emailová adresa
                   </Alert>
                 </div>
               </div>
@@ -167,6 +169,16 @@ function RegisterPage({ setLogged, logged }) {
                 </div>
               </div>
             ) : null}
+
+            {errPassLen ? (
+              <div className={classes.alert}>
+                <div className={classes.alertDiv}>
+                  <Alert variant="outlined" severity="error">
+                    Heslo musí být delší než 5 znaků
+                  </Alert>
+                </div>
+              </div>
+            ) : null}
             <div className={classes.addComponent}>
               <TextField
                 required
@@ -175,6 +187,7 @@ function RegisterPage({ setLogged, logged }) {
                 onChange={(e) => {
                   setPassword(e.target.value);
                   setErrPass(false);
+                  setErrPassLen(false);
                 }}
                 value={password}
                 id="password"
@@ -200,7 +213,7 @@ function RegisterPage({ setLogged, logged }) {
               ></TextField>
             </div>
             <div className={classes.addComponent}>
-              <Button type="submit" disabled={sent} variant="outlined">
+              <Button type="submit" variant="outlined">
                 Registrovat se
               </Button>
             </div>

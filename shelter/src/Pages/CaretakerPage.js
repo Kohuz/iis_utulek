@@ -96,9 +96,7 @@ function CaretakerPage() {
 
   return (
     <>
-      {/*TODO: CONTINUE HERE*/}
       <AddAnimal open={openAddAnimal} handleClose={handleCloseAddAnimal} />
-      {/* <RequestDialog open={openRequest} handleClose={handleCloseRequest} /> */}
       <Button variant="outlined" onClick={handleOpenAddAnimal}>
         Zavést nové zvíře
       </Button>

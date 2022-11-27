@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import timetable from '../Helpers/temp_arrays';
 import { addDays, format } from 'date-fns';
@@ -31,20 +31,13 @@ function WalkingSchedule() {
     let finalDates = datesUndefined.filter((item) => item);
 
     axios
-      .post(
-        'event/animal/' + id + '/walkDays',
-        JSON.stringify({
-          animal_id: id,
-          days: finalDates,
-        }),
-        {
-          headers: {
-            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      )
+      .post('event/animal/' + id + '/walkDays', JSON.stringify(finalDates), {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
       .then((response) => {
         if (response.status == 200) {
         } else {
@@ -52,6 +45,34 @@ function WalkingSchedule() {
       })
       .catch((response) => {});
   };
+
+  const [schedule, setSchedule] = useState([]);
+
+  const fetchSchedule = () => {
+    axios
+      .get('event/animal/' + id + '/walkDays', {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        //console.log(response.data);
+        const arr = new Array(4);
+        const myGrid = [...Array(4)].map((e) => Array(7));
+        let s = 0;
+        for (var i = 0; i < 4; i++) {
+          for (var j = 0; j < 7; j++) {
+            myGrid[i][j] = response.data[s];
+            s++;
+          }
+        }
+
+        setTable(myGrid);
+      })
+      .catch((error) => {});
+  };
+
+  useEffect(fetchSchedule, []);
   return (
     <>
       <table>
@@ -62,7 +83,7 @@ function WalkingSchedule() {
               {week.map((day, j) => (
                 <Button
                   variant="contained"
-                  color={table[i][j] ? 'warning' : 'success'}
+                  color={table[i][j] ? 'success' : 'warning'}
                   onClick={() => {
                     let newArr = [...table];
                     newArr[i][j] = !newArr[i][j];
@@ -77,7 +98,6 @@ function WalkingSchedule() {
         </tbody>
       </table>
 
-      <Button onClick={() => console.log(table)}>table content</Button>
       <Button onClick={() => handleSubmit()}>Uložit</Button>
     </>
   );

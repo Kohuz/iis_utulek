@@ -113,7 +113,7 @@ function Schedule() {
         <DatePicker
           locale="cs"
           minDate={new Date()}
-          maxDate={addDays(new Date(), 14)}
+          maxDate={addDays(new Date(), 28)}
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);

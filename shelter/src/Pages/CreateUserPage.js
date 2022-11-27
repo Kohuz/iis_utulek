@@ -64,14 +64,16 @@ function CreateUserPage() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const submitForm = () => {
+    let ret = false;
     if (!validateEmail(email)) {
       setErrEmail(true);
-      return;
+      ret = true;
     }
     if (password != passwordConfirm) {
       setErrPass(true);
-      return;
+      ret = true;
     }
+    if (ret) return;
     axios
       .post(
         REGISTER_URL,

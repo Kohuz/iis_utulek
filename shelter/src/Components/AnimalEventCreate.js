@@ -60,8 +60,6 @@ function AnimalEventCreate() {
   };
 
   const send = () => {
-    console.log(type);
-    return;
     axios
       .post(
         '/event',

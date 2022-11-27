@@ -47,6 +47,7 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
   return (
     <>
       <RequestDialog
+        key={animal.animal_id}
         open={openRequest}
         id={animal.animal_id}
         name={animal.name}
@@ -64,6 +65,9 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
               ? 'roky'
               : null}
             {animal.age > 4 ? 'let' : null}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            Popis: {animal.commentary}
           </Typography>
         </CardContent>
         <CardActions>

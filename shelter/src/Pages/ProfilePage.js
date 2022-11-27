@@ -67,15 +67,16 @@ function ProfilePage() {
 
   useEffect(fetchUser, {});
   const handleSubmit = () => {
+    let ret = false;
     if (!validateEmail(email)) {
       setErrEmail(true);
-      return;
+      ret = true;
     }
     if (password != passwordConfirm && password != '') {
       setErrPass(true);
-      return;
+      ret = true;
     }
-
+    if (ret) return;
     let updateObject = {};
     if (email != '') {
       updateObject.email = email;
@@ -128,7 +129,10 @@ function ProfilePage() {
               autoComplete="off"
               InputLabelProps={{ style: { fontSize: 20 } }}
               inputProps={{ style: { fontSize: 21 } }}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrPass(false);
+              }}
               value={password}
               id="password"
               label="Heslo"
@@ -145,7 +149,10 @@ function ProfilePage() {
             <TextField
               InputLabelProps={{ style: { fontSize: 20 } }}
               inputProps={{ style: { fontSize: 21 } }}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
+              onChange={(e) => {
+                setPasswordConfirm(e.target.value);
+                setErrPass(false);
+              }}
               value={passwordConfirm}
               id="passwordConfirm"
               label="Heslo znovu"

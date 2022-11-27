@@ -62,6 +62,7 @@ function WalksPage() {
         })
         .map((walk) => (
           <WalkCard
+            key={walk.event_id}
             walk={walk}
             walks={walks}
             setWalks={setWalks}
