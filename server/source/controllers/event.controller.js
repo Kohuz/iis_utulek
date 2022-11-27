@@ -124,11 +124,9 @@ exports.addWalkDays = (req, res) => {
   // verify was already done
   var user_token = webtoken.decode(req.headers['authorization'].split(' ')[1]);
 
-  let events_to_create = req.body.days.map((day) => {
-    let start = new Date(day);
-    let end = new Date(day);
-    end.setHours(23);
-    end.setMinutes(59);
+  let events_to_create = req.body.map((day) => {
+    let start = moment.tz(day + ' 00:00', 'Europe/Prague');
+    let end = moment.tz(day + ' 23:59', 'Europe/Prague');
 
     return {
       commentary: 'Available for walks',
