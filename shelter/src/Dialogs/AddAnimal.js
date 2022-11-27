@@ -11,19 +11,31 @@ import {
   FormLabel,
   InputLabel,
   MenuItem,
+  Alert,
   Select,
 } from '@mui/material';
 import React, { useState } from 'react';
+import { animalTypes } from 'Helpers/AnimalTypes';
 
 const CREATE_URL = '/animal';
 function AddAnimal({ open, handleClose }) {
-  const types = ['Kočka', 'Pes', 'Aligátor'];
+  const types = animalTypes;
   const [name, setName] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Pes');
   const [age, setAge] = useState(0);
+  const [ageErr, setAgeErr] = useState(false);
+  const [empty, setEmpty] = useState(false);
   const [commentary, setCommentary] = useState('');
 
   const handleSubmit = (e) => {
+    if (age < 0 || age > 80) {
+      setAgeErr(true);
+      return;
+    }
+    if (name == '' || commentary == '') {
+      setEmpty(true);
+      return;
+    }
     e.preventDefault();
     handleClose();
     axios
@@ -46,6 +58,9 @@ function AddAnimal({ open, handleClose }) {
       .then((response) => {
         if (response.status == 200) {
           handleClose();
+          setName('');
+          setCommentary('');
+          alert('Zvíře úspěšně uloženo');
         } else {
         }
       })
@@ -56,13 +71,23 @@ function AddAnimal({ open, handleClose }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Nový příspěvek</DialogTitle>
         <DialogContent>
+          {empty ? (
+            <div>
+              <Alert variant="outlined" severity="error">
+                Vyplňte všechna pole
+              </Alert>
+            </div>
+          ) : null}
           <FormControlLabel
             control={
               <TextField
                 required
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setEmpty(false);
+                }}
                 value={name}
                 id="name"
                 label="Jméno"
@@ -73,13 +98,24 @@ function AddAnimal({ open, handleClose }) {
             labelPlacement="top"
             label="Jméno"
           />
+          {ageErr ? (
+            <div>
+              <Alert variant="outlined" severity="error">
+                Věk musí být mezi 0 - 80 roky
+              </Alert>
+            </div>
+          ) : null}
+
           <FormControlLabel
             control={
               <TextField
                 required
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setAge(parseInt(e.target.value))}
+                onChange={(e) => {
+                  setAge(parseInt(e.target.value));
+                  setAgeErr(false);
+                }}
                 value={age}
                 id="age"
                 label="Věk"
@@ -96,7 +132,10 @@ function AddAnimal({ open, handleClose }) {
                 required
                 InputLabelProps={{ style: { fontSize: 20 } }}
                 inputProps={{ style: { fontSize: 21 } }}
-                onChange={(e) => setCommentary(e.target.value)}
+                onChange={(e) => {
+                  setCommentary(e.target.value);
+                  setEmpty(false);
+                }}
                 value={commentary}
                 id="commentary"
                 label="Komentář"
@@ -124,7 +163,14 @@ function AddAnimal({ open, handleClose }) {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button size="large" onClick={handleClose}>
+          <Button
+            size="large"
+            onClick={() => {
+              handleClose();
+              setName('');
+              setCommentary('');
+            }}
+          >
             Zrušit
           </Button>
           <Button size="large" onClick={handleSubmit}>

@@ -59,7 +59,11 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
             {animal.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {animal.type}, {animal.age} roky
+            {animal.type}, {animal.age} {animal.age == 1 ? 'rok' : null}
+            {animal.age == 2 || animal.age == 3 || animal.age == 4
+              ? 'roky'
+              : null}
+            {animal.age > 4 ? 'let' : null}
           </Typography>
         </CardContent>
         <CardActions>
@@ -96,7 +100,7 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
           {from === 'veterinarian' ? (
             <Button
               size="small"
-              onClick={() => navigate('/veteranian/event/' + animals.animal_id)}
+              onClick={() => navigate('/veteranian/event/' + animal.animal_id)}
             >
               Vytvořit událost pro zvíře
             </Button>

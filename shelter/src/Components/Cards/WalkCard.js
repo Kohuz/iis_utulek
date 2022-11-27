@@ -34,7 +34,10 @@ function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
           Procházka s {walk.animal.name}
         </Typography>
         <Typography gutterBottom variant="h6">
-          {walk.start.slice(0, 10)}
+          Datum : {walk.start.slice(0, 10)}
+        </Typography>
+        <Typography gutterBottom variant="h6">
+          Čas : {walk.start.slice(11, -8)}
         </Typography>
         {upcoming ? (
           <CardActions>

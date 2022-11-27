@@ -198,7 +198,7 @@ const Navbar = () => {
                 ) : null}
               </Button>
             ) : null}
-            <Button
+            {/* <Button
               onClick={() => {
                 console.log(authenticated);
                 console.log(roles);
@@ -207,7 +207,7 @@ const Navbar = () => {
               }}
             >
               Log auth info
-            </Button>
+            </Button> */}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

@@ -83,6 +83,7 @@ function RegisterPage({ setLogged, logged }) {
       )
       .then((response) => {
         if (response.status == 200) {
+          alert('Registrace úspěšná');
           navigate(from, { replace: true });
         } else {
         }

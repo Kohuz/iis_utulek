@@ -40,6 +40,25 @@ function CaretakerPage() {
   };
 
   useEffect(fetchData, []);
+  const [borrowed, setBorrowed] = useState([]);
+
+  const fetchBorrowed = () => {
+    axios
+      .get(ANIMALS_URL + '/borrowed', {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setBorrowed(response.data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  useEffect(fetchBorrowed, []);
 
   const fetchRequests = () => {
     axios
@@ -99,7 +118,14 @@ function CaretakerPage() {
           ))}
         </Grid>
         <Grid item xs={6}>
-          <Typography variant="h5">Zamítnuté žádosti</Typography>
+          <Typography variant="h4">Zamítnuté žádosti:</Typography>
+          <br></br>
+          {requests.filter((request) => request.state == 'rejected').length ==
+          0 ? (
+            <Typography color="success" variant="h6">
+              Žádné zamítnuté žádosti
+            </Typography>
+          ) : null}
           {requests
             .filter((request) => request.state == 'rejected')
             .map((request) => (
@@ -110,6 +136,18 @@ function CaretakerPage() {
                 </Button>
               </>
             ))}
+          <Typography variant="h4">Zapůjčená zvířata: </Typography>
+          <br></br>
+          {borrowed.length == 0 ? (
+            <Typography color="success" variant="h6">
+              Žádná zapůjčená zvířata
+            </Typography>
+          ) : null}
+          {borrowed.map((animal) => (
+            <>
+              <p>{animal.name}</p>
+            </>
+          ))}
         </Grid>
       </Grid>
     </>

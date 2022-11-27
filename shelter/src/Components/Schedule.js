@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Day from '../Helpers/day';
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -107,7 +107,9 @@ function Schedule() {
   return (
     <>
       <table>
-        <caption>Rozvrh {animal.name}</caption>
+        <caption>
+          <Typography variant="h2">Rozvrh {animal.name}</Typography>
+        </caption>
         <DatePicker
           locale="cs"
           minDate={new Date()}
@@ -186,10 +188,12 @@ function Schedule() {
         ? schedule[index].hours.map((hour) => <p>{hour.time}</p>)
         : null} */}
       <Button
+        size="large"
         onClick={() => {
           //console.log(schedule[index]);
           createEvent();
         }}
+        variant="outlined"
       >
         Rezervovat
       </Button>

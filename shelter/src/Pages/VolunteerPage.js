@@ -27,14 +27,8 @@ function VolunteerPage() {
   useEffect(fetchData, []);
   return (
     <>
-      <Typography>Neověření dobrovolníci</Typography>
-      <Button
-        onClick={() => {
-          console.log(users);
-        }}
-      >
-        asdfkjsd
-      </Button>
+      <Typography variant="h3">Neověření dobrovolníci: </Typography>
+      <br></br>
       {users
         .filter((user) => !user.verified && user.is_volunteer)
         .map((user) => (
@@ -46,7 +40,8 @@ function VolunteerPage() {
             fetchData={fetchData}
           ></VolunteerCard>
         ))}
-      <Typography>Dobrovolníci</Typography>
+      <Typography variant="h3">Ověření dobrovolníci: </Typography>
+      <br></br>
       {users
         .filter((user) => user.verified && user.is_volunteer)
         .map((user) => (

@@ -19,25 +19,6 @@ const USER_URL = '/user';
 function UserCard({ user, users, setUsers, fetchData }) {
   const { authenticated, roles } = useContext(authContext);
   const navigate = useNavigate();
-  const verify = (id) => {
-    axios
-      .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-        },
-      })
-      .then((response) => {
-        if (response.status == 200) {
-          //let newArr = [...users];
-          //newArr.find((user) => user.id).verified = true;
-          //setUsers([...newArr]);
-
-          fetchData();
-        }
-      });
-  };
 
   const remove = (id) => {
     axios

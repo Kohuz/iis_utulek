@@ -45,7 +45,7 @@ function AnimalsPage() {
   return (
     <>
       <Select
-        sx={{ minWidth: '400px' }}
+        sx={{ minWidth: '400px', marginTop: '15px' }}
         label="Druh Zvířete"
         id="type"
         value={type}

@@ -33,10 +33,14 @@ function AnimalEventCreate() {
   const [dateFrom, setDateFrom] = useState(new Date());
   const [dateTo, setDateTo] = useState(new Date());
 
+  const dict = {
+    exam: 'Vyšetření',
+    appointment: 'Zákrok',
+  };
   const [animal, setAnimal] = useState({});
   const [error, setError] = useState(null);
-  const types = ['appointment', 'exam'];
-  const [type, setType] = useState('exam');
+  const types = [dict['appointment'], dict['exam']];
+  const [type, setType] = useState(dict['exam']);
   const [schedule, setSchedule] = useState([]);
   const [index, setIndex] = useState(0);
 
@@ -56,6 +60,8 @@ function AnimalEventCreate() {
   };
 
   const send = () => {
+    console.log(type);
+    return;
     axios
       .post(
         '/event',
@@ -165,7 +171,7 @@ function AnimalEventCreate() {
             onChange={(e) => setEventName(e.target.value)}
             value={eventName}
             id="eventName"
-            label="Název eventu"
+            label="Název události"
             type="text"
             variant="outlined"
           ></TextField>

@@ -21,8 +21,9 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
   const verify = (id) => {
     const newUsers = users.filter((user) => id !== user.user_id);
     setUsers(newUsers);
+    const updateObject = { verified: true };
     axios
-      .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
+      .put(USER_URL + '/' + id, JSON.stringify({ updateObject }), {
         headers: {
           Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           'Content-Type': 'application/json',

@@ -21,6 +21,11 @@ function AdminSchedule({
 }) {
   const { id } = useParams();
   const createEvent = () => {
+    if (type == 'Zákrok') type = 'appointment';
+    if (type == 'Vyšetření') {
+      type = 'exam';
+    }
+
     let arr = schedule[index].hours.filter((hour) =>
       hour.events.includes('current event')
     );
@@ -44,7 +49,12 @@ function AdminSchedule({
           },
 
           hours: s,
-          day: date,
+          day:
+            date.getFullYear() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getDate(),
         }),
         {
           headers: {

@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 const CREATE_URL = '/request';
 function RequestDialog({ open, handleClose, id, name }) {
   const types = ['Vyšetření', 'Očkování'];
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Vyšetření');
   const [title, setTitle] = useState('');
   const [commentary, setCommentary] = useState('');
   const classes = useStyles();
@@ -58,6 +58,9 @@ function RequestDialog({ open, handleClose, id, name }) {
       .then((response) => {
         if (response.status == 200) {
           handleClose();
+          setTitle('');
+          setCommentary('');
+          alert('Požadavek úspěšně vytvořen');
         } else {
         }
       })
@@ -112,7 +115,14 @@ function RequestDialog({ open, handleClose, id, name }) {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button size="large" onClick={handleClose}>
+          <Button
+            size="large"
+            onClick={() => {
+              handleClose();
+              setTitle('');
+              setCommentary('');
+            }}
+          >
             Zrušit
           </Button>
           <Button size="large" onClick={send}>
