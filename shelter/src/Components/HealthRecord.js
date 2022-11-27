@@ -24,6 +24,11 @@ function HealthRecord() {
   useEffect(fetchData, []);
   return (
     <>
+      {events.filter(
+        (event) => event.type == 'exam' || event.type == 'appointment'
+      ).length == 0
+        ? 'Žádné zdravotní události'
+        : null}
       {events
         .filter((event) => event.type == 'exam' || event.type == 'appointment')
         .map((event) => (

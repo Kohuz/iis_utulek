@@ -24,6 +24,7 @@ import AnimalEventCreate from 'Components/AnimalEventCreate';
 import AdminSchedule from 'Components/AdminSchedule';
 import UserPage from 'Pages/UserPage';
 import WalkingSchedule from 'Components/WalkingSchedule';
+import EditProfilePage from 'Pages/EditProfilePage';
 
 const theme = createTheme({
   palette: {
@@ -109,7 +110,7 @@ function App() {
             <Route path="/users" element={<UserPage />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[1]} />}>
-            <Route path="/user/:id" element={<ProfilePage />} />
+            <Route path="/users/:id" element={<EditProfilePage />} />
           </Route>
 
           <Route path="*" element={<h1>Not found</h1>} />
