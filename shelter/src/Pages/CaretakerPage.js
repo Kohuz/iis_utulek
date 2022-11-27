@@ -18,15 +18,7 @@ function CaretakerPage() {
     setOpenAddAnimal(false);
     fetchData();
   };
-  const [openRequest, setOpenRequest] = useState(false);
-  //functions for handling the dialog opening
-  const handleOpenRequest = () => {
-    setOpenRequest(true);
-  };
 
-  const handleCloseRequest = () => {
-    setOpenRequest(false);
-  };
   const [animals, setAnimals] = useState([]);
   const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
@@ -96,7 +88,6 @@ function CaretakerPage() {
           {animals.map((animal) => (
             <>
               <AnimalCard
-                openRequest={handleOpenRequest}
                 key={animal.animal_id}
                 animal={animal}
                 animals={animals}
@@ -104,12 +95,6 @@ function CaretakerPage() {
                 fetchData={fetchData}
                 from={'care'}
               ></AnimalCard>
-              <RequestDialog
-                open={openRequest}
-                id={animal.animal_id}
-                name={animal.name}
-                handleClose={handleCloseRequest}
-              />
             </>
           ))}
         </Grid>

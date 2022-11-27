@@ -72,8 +72,8 @@ function LoginPage({ setLogged, logged }) {
           localStorage.setItem('authenticated', auth);
           localStorage.setItem('roles', JSON.stringify(roles));
           localStorage.setItem('token', token);
-          localStorage.setItem('userId', response.data.user_data[0].user_id);
-          localStorage.setItem('name', response.data.user_data[0].name);
+          localStorage.setItem('userId', response.data.user_data.user_id);
+          localStorage.setItem('name', response.data.user_data.name);
 
           navigate(from, { replace: true });
         } else {
