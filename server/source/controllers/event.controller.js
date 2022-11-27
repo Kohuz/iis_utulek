@@ -71,12 +71,14 @@ exports.createOnDay = (req, res) => {
   });
 
   let events_to_create = consequent_hours.map((a) => {
-    let start = new Date(req.body.day);
-    let end = new Date(req.body.day);
-    start.setHours(a[0]);
+    let start_hour = a[0].toString();
+    let end_hour = a[a.length - 1].toString();
 
-    end.setHours(a[a.length - 1]);
-    end.setMinutes(59);
+    let start = moment.tz(
+      req.body.day + ' ' + start_hour + ':00',
+      'Europe/Prague'
+    );
+    let end = moment.tz(req.body.day + ' ' + end_hour + ':59', 'Europe/Prague');
 
     let event = Object.assign({}, req.body.event);
     event.start = start;
