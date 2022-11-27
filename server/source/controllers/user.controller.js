@@ -19,27 +19,33 @@ const rolesDict = {
 };
 
 const generateHash = (password) => {
+  let ret;
   bcrypt
     .hash(password, USER.saltRounds)
     .then((hash) => {
+      USER.debug.log('hashed ' + hash);
       return hash;
     })
     .catch((err) => {
       res.status(500).send({
         message: err,
       });
-      return null;
+      ret = null;
     });
+
+  return ret;
 };
 
 exports.create = (req, res) => {
   USER.debug.log('Create called');
+  USER.debug.log(req.body);
 
+  const salt = bcrypt.genSaltSync(10);
   const user = {
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
-    password: generateHash(req.body.password),
+    password: bcrypt.hashSync(req.body.password, salt),
     bank_account: req.body.bank_account ?? '',
     address: req.body.address ?? '',
     is_volunteer: req.body.is_volunteer ?? false,
@@ -51,8 +57,9 @@ exports.create = (req, res) => {
 
   if (!user.password) {
     USER.debug.log('WTF');
-    USER.debug.log(req.body.password);
-    return;
+    res.status(500).send({
+      message: 'Sorry, some error occurred' + err,
+    });
   }
 
   database.user
