@@ -25,7 +25,7 @@ function UserCard({ user, users, setUsers, fetchData }) {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -43,7 +43,7 @@ function UserCard({ user, users, setUsers, fetchData }) {
     axios
       .delete(USER_URL + '/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

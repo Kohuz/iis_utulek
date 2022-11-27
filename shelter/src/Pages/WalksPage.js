@@ -13,9 +13,9 @@ function WalksPage() {
 
   const fetchData = () => {
     axios
-      .get(WALKS_URL + localStorage.getItem('userId'), {
+      .get(WALKS_URL + sessionStorage.getItem('userId'), {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

@@ -77,7 +77,7 @@ function RegisterPage({ setLogged, logged }) {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           },
         }
       )

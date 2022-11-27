@@ -58,7 +58,7 @@ function EditProfilePage() {
     axios
       .get('user/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -104,7 +104,7 @@ function EditProfilePage() {
     }
     axios
       .put(
-        USR_URL + '/' + localStorage.getItem('userId'),
+        USR_URL + '/' + sessionStorage.getItem('userId'),
         JSON.stringify({
           updateObject,
         }),
@@ -112,7 +112,7 @@ function EditProfilePage() {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           },
         }
       )

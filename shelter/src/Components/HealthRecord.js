@@ -12,7 +12,7 @@ function HealthRecord() {
     axios
       .get('event/animal/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

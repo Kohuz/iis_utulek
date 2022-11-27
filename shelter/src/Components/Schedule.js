@@ -30,7 +30,7 @@ function Schedule() {
     axios
       .get('event/animal/' + id + '/schedule', {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -46,7 +46,7 @@ function Schedule() {
     axios
       .get(ANIMAL_URL + '/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -77,7 +77,7 @@ function Schedule() {
             title: '',
             type: 'walk',
             animal_id: id,
-            user_id: parseInt(localStorage.getItem('userId')),
+            user_id: parseInt(sessionStorage.getItem('userId')),
           },
 
           hours: s,
@@ -85,7 +85,7 @@ function Schedule() {
         }),
         {
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },

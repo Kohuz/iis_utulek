@@ -44,7 +44,7 @@ function AnimalEventCreate() {
     axios
       .get('event/animal/' + id + '/schedule', {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -62,7 +62,7 @@ function AnimalEventCreate() {
         JSON.stringify({
           // title: title,
           commentary: eventName,
-          user_id: localStorage.getItem('userId'),
+          user_id: sessionStorage.getItem('userId'),
           animal_id: id,
           type: type,
           start: dateFrom,
@@ -70,7 +70,7 @@ function AnimalEventCreate() {
         }),
         {
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },
@@ -89,7 +89,7 @@ function AnimalEventCreate() {
     axios
       .get(ANIMAL_URL, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

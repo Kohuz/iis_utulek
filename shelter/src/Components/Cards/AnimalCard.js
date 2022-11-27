@@ -33,7 +33,7 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
     axios
       .delete(DELETE_URL + '/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

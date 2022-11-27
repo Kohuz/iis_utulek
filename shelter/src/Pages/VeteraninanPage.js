@@ -16,7 +16,7 @@ function VeterinarianPage() {
     axios
       .get(ANIMALS_URL, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -35,7 +35,7 @@ function VeterinarianPage() {
     axios
       .get(REQUEST_URL, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

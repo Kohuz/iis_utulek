@@ -51,9 +51,9 @@ function ProfilePage() {
 
   const fetchUser = () => {
     axios
-      .get('user/' + localStorage.getItem('userId'), {
+      .get('user/' + sessionStorage.getItem('userId'), {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -91,7 +91,7 @@ function ProfilePage() {
     }
     axios
       .put(
-        USR_URL + '/' + localStorage.getItem('userId'),
+        USR_URL + '/' + sessionStorage.getItem('userId'),
         JSON.stringify({
           updateObject,
         }),
@@ -99,7 +99,7 @@ function ProfilePage() {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           },
         }
       )

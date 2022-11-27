@@ -40,7 +40,7 @@ function AdminSchedule({
             commentary: eventName,
             type: type,
             animal_id: id,
-            user_id: parseInt(localStorage.getItem('userId')),
+            user_id: parseInt(sessionStorage.getItem('userId')),
           },
 
           hours: s,
@@ -48,7 +48,7 @@ function AdminSchedule({
         }),
         {
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },

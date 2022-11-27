@@ -72,7 +72,7 @@ const Navbar = () => {
     setRoles([]);
     setAccessToken('');
     setUsername('');
-    localStorage.clear();
+    sessionStorage.clear();
     navigate('/');
   };
   const [volunteers, setVolunteers] = useState(0);
@@ -84,7 +84,7 @@ const Navbar = () => {
       axios
         .get(VOLUNTEERS_URL, {
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           },
         })
         .then((response) => {
@@ -104,7 +104,7 @@ const Navbar = () => {
       axios
         .get(REQUESTS_COUNT, {
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           },
         })
         .then((response) => {
@@ -215,7 +215,7 @@ const Navbar = () => {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar> {localStorage.getItem('name')[0]}</Avatar>
+                    <Avatar> {sessionStorage.getItem('name')[0]}</Avatar>
                   </IconButton>
                 </Tooltip>
                 <Menu

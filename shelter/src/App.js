@@ -48,11 +48,15 @@ const theme = createTheme({
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem('authenticated') === 'true'
+    sessionStorage.getItem('authenticated') === 'true'
   );
-  const [roles, setRoles] = useState(JSON.parse(localStorage.getItem('roles')));
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('token'));
-  const [username, setUsername] = useState(localStorage.getItem('username'));
+  const [roles, setRoles] = useState(
+    JSON.parse(sessionStorage.getItem('roles'))
+  );
+  const [accessToken, setAccessToken] = useState(
+    sessionStorage.getItem('token')
+  );
+  const [username, setUsername] = useState(sessionStorage.getItem('username'));
   return (
     <authContext.Provider
       value={{

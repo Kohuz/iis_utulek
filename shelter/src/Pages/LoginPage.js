@@ -51,7 +51,7 @@ function LoginPage({ setLogged, logged }) {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -68,14 +68,15 @@ function LoginPage({ setLogged, logged }) {
           setAccessToken(token);
           setUsername(formUsername);
 
-          localStorage.setItem('username', formUsername);
-          localStorage.setItem('authenticated', auth);
-          localStorage.setItem('roles', JSON.stringify(roles));
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', response.data.user_data.user_id);
-          localStorage.setItem('name', response.data.user_data.name);
+          sessionStorage.setItem('username', formUsername);
+          sessionStorage.setItem('authenticated', auth);
+          sessionStorage.setItem('roles', JSON.stringify(roles));
+          // localStorage.setItem('token', token);
+          sessionStorage.setItem('token', token);
+          sessionStorage.setItem('userId', response.data.user_data.user_id);
+          sessionStorage.setItem('name', response.data.user_data.name);
 
-          navigate(from, { replace: true });
+          navigate('/animals');
         } else {
           setErr(true);
         }

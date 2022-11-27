@@ -27,7 +27,7 @@ function CaretakerPage() {
     axios
       .get(ANIMALS_URL, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -43,9 +43,9 @@ function CaretakerPage() {
 
   const fetchRequests = () => {
     axios
-      .get('/request/' + localStorage.getItem('userId'), {
+      .get('/request/' + sessionStorage.getItem('userId'), {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -64,7 +64,7 @@ function CaretakerPage() {
     axios
       .delete('request/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

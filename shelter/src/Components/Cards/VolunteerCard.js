@@ -24,7 +24,7 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
     axios
       .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
         },
@@ -46,7 +46,7 @@ function VolunteerCard({ user, users, setUsers, fetchData }) {
     axios
       .delete(USER_URL + '/' + id, {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
       })
       .then((response) => {
