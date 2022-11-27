@@ -70,7 +70,9 @@ function AdminSchedule({
         <caption>Rozvrh {id}</caption>
         <tbody>
           <tr>
-            {!schedule[index] ? <p>TODO: </p> : null}
+            {!schedule[index] ? (
+              <p>Bohužel nelze udělat událost tak dopředu </p>
+            ) : null}
             {schedule[index] && schedule.length != 0
               ? schedule[index].hours.map((hour, j) => (
                   <td>

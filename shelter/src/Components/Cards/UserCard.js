@@ -13,10 +13,12 @@ import axios from 'axios/axios';
 import authContext from 'Helpers/AuthContext';
 import { deepOrange } from '@mui/material/colors';
 import dog from '../../dog.png';
+import { useNavigate } from 'react-router-dom';
 
 const USER_URL = '/user';
 function UserCard({ user, users, setUsers, fetchData }) {
   const { authenticated, roles } = useContext(authContext);
+  const navigate = useNavigate();
   const verify = (id) => {
     axios
       .put(USER_URL + '/' + id, JSON.stringify({ verified: true }), {
@@ -59,17 +61,19 @@ function UserCard({ user, users, setUsers, fetchData }) {
             {user.name[0]}
           </Avatar>
           <Typography gutterBottom>
-            {user.name}
+            {user.name + ' '}
             {user.surname}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {user.birthDate}
+            Role: {user.is_volunteer ? 'Dobrovolník, ' : null}
+            {user.is_caretaker ? 'Pečovatel, ' : null}
+            {user.is_veterinarian ? 'Veterinář, ' : null}
           </Typography>
         </CardContent>
         <CardActions>
           <Button
             onClick={() => {
-              remove(user.id);
+              remove(user.user_id);
             }}
             size="small"
           >
@@ -78,9 +82,7 @@ function UserCard({ user, users, setUsers, fetchData }) {
 
           <Button
             size="small"
-            onClick={() => {
-              verify(user.id);
-            }}
+            onClick={() => navigate('/users/' + user.user_id)}
           >
             Upravit uživatele
           </Button>

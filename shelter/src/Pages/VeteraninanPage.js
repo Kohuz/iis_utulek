@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AnimalCard from 'Components/Cards/AnimalCard';
 import RequestCard from 'Components/Cards/RequestCard';
 import axios from 'axios/axios';
+import { Grid, Select, MenuItem } from '@mui/material';
+import { animalTypeswithAll } from 'Helpers/AnimalTypesAll';
 
 const ANIMALS_URL = '/animal';
 const REQUEST_URL = '/request';
@@ -46,20 +48,8 @@ function VeterinarianPage() {
   };
 
   useEffect(fetchRequests, []);
-  // const requests = [
-  //   {
-  //     id: 1,
-  //     animal: 'Alík',
-  //     author: 'Pepa',
-  //     date: '27/11/2022',
-  //   },
-  //   {
-  //     id: 2,
-  //     animal: 'Žofka',
-  //     author: 'Pepa',
-  //     date: '28/11/2022',
-  //   },
-  // ];
+  const types = animalTypeswithAll;
+  const [type, setType] = useState('Všechny');
   return (
     <>
       <h3>Požadavky</h3>
@@ -74,15 +64,38 @@ function VeterinarianPage() {
           ></RequestCard>
         ))}
       <h3>Zvířata</h3>
-      {animals.map((animal) => (
-        <AnimalCard
-          key={animal.id}
-          animal={animal}
-          animals={animals}
-          setAnimals={setAnimals}
-          from={'veterinarian'}
-        ></AnimalCard>
-      ))}
+      <Select
+        sx={{ minWidth: '400px' }}
+        label="Druh Zvířete"
+        id="type"
+        value={type}
+        onChange={(e) => setType(e.target.value)}
+      >
+        {types.map((type) => (
+          <MenuItem value={type}>{type}</MenuItem>
+        ))}
+      </Select>
+      <Grid container spacing={3}>
+        {animals
+          .filter((animal) => {
+            if (type == 'Všechny') {
+              return animal;
+            } else if (animal.type == type) {
+              return animal;
+            }
+          })
+          .map((animal) => (
+            <Grid item xs={6} md={4} lg={2}>
+              <AnimalCard
+                key={animal.id}
+                animal={animal}
+                animals={animals}
+                setAnimals={setAnimals}
+                from={'veterinarian'}
+              />
+            </Grid>
+          ))}
+      </Grid>
     </>
   );
 }

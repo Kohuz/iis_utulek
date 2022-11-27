@@ -50,6 +50,8 @@ exports.create = (req, res) => {
   };
 
   if (!user.password) {
+    USER.debug.log('WTF');
+    USER.debug.log(req.body.password);
     return;
   }
 
@@ -131,7 +133,7 @@ exports.updateById = (req, res) => {
   const id = req.params.id;
 
   database.user
-    .update(req.body, {
+    .update(req.body.updateObject, {
       where: { user_id: id },
     })
     .then((retCode) => {

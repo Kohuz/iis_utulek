@@ -211,7 +211,13 @@ exports.findAllForAnimal = (req, res) => {
   const id = req.params.id;
 
   database.animal
-    .findByPk(id, { include: ['events'] })
+    .findByPk(id, {
+      include: {
+        model: database.event,
+        include: 'animal',
+        as: 'events',
+      },
+    })
     .then((animal) => {
       if (animal === null || animal.events === null) {
         res.status(404).send({
@@ -265,7 +271,7 @@ exports.getSchedule = (req, res) => {
 
   const id = req.params.id;
   let from = new Date();
-  let to = new Date(from.getTime() + 14 * day);
+  let to = new Date(from.getTime() + 30 * day);
 
   database.animal
     .findByPk(id, {
@@ -288,7 +294,7 @@ exports.getSchedule = (req, res) => {
     })
     .then((animal) => {
       let from = new Date();
-      let to = new Date(from.getTime() + 14 * day);
+      let to = new Date(from.getTime() + 30 * day);
 
       EVENT.debug.log(animal);
       if (animal === null || animal.events === null) {

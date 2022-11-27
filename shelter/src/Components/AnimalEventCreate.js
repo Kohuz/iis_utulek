@@ -116,6 +116,7 @@ function AnimalEventCreate() {
               <DatePicker
                 locale="cs"
                 minDate={new Date()}
+                maxDate={addDays(new Date(), 30)}
                 selected={date}
                 onChange={(date) => {
                   setDate(date);

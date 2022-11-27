@@ -108,6 +108,9 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[1]} />}>
             <Route path="/users" element={<UserPage />} />
           </Route>
+          <Route element={<RequireAuth allowedRoles={[1]} />}>
+            <Route path="/user/:id" element={<ProfilePage />} />
+          </Route>
 
           <Route path="*" element={<h1>Not found</h1>} />
         </Routes>

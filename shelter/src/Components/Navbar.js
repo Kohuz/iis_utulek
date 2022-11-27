@@ -88,7 +88,7 @@ const Navbar = () => {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           setVolunteers(response.data.length);
         })
         .catch((error) => {
@@ -108,7 +108,7 @@ const Navbar = () => {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           setRequests(response.data.length);
         })
         .catch((error) => {

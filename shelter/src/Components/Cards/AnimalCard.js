@@ -90,7 +90,7 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
               size="small"
               onClick={() => navigate('/veteranian/' + animal.animal_id)}
             >
-              Editovat zdravotní záznam
+              Zobrazit zdravotní záznam
             </Button>
           ) : null}
           {from === 'veterinarian' ? (

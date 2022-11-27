@@ -1,6 +1,13 @@
-import { Button, FormControlLabel, TextField, Typography } from '@mui/material';
+// @ts-nocheck
+import {
+  Button,
+  FormControlLabel,
+  TextField,
+  Typography,
+  Alert,
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { validateEmail } from 'Helpers/validateEmail';
 import axios from 'axios/axios';
 import { useNavigate } from 'react-router-dom';
@@ -17,11 +24,21 @@ const useStyles = makeStyles({
   log: {
     marginTop: '13px',
   },
+  alert: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
+  },
+  alertDiv: {
+    width: '20%',
+  },
 });
 
 const USR_URL = '/user/';
 function ProfilePage() {
   const { roles } = useContext(authContext);
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
   const classes = useStyles();
   const [email, setEmail] = useState('');
@@ -31,15 +48,33 @@ function ProfilePage() {
   const [errEmail, setErrEmail] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+
+  const fetchUser = () => {
+    axios
+      .get('user/' + localStorage.getItem('userId'), {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        setUser(response.data);
+        setEmail(response.data.email);
+        setAddress(response.data?.address);
+        setbankAccount(response.data?.bank_account);
+      })
+      .catch((error) => {});
+  };
+
+  useEffect(fetchUser, {});
   const handleSubmit = () => {
-    // if (!validateEmail(email)) {
-    //   setErrEmail(true);
-    //   return;
-    // }
-    // if (password != passwordConfirm) {
-    //   setErrPass(true);
-    //   return;
-    // }
+    if (!validateEmail(email)) {
+      setErrEmail(true);
+      return;
+    }
+    if (password != passwordConfirm && password != '') {
+      setErrPass(true);
+      return;
+    }
 
     let updateObject = {};
     if (email != '') {
@@ -80,6 +115,13 @@ function ProfilePage() {
     <>
       <div className={classes.form}>
         <Typography variant="h4">Změna hesla</Typography>
+        {errPass ? (
+          <div className={classes.alert}>
+            <Alert variant="outlined" severity="error">
+              Hesla se neshodují
+            </Alert>
+          </div>
+        ) : null}
         <FormControlLabel
           control={
             <TextField
@@ -104,7 +146,7 @@ function ProfilePage() {
               InputLabelProps={{ style: { fontSize: 20 } }}
               inputProps={{ style: { fontSize: 21 } }}
               onChange={(e) => setPasswordConfirm(e.target.value)}
-              value={setPasswordConfirm}
+              value={passwordConfirm}
               id="passwordConfirm"
               label="Heslo znovu"
               type="password"
@@ -118,12 +160,22 @@ function ProfilePage() {
 
       <div className={classes.form}>
         <Typography variant="h4">Změna dalších údajů</Typography>
+        {errEmail ? (
+          <div className={classes.alert}>
+            <Alert variant="outlined" severity="error">
+              Nevalidní email
+            </Alert>
+          </div>
+        ) : null}
         <FormControlLabel
           control={
             <TextField
               InputLabelProps={{ style: { fontSize: 20 } }}
               inputProps={{ style: { fontSize: 21 } }}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setErrEmail(false);
+                setEmail(e.target.value);
+              }}
               value={email}
               id="email"
               label="Email"

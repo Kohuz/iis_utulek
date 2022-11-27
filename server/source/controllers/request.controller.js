@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   REQUEST.debug.log('create called');
 
   const request = {
-    name: new Date(),
+    date: new Date(),
     type: req.body.type,
     commentary: req.body.commentary ?? '',
     state: 'pending',
