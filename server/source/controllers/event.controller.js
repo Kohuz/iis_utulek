@@ -132,9 +132,9 @@ exports.addWalkDays = (req, res) => {
       commentary: 'Available for walks',
       type: eventType.can_walk,
 
-      date: start,
-      start: start,
-      stop: end,
+      date: start.toDate(),
+      start: start.toDate(),
+      stop: end.toDate(),
 
       animal_id: req.params.id,
       user_id: user_token.id,
