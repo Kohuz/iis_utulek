@@ -15,9 +15,68 @@ const EVENT = {
 const eventType = {
   walk: 'walk',
   can_walk: 'can_walk',
-  exam: 'examination',
+  exam: 'exam',
+  appointment: 'appointment',
 };
 exports.eventType = eventType;
+
+async function cancelCollidingWalks(animal_id, events) {
+  let exams = events.filter(
+    (x) => x.type === eventType.exam || x.type === eventType.appointment
+  );
+
+  for (let i = 0; i < exams.length; i++) {
+    let event = exams[i];
+
+    await database.event.update(
+      { state: 'canceled' },
+      {
+        where: {
+          animal_id: animal_id,
+          type: eventType.walk,
+          [Op.or]: [
+            {
+              // This walk starts during the exam
+              start: {
+                [Op.and]: {
+                  [Op.gte]: event.start,
+                  [Op.lt]: event.stop,
+                },
+              },
+            },
+            {
+              // This walk ends during the exam
+              stop: {
+                [Op.and]: {
+                  [Op.gt]: event.start,
+                  [Op.lt]: event.stop,
+                },
+              },
+            },
+            {
+              // The exam starts during the walk
+              start: {
+                [Op.lte]: event.start,
+              },
+              stop: {
+                [Op.gt]: event.start,
+              },
+            },
+            {
+              // The exam ends during the walk
+              start: {
+                [Op.lt]: event.stop,
+              },
+              stop: {
+                [Op.gt]: event.stop,
+              },
+            },
+          ],
+        },
+      }
+    );
+  }
+}
 
 exports.create = (req, res) => {
   EVENT.debug.log('create called');
@@ -33,12 +92,20 @@ exports.create = (req, res) => {
     user_id: req.body.user_id,
   };
 
-  database.event
-    .create(event)
-    .then((data) => {
-      res.status(200).send({
-        message: 'Event created successfully!',
-      });
+  cancelCollidingWalks(req.body.animal_id, [event])
+    .then(() => {
+      database.event
+        .create(event)
+        .then((data) => {
+          res.status(200).send({
+            message: 'Event created successfully!',
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: 'Sorry, some error occurred' + err,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
@@ -87,12 +154,20 @@ exports.createOnDay = (req, res) => {
     return event;
   });
 
-  database.event
-    .bulkCreate(events_to_create)
-    .then((d) => {
-      res.status(200).send({
-        message: 'Events created successfully!',
-      });
+  cancelCollidingWalks(req.body.event.animal_id, events_to_create)
+    .then(() => {
+      database.event
+        .bulkCreate(events_to_create)
+        .then((d) => {
+          res.status(200).send({
+            message: 'Events created successfully!',
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: 'Sorry, some error occurred' + err,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
@@ -351,6 +426,9 @@ exports.getSchedule = (req, res) => {
             stop: {
               // Get all events that have not ended yet
               [Op.gte]: from,
+            },
+            state: {
+              [Op.ne]: 'canceled',
             },
           },
           order: [['start', 'ASC']],
