@@ -17,6 +17,8 @@ const eventType = {
   can_walk: 'can_walk',
   exam: 'examination',
 };
+exports.eventType = eventType;
+
 exports.create = (req, res) => {
   EVENT.debug.log('create called');
 
@@ -69,12 +71,14 @@ exports.createOnDay = (req, res) => {
   });
 
   let events_to_create = consequent_hours.map((a) => {
-    let start = new Date(req.body.day);
-    let end = new Date(req.body.day);
-    start.setHours(a[0]);
+    let start_hour = a[0].toString();
+    let end_hour = a[a.length - 1].toString();
 
-    end.setHours(a[a.length - 1]);
-    end.setMinutes(59);
+    let start = moment.tz(
+      req.body.day + ' ' + start_hour + ':00',
+      'Europe/Prague'
+    );
+    let end = moment.tz(req.body.day + ' ' + end_hour + ':59', 'Europe/Prague');
 
     let event = Object.assign({}, req.body.event);
     event.start = start;
@@ -279,11 +283,9 @@ exports.getSchedule = (req, res) => {
         {
           model: database.event,
           where: {
-            start: {
-              [Op.gte]: from,
-            },
             stop: {
-              [Op.lte]: to,
+              // Get all events that have not ended yet
+              [Op.gte]: from,
             },
           },
           order: [['start', 'ASC']],
@@ -294,7 +296,7 @@ exports.getSchedule = (req, res) => {
     })
     .then((animal) => {
       let from = new Date();
-      let to = new Date(from.getTime() + 30 * day);
+      let to = moment(new Date(from.getTime() + 30 * day));
 
       EVENT.debug.log(animal);
       if (animal === null || animal.events === null) {
@@ -307,14 +309,17 @@ exports.getSchedule = (req, res) => {
       let events = animal.events;
       let days = [];
 
-      from = from.getTime();
-      to = to.getTime();
+      from = from.valueOf();
+      to = to.valueOf();
 
       for (let now = from; now < to; now += hour) {
         let now_date = moment(new Date(now));
+        now_date.minutes(0);
+        now_date.seconds(0);
+        now_date.milliseconds(0);
 
         let last_day = days.length === 0 ? '' : days[days.length - 1].day;
-        let now_day = now_date.locale('cs').format('dddd');
+        let now_day = now_date.tz('Europe/Prague').locale('cs').format('dddd');
 
         if (now_day !== last_day) {
           days.push({
@@ -324,22 +329,30 @@ exports.getSchedule = (req, res) => {
         }
 
         let event_types = [];
-        let start = now;
-        let stop = now + hour;
+        let hstart = now_date.valueOf();
+        let hstop = hstart + hour;
 
         events.forEach((e) => {
+          let estart = e.start;
+          let estop = e.stop;
+
+          let event_begins_this_hour = estart >= hstart && estart < hstop;
+          let event_ends_this_hour = estop > hstart && estop < hstop;
+          let hour_begins_in_event = hstart >= estart && hstart < estop;
+          let hour_ends_in_event = hstop > estart && hstop < estop;
+
           let overlaps_with_current_hour =
-            (start >= e.start && start <= e.stop) ||
-            (stop >= e.start && stop <= e.stop) ||
-            (e.start >= start && e.start <= stop) ||
-            (e.stop >= start && e.stop <= stop);
+            event_begins_this_hour ||
+            event_ends_this_hour ||
+            hour_begins_in_event ||
+            hour_ends_in_event;
 
           if (overlaps_with_current_hour) {
             event_types.push(e.type);
           }
         });
 
-        let now_hour = now_date.hour();
+        let now_hour = now_date.tz('Europe/Prague').hour();
 
         if (now_hour >= 8 && now_hour <= 17) {
           days[days.length - 1].hours.push({

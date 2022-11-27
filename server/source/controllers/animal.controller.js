@@ -1,6 +1,8 @@
 const database = require('../models');
 const url = require('url');
 const token = require('../helpers/token');
+const { eventType } = require('../controllers/event.controller');
+const { Op } = require('sequelize');
 
 const ANIMAL = {
   debug: {
@@ -36,14 +38,30 @@ exports.create = (req, res) => {
 
 exports.borrowed = (req, res) => {
   ANIMAL.debug.log('borrowed called');
+  let now = new Date();
 
   database.animal
     .findAll({
-      where: {
-        borrowed: true,
-      },
+      include: [
+        {
+          model: database.event,
+          where: {
+            start: {
+              [Op.lte]: now,
+            },
+            stop: {
+              [Op.gte]: now,
+            },
+            type: eventType.walk,
+          },
+          order: [['start', 'ASC']],
+          as: 'events',
+          required: true,
+        },
+      ],
     })
     .then((data) => {
+      data.events = null;
       res.status(200).send(data);
     })
     .catch((err) => {
