@@ -142,11 +142,25 @@ exports.addWalkDays = (req, res) => {
   });
 
   database.event
-    .bulkCreate(events_to_create)
-    .then((d) => {
-      res.status(200).send({
-        message: 'Events created successfully!',
-      });
+    .destroy({
+      where: {
+        type: 'can_walk',
+        animal_id: req.params.id,
+      },
+    })
+    .then((_) => {
+      database.event
+        .bulkCreate(events_to_create)
+        .then((d) => {
+          res.status(200).send({
+            message: 'Walk schedule replaced successfully!',
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: 'Sorry, some error occurred' + err,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
