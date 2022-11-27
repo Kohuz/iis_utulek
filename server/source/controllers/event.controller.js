@@ -155,6 +155,59 @@ exports.addWalkDays = (req, res) => {
     });
 };
 
+exports.getWalkDays = (req, res) => {
+  EVENT.debug.log('add walk days called');
+  let now = moment.tz('Europe/Prague').startOf('day');
+  let day = 24 * 60 * 60 * 1000;
+  let future_days_to_get = 30;
+
+  database.animal
+    .findByPk(req.params.id, {
+      include: {
+        model: database.event,
+        where: {
+          type: eventType.can_walk,
+          stop: {
+            [Op.gte]: now,
+          },
+          start: {
+            [Op.lte]: now + future_days_to_get * day,
+          },
+        },
+        as: 'events',
+      },
+    })
+    .then((d) => {
+      if (d === null || d.events === null) {
+        res.status(404).send({
+          message: 'Animal not found',
+        });
+        return;
+      }
+
+      let events = d.events;
+      let result = new Array(future_days_to_get).fill(false);
+
+      events.forEach((event) => {
+        let start_day = Math.floor((event.start - now) / day);
+        let end_day = Math.floor((event.stop - now) / day);
+
+        for (let day = start_day; day <= end_day; day++) {
+          if (day >= 0 && day < result.length) {
+            result[day] = true;
+          }
+        }
+      });
+
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: 'Could not get walk days: ' + err,
+      });
+    });
+};
+
 exports.deleteById = (req, res) => {
   EVENT.debug.log('delete called');
   const id = req.params.id;

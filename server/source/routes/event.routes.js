@@ -20,6 +20,8 @@ module.exports = (app) => {
 
   router.post('/animal/:id(\\d+)/walkDays', events.addWalkDays);
 
+  router.get('/animal/:id(\\d+)/walkDays', events.getWalkDays);
+
   // Return this structure for animal, it should be for 2 weeks ahead.
   /* {
             "day": "pondělí",
