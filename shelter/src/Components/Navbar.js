@@ -80,7 +80,7 @@ const Navbar = () => {
   const [error, setError] = useState(null);
 
   const fetchUnverified = () => {
-    if (authenticated && roles.includes(2)) {
+    if (authenticated && roles.includes(2077)) {
       axios
         .get(VOLUNTEERS_URL, {
           headers: {
@@ -100,7 +100,7 @@ const Navbar = () => {
   useInterval(fetchUnverified, 5000);
   useEffect(fetchUnverified, []);
   const fetchRequests = () => {
-    if (authenticated && roles.includes(2)) {
+    if (authenticated && roles.includes(2077)) {
       axios
         .get(REQUESTS_COUNT, {
           headers: {
