@@ -110,7 +110,12 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
           </Typography>
         </CardContent>
         <CardActions>
-          {authenticated && from == 'animals' ? (
+          {sessionStorage.getItem('verified') == 'false' ? (
+            <Typography>Nemůžete venčit, ještě jste nebyl ověřen</Typography>
+          ) : null}
+          {authenticated &&
+          from == 'animals' &&
+          sessionStorage.getItem('verified') == 'true' ? (
             <Button
               size="small"
               onClick={() => navigate('/animals/' + animal.animal_id)}

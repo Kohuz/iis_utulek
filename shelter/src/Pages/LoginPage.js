@@ -75,6 +75,7 @@ function LoginPage({ setLogged, logged }) {
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('userId', response.data.user_data.user_id);
           sessionStorage.setItem('name', response.data.user_data.name);
+          sessionStorage.setItem('verified', response.data.user_data.verified);
 
           navigate('/animals');
         } else {
