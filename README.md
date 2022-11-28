@@ -44,3 +44,15 @@ exports.func1 = () => { ... };
 exports.obj1 = { ... };
 exports.func2 = () => { ... };
 ```
+
+## Saving documentation
+
+Provided documentation is saved with some weird encoding defined in HTTP
+standard, therefore we have to enable proper UTF8 encoding in our editors.
+
+### Vim related setup
+
+```vim
+set fileencoding=utf8
+set bomb
+```

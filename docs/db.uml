@@ -1,0 +1,65 @@
+@startuml
+/' skinparam groupInheritance 2 '/
+
+hide circle
+skinparam linetype ortho
+
+entity "users" as user {
+    user_id : number <<PK>> <<generated>>
+    --
+    email : text
+    name : text
+    surname : text
+    birth_date : text
+    password : text
+    bank_account : text
+    address : text
+    is_volunteer : bool
+    is_admin : bool
+    is_caretaker : bool
+    is_veterinarian : bool
+    is_verified : bool
+}
+
+
+entity "animals" as animal {
+    animal_id : number <<PK>> <<Generated>>
+    --
+    name : text
+    type : text
+    commentary : text
+    age : number
+    state : text
+    borrowed : bool
+}
+
+
+entity "events" as event {
+    event_id : number <<PK>> <<generated>>
+    --
+    animal_id : number <<FK>>
+    user_id : number <<FK>>
+    date : date
+    commentary : text
+    type : text
+    start : datetime
+    stop : datetime
+    state : text
+}
+user --|{ event
+animal --|{ event
+
+
+entity "requests" as req {
+    request_id : number <<PK>> <<generated>>
+    --
+    animal_id  : <<FK>>
+    user_id  : <<FK>>
+    date : date
+    commentary : text
+    type : text
+    state : text
+}
+user --|{ req
+animal --|{ req
+@enduml

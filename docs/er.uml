@@ -1,66 +1,76 @@
 @startuml
 /' skinparam groupInheritance 2 '/
+/' skinparam linetype ortho '/
 
-note "There is only one Walk schedule to rule them all" as N1
+/' title Entity Relationship Diagram pro projekt IIS '/
+header Vytvořeno pomocí PlantUML
+footer Kryštof Albrecht (xalbre05), Jakub Kozubek (xkozub07), Daniel Kříž (xkrizd03)
 
-entity "User" {
-    Name
-    Surname
-    Birth Date
+entity "Obecný Uživatel" as user {
+    * ID
+    --
+    * Jméno
+    * Přijmení
+    * Datum narození
+    * Heslo
+    * Adresa
+    * Email
 }
 
-entity "Task" {}
 
-entity "Walk" {
-    Start Date
-    End Date
+entity "Zaměstnanec" as employee {
+    * Číslo účtu
+}
+user <|-- employee
+
+entity "Pečovatel" as caretaker { }
+employee <|-- caretaker
+
+
+entity "Admin" as admin { }
+employee <|-- admin
+
+
+entity "Veterinář" as vet { }
+employee <|-- vet
+
+
+entity "Dobrovolník" as volunteer { }
+user <|-- volunteer
+
+entity "Zvíře" as animal {
+    * ID
+    --
+    * Jméno
+    * Věk
+    * Druh
+    * Komentář
 }
 
-entity "Reservation" {
 
+entity "Událost" as event {
+    * ID
+    --
+    * Komentář
+    * Typ
+    * Status
+    * Rozsah platnosti
 }
-Walk ||..o{ Reservation
+event }o---|| caretaker
+event }o---o| volunteer
+event }o---o| vet
+event }o---|| animal
 
-entity "Animal" {
-    Name
-    Type
-    Photo
-    Age
+
+entity "Požadavek" as request {
+    * ID
+    --
+    * Komentář
+    * Datum platnosti
+    * Status
 }
-Walk }o..|| Animal
-
-entity "Animal Event" as AnimalEvent {
-    Name
-    Date
-    Commentary
-    Type
-}
-Animal ||..o{ AnimalEvent
-
-entity "Veterinarian" {
-    Adress
-    Bank Account
-}
-User <|-- Veterinarian
-AnimalEvent }o..o| Veterinarian
-
-entity "Volunteer" {
-
-}
-User <|-- Volunteer
-Reservation }o..|| Volunteer
-
-entity "Admin" {
-
-}
-User <|-- Admin
-
-entity "Caretaker" {
-    Adress
-    Bank Account
-}
-User <|-- Caretaker
-Walk }o..|| Caretaker
-
+request }o---|| caretaker
+request }o---o| vet /'veterinarian attaches later'/
+request }o---|| animal
 
 @enduml

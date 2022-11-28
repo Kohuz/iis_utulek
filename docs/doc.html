@@ -1,0 +1,164 @@
+﻿<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> -->
+<html>
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-2"/>
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
+
+<h1>Zvířecí útulek</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Kryštof Albrecht <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xalbre05@stud.fit.vutbr.cz">xalbre05@stud.fit.vutbr.cz</a> -
+        Implementace většiny Backendu
+	</dd>
+	<dd>Jakub Kozubek <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xkozub07@stud.fit.vutbr.cz">xkozub07@stud.fit.vutbr.cz</a> - 
+        Implementace Frontendu, finální nasazení systému, navržení API.
+	</dd>
+  <dd>Daniel Kříž <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xkrizd03@stud.fit.vutbr.cz">xkrizd03@stud.fit.vutbr.cz</a> - 
+		Implementace Backendu, vytvoření databáze, nasazování systému během vývoje.
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://159.223.213.207:3000/">http://159.223.213.207:3000/</a></dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>petr@test.test</td><td>123456</td><td>Pečovatel</td></tr>
+<tr><td>adam.admin@test.test</td><td>random</td><td>Administrátor</td></tr>
+<tr><td>dobrovolny@test.test</td><td>another</td><td>Dobrovolník</td></tr>
+<tr><td>doctor1@veterinar-test.test</td><td>doktor123</td><td>Veterinář</td></tr>
+</table>
+
+<p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
+
+<h3>Video</h3>
+
+    <p>
+        Přiložte odkaz na komentované video demostrující použití informačního
+        systému. Zaměřte se na případy užití definované zadáním (např.
+        registrace uživatele, správa uživatelů a činnosti jednotlivých rolí).
+        Video nahrajte například na VUT Google Drive, kde ho bude možné přímo
+        spustit z odkazu.
+    </p>
+
+<h2>Implementace</h2>
+
+<img src="er.png">
+
+    <p>
+        Z návrhu vyplývá, že uživatelé a jejich role jsou postaveny na generalizaci.
+        Jednotlivý uživatelé vytváření, podle svých práv, události a požadavky a navzájem
+        na ně reágují (např. pečovatel vypíše rozvrh venčení a dobrovolník na něj reáguje).
+        Tyto požavavky a události se vztahují k jednolivým zvířatům.
+    </p>
+
+    <p>
+        Systém je implementován v jazyce Javascript za použití knihoven React a
+        Express.js. Připady užití jsou implementováný v souborech rozdělených
+        podle tabulek v databázi (s tím, že uživatelé jsou společně v jedné
+        tabulce a mohou volat API určitým způsobem pouze s příslušnými právy)
+    </p>
+
+    <p>
+        Pro cestu <b>server/source</b> má projekt tuto strukturu:
+    </p>
+    <ul>
+        <li>controllers/ - implementace logiky pro jednotlivé role/entity</li>
+        <li>helpers/ - pomocné funkce (správa webových tokenů)</li>
+        <li>models/ - abstrakce nad databází</li>
+        <li>routes/ - popis API</li>
+        <li>server.js - hlavní skript</li>
+    </ul>
+
+    <p>
+        Případy užití pro jednotlivé role/entity jsou v příslušných souborech
+        odpovídající cestě <b>server/source/<i>funkce</i>/<i>role</i>.<i>funkce</i>.js</b>
+    </p>
+
+    <p>
+        Připady užití, které se týkají uživatelů jsou implementovány v souboru
+        <b>server/source/controllers/user.controller.js</b>
+    </p>
+
+
+    <p>
+        Stručná dokumentace k implementaci, která popisuje, které části projektu
+        (např. PHP skripty) implementují jednotlivé případy použití.
+    </p>
+
+<h3>Databáze</h3>
+
+<img src="db.png">
+
+<h2>Instalace</h2>
+
+    <p>
+        Části implementované pomocí JavaScriptu potřebují k instalaci mít
+        nástroj na správu balíčku <b> npm </b>, pomocí kterého jsou pak
+        nainstalovány všechny další závislosti. Navíc je potřeba interpret
+        JavaScriptu pro servery <b>node.js</b>.
+    </p>
+
+<h3>Server/Backend</h3>
+
+<ul>
+    <li>cd shelter</li>
+    <li>npm install</li>
+    <li>node source/server.js</li>
+</ul>
+
+<h3>Frontend</h3>
+
+<ul>
+    <li>cd shelter</li>
+    <li>npm install</li>
+    <li>npm start</li>
+</ul>
+
+<h3>Inicialize Databáze</h3>
+
+<p>K inicializaci jsou použity celkem dva skripty:</p>
+<ul>
+    <li>00-schema.sql</li>
+    <li>01-fill_with_data.sql</li>
+</ul>
+
+<p>
+    Kde první obsahuje specifikaci jednotlivých tabulek a druhý je následně plní
+    daty. Oba je možné zavolat z interaktiního příkazového řádku databáze pomocí
+    příkazu <i>SOURCE</i>.
+</p>
+    <p>
+        Pro správnou funkčnost nové instance systému je nutné oba skripty
+        zavolat v databázy používající dialekt
+        <i>MySQL</i>, projekt byl testován konkrétně na implementaci <b>MariaDB</b>.
+</p>
+
+
+<h2>Známé problémy</h2>
+    <p>
+        Protože jsou jednotlivé komponenty hostovány, ale na serverech třetích
+        stran, kde jsme trochu více limitování výkonem, tak se může stát, že
+        jednotlivé dotazy budou trvat trochu delší dobu (např. v řádech jednotek
+        vteřin).
+    </p>
+
+</body>
+</html>

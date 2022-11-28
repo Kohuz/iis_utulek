@@ -1,0 +1,59 @@
+@startuml
+skinparam actorStyle awesome
+(Registrace) as (reg)
+(Chyba při registraci) ..> (reg) : <<extends>>
+(Registrace byla úspěšná) ..> (reg) : <<extends>>
+
+(Přihlásit se) as (login)
+(Chyba při přihlášení) ..> (login) : <<extends>>
+(Přihlášení bylo úspěšné) ..> (login) : <<extends>>
+
+(Odhlásit se) as (logout)
+(zapsat se na venčení) as (take_walk)
+(Upravit rozpis venčení) as (change_walk_schedule)
+(vypsat požadavek) as (make_request)
+(Odstranit uživatele) as (remove)
+(Ověření uživatele) as (verify)
+(Zobrazit více informací) as (info)
+(Přidat zvíře) as (add_animal)
+(Upravit zvíře) as (update_animal)
+(Přijmout požadavek) as (accept_request)
+
+(Verifikace registračních\núdajů) as (check_register_data)
+(reg) <.. (check_register_data) : <<include>>
+
+(Verifikace přihlašovacích\núdajů) as (check_login_data)
+(login) <.. (check_login_data) : <<include>>
+
+
+actor :Neregistrovaný uživatel: as user
+(info) <-- user
+(reg) <-- user
+
+
+actor :Dobrovolník: as volunteer
+(login) <-- volunteer
+(logout) <-- volunteer
+(take_walk) <-- volunteer
+(info) <--- volunteer
+
+
+actor :Veterinář: as vet
+volunteer <|-- vet
+(accept_request) <-- vet
+
+
+actor :Pečovatel: as petcarer
+vet <|-- petcarer
+(change_walk_schedule) <-- petcarer
+(make_request) <-- petcarer
+(verify) <-- petcarer
+(add_animal) <-- petcarer
+(update_animal) <-- petcarer
+
+
+actor :Admin: as admin
+petcarer <|-- admin
+
+(remove) <-- admin
+@enduml
