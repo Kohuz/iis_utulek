@@ -58,7 +58,7 @@ function WalksPage() {
             : new Date(walk.start) > new Date()
         )
         .sort(function (a, b) {
-          return new Date(b.start) - new Date(a.start);
+          return new Date(a.start) - new Date(b.start);
         })
         .map((walk) => (
           <WalkCard
