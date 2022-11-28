@@ -62,7 +62,8 @@ function Schedule() {
     let arr = schedule[index].hours.filter((hour) =>
       hour.events.includes('current_walk')
     );
-    let s = arr.map((item) => item.time);
+    let s = arr.map((item) => (item.time < 10 ? '0' + item.time : item.time));
+
     let date =
       startDate.getFullYear() +
       '-' +
@@ -110,10 +111,10 @@ function Schedule() {
     <>
       <table>
         <caption>
-          <Typography variant="h2">Rozvrh {animal.name}</Typography>
+          <Typography variant='h2'>Rozvrh {animal.name}</Typography>
         </caption>
         <DatePicker
-          locale="cs"
+          locale='cs'
           minDate={new Date()}
           maxDate={addDays(new Date(), 28)}
           selected={startDate}
@@ -145,7 +146,7 @@ function Schedule() {
               ? schedule[index].hours.map((hour, j) => (
                   <td>
                     <Button
-                      variant="contained"
+                      variant='contained'
                       color={
                         hour.events.includes('current_walk')
                           ? 'warning'
@@ -190,12 +191,12 @@ function Schedule() {
         ? schedule[index].hours.map((hour) => <p>{hour.time}</p>)
         : null} */}
       <Button
-        size="large"
+        size='large'
         onClick={() => {
           //console.log(schedule[index]);
           createEvent();
         }}
-        variant="outlined"
+        variant='outlined'
       >
         Rezervovat
       </Button>

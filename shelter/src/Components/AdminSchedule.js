@@ -29,9 +29,13 @@ function AdminSchedule({
     let arr = schedule[index].hours.filter((hour) =>
       hour.events.includes('current event')
     );
-    let s = arr.map((item) => item.time);
+    let s = arr.map((item) => (item.time < 10 ? '0' + item.time : item.time));
     let cur_date =
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      date.getFullYear() +
+      '-' +
+      (date.getMonth() + 1) +
+      '-' +
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     console.log(eventName);
     console.log(type);
     console.log(s);
@@ -54,7 +58,7 @@ function AdminSchedule({
             '-' +
             (date.getMonth() + 1) +
             '-' +
-            date.getDate(),
+            (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()),
         }),
         {
           headers: {
@@ -103,7 +107,7 @@ function AdminSchedule({
               ? schedule[index].hours.map((hour, j) => (
                   <td>
                     <Button
-                      variant="contained"
+                      variant='contained'
                       color={
                         hour.events.includes('current event')
                           ? 'warning'
@@ -141,7 +145,7 @@ function AdminSchedule({
               : null}
           </tr>
         </tbody>
-        <Button onClick={() => createEvent()}>Rezervovat</Button>
+        <Button onClick={() => createEvent()}>Vytvořit</Button>
       </table>
     </>
   );

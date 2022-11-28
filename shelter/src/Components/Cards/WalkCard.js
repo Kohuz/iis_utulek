@@ -35,18 +35,18 @@ function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
   return (
     <Card sx={{ maxWidth: 700, marginTop: '1%' }}>
       <CardContent>
-        <Typography gutterBottom variant="h5">
+        <Typography gutterBottom variant='h5'>
           Procházka s {walk.animal.name}
         </Typography>
-        <Typography gutterBottom variant="h6">
+        <Typography gutterBottom variant='h6'>
           Datum : {walk.start.slice(0, 10)}
         </Typography>
-        <Typography gutterBottom variant="h6">
-          Čas : {format(addHours(new Date(walk.start), 1), 'HH:mm')}
+        <Typography gutterBottom variant='h6'>
+          Čas : {format(addHours(new Date(walk.start), 0), 'HH:mm')}
         </Typography>
         {walk.state == 'canceled' ? (
           <>
-            <Alert severity="error"> Zrušena</Alert>
+            <Alert severity='error'> Zrušena</Alert>
             <Button onClick={() => navigate('/animals/' + walk.animal_id)}>
               Vytvořit novou procházku
             </Button>
@@ -55,7 +55,7 @@ function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
         ) : null}
         {upcoming && walk.state != 'canceled' ? (
           <CardActions>
-            <Button size="small" onClick={() => remove(walk.event_id)}>
+            <Button size='small' onClick={() => remove(walk.event_id)}>
               Zrušit
             </Button>
           </CardActions>
