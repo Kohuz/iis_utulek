@@ -14,6 +14,8 @@ app.use('/api', (req, res, next) => {
   if (
     req.url == '/v1/user/login' ||
     req.url == '/v1/user/login/' ||
+    req.url == '/v1/animal' ||
+    req.url == '/v1/animal/' ||
     req.url == '/v1/user/register' ||
     req.url == '/v1/user/register/'
   ) {

@@ -199,7 +199,7 @@ function EditProfilePage() {
           labelPlacement="top"
           label="Email"
         />
-        {roles.includes(3) ? (
+        {roles.includes(3998) ? (
           <FormControlLabel
             control={
               <TextField
@@ -217,7 +217,7 @@ function EditProfilePage() {
             label="Bankovní účet"
           />
         ) : null}
-        {roles.includes(2) || roles.includes(3) ? (
+        {roles.includes(2077) || roles.includes(3998) ? (
           <FormControlLabel
             control={
               <TextField

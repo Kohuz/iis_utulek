@@ -25,6 +25,7 @@ import AdminSchedule from 'Components/AdminSchedule';
 import UserPage from 'Pages/UserPage';
 import WalkingSchedule from 'Components/WalkingSchedule';
 import EditProfilePage from 'Pages/EditProfilePage';
+import AboutPage from 'Pages/AboutPage';
 
 const theme = createTheme({
   palette: {
@@ -79,18 +80,23 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/animals" element={<AnimalsPage />} />
-          <Route element={<RequireAuth allowedRoles={[1, 2, 3, 4]} />}>
+          <Route path="/about" element={<AboutPage />} />
+          <Route
+            element={<RequireAuth allowedRoles={[1212, 2077, 3998, 4004]} />}
+          >
             <Route path="/animals/:id" element={<Schedule />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1, 2, 3, 4]} />}>
+          <Route
+            element={<RequireAuth allowedRoles={[1212, 2077, 3998, 4004]} />}
+          >
             <Route path="/" element={<HomePage />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[1, 2]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212, 2077]} />}>
             <Route path="/caretaker" element={<CaretakerPage />} />
             <Route path="/caretaker/:id" element={<WalkingSchedule />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1, 3]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212, 3998]} />}>
             <Route path="/veteranian" element={<VeterinarianPage />} />
             <Route path="/veteranian/:id" element={<HealthRecord />} />
             <Route
@@ -98,22 +104,24 @@ function App() {
               element={<AnimalEventCreate />}
             />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1, 2]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212, 2077]} />}>
             <Route path="/volunteer" element={<VolunteerPage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1, 4]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212, 4004]} />}>
             <Route path="/walks" element={<WalksPage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1, 2, 3, 4]} />}>
+          <Route
+            element={<RequireAuth allowedRoles={[1212, 2077, 3998, 4004]} />}
+          >
             <Route path="/profile" element={<ProfilePage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212]} />}>
             <Route path="/create_user" element={<CreateUserPage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212]} />}>
             <Route path="/users" element={<UserPage />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={[1]} />}>
+          <Route element={<RequireAuth allowedRoles={[1212]} />}>
             <Route path="/users/:id" element={<EditProfilePage />} />
           </Route>
 

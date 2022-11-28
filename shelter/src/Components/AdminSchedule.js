@@ -5,7 +5,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios/axios';
 import { useParams } from 'react-router-dom';
 
@@ -74,10 +74,26 @@ function AdminSchedule({
       .catch((response) => {});
   };
 
+  const [animal, setAnimal] = useState({});
+  const fetchAnimal = () => {
+    axios
+      .get('animal' + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        //console.log(response);
+        setAnimal(response.data);
+      })
+      .catch((error) => {});
+  };
+  useEffect(fetchAnimal, []);
+
   return (
     <>
       <table>
-        <caption>Rozvrh {id}</caption>
+        <caption>Rozvrh {animal.name}</caption>
         <tbody>
           <tr>
             {!schedule[index] ? (
@@ -125,7 +141,6 @@ function AdminSchedule({
               : null}
           </tr>
         </tbody>
-        <Button onClick={() => console.log(schedule)}>table content</Button>
         <Button onClick={() => createEvent()}>Rezervovat</Button>
       </table>
     </>

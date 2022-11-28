@@ -9,7 +9,12 @@ import {
 import React, { useContext, useState } from 'react';
 import authContext from 'Helpers/AuthContext';
 import dog from '../../dog.png';
-
+import cat from '../../cat.png';
+import aligator from '../../aligator.png';
+import hamster from '../../hamster.png';
+import bunny from '../../bunny.png';
+import leguan from '../../leguan.png';
+import parrot from '../../parrot.png';
 import { rolesDict, checkRoles } from '../../Helpers/Roles';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios/axios';
@@ -54,7 +59,41 @@ function AnimalCard({ animal, from, fetchData, animals, setAnimals }) {
         handleClose={handleCloseRequest}
       />
       <Card sx={{ maxWidth: 700 }}>
-        <CardMedia component="img" height="100" image={dog} alt="exampleDog" />
+        {animal.type == 'Pes' ? (
+          <CardMedia>
+            <img src={dog} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Kočka' ? (
+          <CardMedia>
+            <img src={cat} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Aligátor' ? (
+          <CardMedia>
+            <img src={aligator} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Křeček' ? (
+          <CardMedia>
+            <img src={hamster} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Králík' ? (
+          <CardMedia>
+            <img src={bunny} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Papoušek' ? (
+          <CardMedia>
+            <img src={parrot} width="245"></img>
+          </CardMedia>
+        ) : null}
+        {animal.type == 'Leguán' ? (
+          <CardMedia>
+            <img src={leguan} width="245"></img>
+          </CardMedia>
+        ) : null}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {animal.name}

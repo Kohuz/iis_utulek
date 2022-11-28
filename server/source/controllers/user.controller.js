@@ -12,10 +12,10 @@ const USER = {
 };
 
 const rolesDict = {
-  Admin: 1,
-  Caretaker: 2,
-  Veterinarian: 3,
-  Volunteer: 4,
+  Admin: 1212,
+  Caretaker: 2077,
+  Veterinarian: 3998,
+  Volunteer: 4004,
 };
 
 const generateHash = (password) => {

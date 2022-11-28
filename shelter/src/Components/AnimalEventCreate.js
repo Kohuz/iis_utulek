@@ -111,8 +111,20 @@ function AnimalEventCreate() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Button onClick={() => setOneDay(true)}>Událost na jeden den</Button>
-          <Button onClick={() => setOneDay(false)}>Událost na více dní</Button>
+          <Button
+            size="large"
+            variant="outlined"
+            onClick={() => setOneDay(true)}
+          >
+            Událost na jeden den
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            onClick={() => setOneDay(false)}
+          >
+            Událost na více dní
+          </Button>
           {oneDay ? (
             <>
               <Typography>Datum událost</Typography>
@@ -144,14 +156,14 @@ function AnimalEventCreate() {
             </>
           ) : (
             <>
-              <Typography>Datum od</Typography>
+              <Typography variant="h5">Datum od</Typography>
               <DatePicker
                 locale="cs"
                 minDate={new Date()}
                 selected={dateFrom}
                 onChange={(date) => setDateFrom(date)}
               />
-              <Typography>Datum do</Typography>
+              <Typography variant="h5">Datum do</Typography>
               <DatePicker
                 locale="cs"
                 minDate={dateFrom}
@@ -163,18 +175,19 @@ function AnimalEventCreate() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            sx={{ marginTop: '30px' }}
             required
             InputLabelProps={{ style: { fontSize: 20 } }}
             inputProps={{ style: { fontSize: 21 } }}
             onChange={(e) => setEventName(e.target.value)}
             value={eventName}
             id="eventName"
-            label="Název události"
+            label="Popis události"
             type="text"
             variant="outlined"
           ></TextField>
 
-          <FormControl sx={{ minWidth: '500px' }}>
+          <FormControl sx={{ marginTop: '30px', minWidth: '500px' }}>
             <InputLabel id="demo-simple-select-label">
               Druh požadavku
             </InputLabel>

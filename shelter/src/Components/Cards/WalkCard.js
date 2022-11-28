@@ -6,11 +6,14 @@ import {
   CardContent,
   CardActions,
   Button,
+  Alert,
 } from '@mui/material';
 import axios from 'axios/axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
+  const navigate = useNavigate();
   const remove = (id) => {
     const newWalks = walks.filter((walk) => id !== walk.event_id);
     setWalks(newWalks);
@@ -39,7 +42,16 @@ function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
         <Typography gutterBottom variant="h6">
           Čas : {walk.start.slice(11, -8)}
         </Typography>
-        {upcoming ? (
+        {walk.state == 'canceled' ? (
+          <>
+            <Alert severity="error"> Zrušena</Alert>
+            <Button onClick={() => navigate('/animals/' + walk.animal_id)}>
+              Vytvořit novou procházku
+            </Button>
+            <Button onClick={() => remove(walk.event_id)}> Odebrat</Button>
+          </>
+        ) : null}
+        {upcoming && walk.state != 'canceled' ? (
           <CardActions>
             <Button size="small" onClick={() => remove(walk.event_id)}>
               Zrušit

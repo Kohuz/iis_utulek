@@ -46,6 +46,20 @@ function WalkingSchedule() {
       })
       .catch((response) => {});
   };
+  const [animal, setAnimal] = useState({});
+  const fetchData = () => {
+    axios
+      .get('animal' + '/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      })
+      .then((response) => {
+        //console.log(response);
+        setAnimal(response.data);
+      })
+      .catch((error) => {});
+  };
 
   const [schedule, setSchedule] = useState([]);
 
@@ -72,12 +86,12 @@ function WalkingSchedule() {
       })
       .catch((error) => {});
   };
-
+  useEffect(fetchData, []);
   useEffect(fetchSchedule, []);
   return (
     <>
       <table>
-        <caption>Rozvrh {id}</caption>
+        <caption>Rozvrh {animal.name}</caption>
         <tbody>
           {table.map((week, i) => (
             <tr>

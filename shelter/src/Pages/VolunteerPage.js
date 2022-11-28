@@ -29,6 +29,10 @@ function VolunteerPage() {
     <>
       <Typography variant="h3">Neověření dobrovolníci: </Typography>
       <br></br>
+      {users.filter((user) => !user.verified && user.is_volunteer).length ==
+      0 ? (
+        <Typography variant="h5">Žádní neověření dobrovolníci</Typography>
+      ) : null}
       {users
         .filter((user) => !user.verified && user.is_volunteer)
         .map((user) => (

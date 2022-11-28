@@ -160,12 +160,12 @@ const Navbar = () => {
             <Button onClick={() => navigate('/animals')}>
               <Typography textAlign="center">Zvířata</Typography>
             </Button>
-            {roles?.includes(2) ? (
+            {roles?.includes(2077) ? (
               <Button onClick={() => navigate('/caretaker')}>
                 <Typography textAlign="center">Pečovatel</Typography>
               </Button>
             ) : null}
-            {roles?.includes(3) ? (
+            {roles?.includes(3998) ? (
               <Button onClick={() => navigate('/veteranian')}>
                 <Typography textAlign="center">Veteřinář</Typography>
                 {requests != 0 ? (
@@ -179,12 +179,12 @@ const Navbar = () => {
                 ) : null}
               </Button>
             ) : null}
-            {roles?.includes(4) ? (
+            {roles?.includes(4004) ? (
               <Button onClick={() => navigate('/walks')}>
                 <Typography textAlign="center">Venčení</Typography>
               </Button>
             ) : null}
-            {roles?.includes(2) ? (
+            {roles?.includes(2077) ? (
               <Button onClick={() => navigate('/volunteer')}>
                 <Typography textAlign="center">Dobrovolníci</Typography>
                 {volunteers != 0 ? (
@@ -198,16 +198,10 @@ const Navbar = () => {
                 ) : null}
               </Button>
             ) : null}
-            {/* <Button
-              onClick={() => {
-                console.log(authenticated);
-                console.log(roles);
-                console.log(accessToken);
-                console.log(username);
-              }}
-            >
-              Log auth info
-            </Button> */}
+
+            <Button onClick={() => navigate('/about')}>
+              <Typography textAlign="center">O nás</Typography>
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -240,14 +234,14 @@ const Navbar = () => {
                   <MenuItem onClick={() => navigate('/profile')}>
                     <Typography textAlign="center">Profil</Typography>
                   </MenuItem>
-                  {roles?.includes(1) ? (
+                  {roles?.includes(1212) ? (
                     <MenuItem onClick={() => navigate('/create_user')}>
                       <Typography textAlign="center">
                         Vytvořit uživatele
                       </Typography>
                     </MenuItem>
                   ) : null}
-                  {roles?.includes(1) ? (
+                  {roles?.includes(1212) ? (
                     <MenuItem onClick={() => navigate('/users')}>
                       <Typography textAlign="center">Uživatelé</Typography>
                     </MenuItem>
