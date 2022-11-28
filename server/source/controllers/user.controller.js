@@ -56,7 +56,6 @@ exports.create = (req, res) => {
   };
 
   if (!user.password) {
-    USER.debug.log('WTF');
     res.status(500).send({
       message: 'Sorry, some error occurred' + err,
     });

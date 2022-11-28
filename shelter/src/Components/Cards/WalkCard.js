@@ -9,8 +9,10 @@ import {
   Alert,
 } from '@mui/material';
 import axios from 'axios/axios';
+import addHours from 'date-fns/addHours';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 
 function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ function WalkCard({ walk, upcoming, walks, setWalks, fetchData }) {
           Datum : {walk.start.slice(0, 10)}
         </Typography>
         <Typography gutterBottom variant="h6">
-          Čas : {walk.start.slice(11, -8)}
+          Čas : {format(addHours(new Date(walk.start), 1), 'HH:mm')}
         </Typography>
         {walk.state == 'canceled' ? (
           <>

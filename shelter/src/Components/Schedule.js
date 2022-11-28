@@ -68,7 +68,9 @@ function Schedule() {
       '-' +
       (startDate.getMonth() + 1) +
       '-' +
-      startDate.getDate();
+      (startDate.getDate() < 10
+        ? '0' + startDate.getDate()
+        : startDate.getDate());
     axios
       .post(
         CREATE_URL,

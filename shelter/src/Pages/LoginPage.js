@@ -117,7 +117,7 @@ function LoginPage({ setLogged, logged }) {
                 onChange={(e) => setFormUsername(e.target.value)}
                 value={formUsername}
                 id="formusername"
-                label="Přihlašovací jméno"
+                label="Email"
                 type="text"
                 variant="outlined"
               ></TextField>

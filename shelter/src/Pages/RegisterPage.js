@@ -155,7 +155,7 @@ function RegisterPage({ setLogged, logged }) {
                 }}
                 value={formEmail}
                 id="formusername"
-                label="mail"
+                label="Email"
                 type="text"
                 variant="outlined"
               ></TextField>
