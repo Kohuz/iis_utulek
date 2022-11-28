@@ -72,6 +72,9 @@ function RequestCard({ request, requests, setRequests, fetchRequests }) {
         <Typography variant="body2" color="text.secondary">
           Datum: {request.date}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Komentář: {request.commentary}
+        </Typography>
       </CardContent>
       <CardActions>
         <Button
